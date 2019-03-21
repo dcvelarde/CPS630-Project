@@ -7,9 +7,14 @@
         <script src="scripts/recipes-controller.js"></script>
         <div ng-controller="RecipeController">
             <h1>{{ recipeHeading }}</h1>
-            <p>{{ recipe }}</p>
             <button ng-click="changeRecipeHeading()">Change heading!</button>
-            <br/><button ng-click="getRequest()">Get all Recipes</button>
+            <br/>   
+            <input ng-model="queryIngredients" type="text"/><button ng-click="searchForRecipes(queryIngredients)">Find Recipes</button>
+
+            <div ng-repeat="recipeObj in listOfRecipes">
+                <h1>{{recipeObj.recipe.label}}</h1>
+                <img src="{{recipeObj.recipe.image}}"/>
+            </div>
         </div>
     </body>
 </html>
