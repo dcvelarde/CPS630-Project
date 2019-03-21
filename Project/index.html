@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+    <head>
+        <title>Project</title>
+    </head>
+    <body ng-app="recipeModule">
+        <script src="scripts/angular.min.js"></script>
+        <script src="scripts/recipes-controller.js"></script>
+        <div ng-controller="RecipeController">
+            <h1>{{ recipeHeading }}</h1>
+            <p>{{ recipe }}</p>
+            <button ng-click="changeRecipeHeading()">Change heading!</button>
+            <br/><button ng-click="getRequest()">Get all Recipes</button>
+        </div>
+    </body>
+</html>
