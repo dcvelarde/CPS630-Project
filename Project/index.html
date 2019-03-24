@@ -7,9 +7,10 @@
         <script src="scripts/recipes-controller.js"></script>
         <div ng-controller="RecipeController">
             <h1>{{ recipeHeading }}</h1>
-            <button ng-click="changeRecipeHeading()">Change heading!</button>
             <br/>   
-            <input ng-model="queryIngredients" type="text"/><button ng-click="searchForRecipes(queryIngredients)">Find Recipes</button>
+            <input placeholder="Enter ingredients" ng-model="queryIngredients" type="text"/>
+            <br/><br/><input placeholder="Enter filters" ng-model="filters" type="text"/> 
+            <br/><br/><button ng-click="searchForRecipes(queryIngredients,filters)">Find Recipes</button>
 
             <div ng-repeat="recipeObj in listOfRecipes">
                 <h1>{{recipeObj.recipe.label}}</h1>
