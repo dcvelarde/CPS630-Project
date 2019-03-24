@@ -1,0 +1,25 @@
+.mainContent {
+    display: flex;
+    flex-flow: row wrap;
+    padding:5px;
+    width:100%;
+}
+
+.recipeContainer {
+    width:50%;
+    padding:10px;
+}
+
+.recipeDetails {
+    padding:5px;
+}
+
+.recipeImg {
+    width: 300px;
+    height:300px;
+    border-radius:0px 10px 5px 50px;
+}
+
+.recipeSearchContainer {
+    width:100%;
+}

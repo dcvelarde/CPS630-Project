@@ -1,6 +1,6 @@
 <!DOCTYPE html>
     <head>
-        <title>Foogether</title>
+        <title>Foodgether</title>
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -35,8 +35,19 @@
                 <h3>Sorry, could not find any recipes with that search criteria :(</h3>
             </div>
             <div class="recipeContainer" ng-repeat="recipeObj in listOfRecipes">
-                <h1>{{recipeObj.recipe.label}}</h1>
-                <img src="{{recipeObj.recipe.image}}"/>
+                <h4>{{recipeObj.recipe.label}}</h4>
+                <div style="display:flex;">
+                    <img class="recipeImg" src="{{recipeObj.recipe.image}}"/>
+                    <div class="recipeDetails">
+                        <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
+                        <p>Average Rating: -/5</p>
+                        <p>Ingredients: 
+                            <ul>
+                                <li ng-repeat="ingredient in recipeObj.recipe.ingredientLines">{{ingredient}}</li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
