@@ -74,6 +74,46 @@ app.get("/user/:id", function(req,res) {
   }
 });
 
+// ******* Get User Ratings by UserID and RecipeIDs *******
+app.get("/reciperating/:userrecipeid", function(req,res) {
+   var userRecipeId = JSON.parse(req.params['userrecipeid']);
+
+   var sqlselect = "SELECT rating FROM UserRecipeRatings WHERE UserID=" + userRecipeId['user'] + " AND RecipeID=\"" + userRecipeId['recipeId'] + "\"";
+   // var sqlselect = "SELECT rating FROM UserRecipeRatings WHERE UserID=" + userRecipeId['user'] + " AND RecipeID=\"009b4b56200185865b1cd4b74480367b\"";
+   connection.query(sqlselect, function(err, rows, fields) {
+      if(rows !== undefined && rows.length > 0) {
+         res.json({rating: rows[0]['rating']});
+      }
+      else {
+         res.json({rating: 0});
+      }
+   });
+});
+
+// ******* Insert or Update User Ratings *******
+app.get("/reciperate/:userreciperating", function(req,res) {
+   var userRecipeRatingArr = JSON.parse(req.params['userreciperating']);
+   var userRecipeRating = userRecipeRatingArr[1];
+   var beenRated = userRecipeRatingArr[0]['beenRated'];
+   var sql;
+   if (!beenRated) {
+      sql = "INSERT INTO UserRecipeRatings(UserID, RecipeID, Rating) VALUES (" +
+         userRecipeRating['user'] + ", '" + userRecipeRating['recipeId'] + "', " +
+         userRecipeRating['rating'] + ")";
+   } else {
+      sql = "UPDATE UserRecipeRatings SET Rating=" + userRecipeRating['rating'] +
+      " WHERE UserID=" + userRecipeRating['user'] + " AND RecipeID=\"" + userRecipeRating['recipeId'] + "\"";
+   }
+   connection.query(sql, function(err, result) {
+      if(err) {
+         res.json({response: "rating was not updated"});
+      }
+      else {
+         res.json({response: "rating was updated"});
+      }
+   });
+});
+
 app.listen(1121,function() {
   console.log("Server is up and listening on port 1121...");
 });

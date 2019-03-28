@@ -6,6 +6,8 @@
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+          <!-- needed for rating icon -->
+          <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
           <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
 
@@ -21,7 +23,7 @@
         <div class="mainContent" ng-controller="RecipeController">
             <div class="recipeSearchContainer">
                 <h1>{{ recipeHeading }}</h1>
-                <br/>   
+                <br/>
                 <label>Ingredients</label><br/><input placeholder="Enter ingredients" ng-model="queryIngredients" type="text"/>
                 <br/><br/><label>Diet Filters</label><br/><select ng-model="dietFilters" class="selectpicker" multiple data-live-search="true">
                   <option ng-repeat="dietFilter in dietFilterOptions">{{dietFilter}}</option>
@@ -39,9 +41,10 @@
                 <div style="display:flex;">
                     <img class="recipeImg" src="{{recipeObj.recipe.image}}"/>
                     <div class="recipeDetails">
+                        <star-rating-directive user="user" recipeObj="recipeObj"></star-rating-directive>
                         <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
                         <p>Average Rating: -/5</p>
-                        <p>Ingredients: 
+                        <p>Ingredients:
                             <ul>
                                 <li ng-repeat="ingredient in recipeObj.recipe.ingredientLines">{{ingredient}}</li>
                             </ul>

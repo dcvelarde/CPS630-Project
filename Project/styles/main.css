@@ -23,3 +23,18 @@
 .recipeSearchContainer {
     width:100%;
 }
+
+/* styling for star rating */
+star-rating-directive {
+   font-size: 40px;
+   display: inline-flex;
+   cursor: pointer;
+}
+
+.star {
+   color: #b0b0b0;
+}
+
+.star.full {
+   color: #f4d91f;
+}
