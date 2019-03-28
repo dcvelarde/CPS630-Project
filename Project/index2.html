@@ -30,6 +30,7 @@
                   <option ng-repeat="healthFilter in healthFilterOptions">{{healthFilter}}</option>
                 </select>
                 <br/><br/><button ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">Find Recipes</button>
+                <br/><br/><button ng-click="generate()">Generate</button>
             </div>
             <div ng-if="listOfRecipes.length == 0 && couldNotFindAnyResults">
                 <h3>Sorry, could not find any recipes with that search criteria :(</h3>
@@ -40,12 +41,13 @@
                     <img class="recipeImg" src="{{recipeObj.recipe.image}}"/>
                     <div class="recipeDetails">
                         <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
-                        <p>Average Rating: -/5</p>
-                        <p>Ingredients: 
+                        <p>Average Rating: {{recipeObj.recipe.rating}}/5</p>
+                        <a href="{{recipeObj.recipe.url}}">Cooking Instructions</a>
+                        <!-- <p>Ingredients: 
                             <ul>
                                 <li ng-repeat="ingredient in recipeObj.recipe.ingredientLines">{{ingredient}}</li>
                             </ul>
-                        </p>
+                        </p> -->
                     </div>
                 </div>
             </div>

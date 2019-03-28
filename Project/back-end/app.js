@@ -9,6 +9,7 @@ var dbUsername = "root";
 var dbPass = "2019cps630";
 var dbSchema = "cps630";
 var authToken = "RecipeProject2019";
+var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());
@@ -72,6 +73,37 @@ app.get("/user/:id", function(req,res) {
       }
     });
   }
+});
+
+// ******* Get User Information by UserID *******
+app.get("/getAverageRating/:id", function(req,res) {
+    const id = parseInt(req.params.id, 10);
+    connection.query("SELECT Round(AVG(Rating),2) AS averageRating FROM UserRecipeRatings WHERE RecipeID="+id, function(err, rows, fields) {
+      if(rows !== undefined)
+        res.json(rows[0]);
+      else{
+        res.json({"averageRating":"-"});
+      }
+    });
+});
+
+app.post("/generate",function(req,res) {
+  var recipeID = req.body.recipeID;
+  var minUserID=1; 
+  var maxUserID=13;  
+  var minRating = 1;
+  var maxRating = 6;
+  var userID =Math.floor(Math.random() * (+maxUserID - +minUserID)) + +minUserID;
+  var rating =Math.floor(Math.random() * (+maxRating - +minRating)) + +minRating; 
+    
+  console.log(userID);
+  console.log(recipeID);
+  console.log(rating);
+
+  connection.query("INSERT IGNORE INTO UserRecipeRatings VALUES("+userID
+    +",'"+recipeID+"',"+rating+")", function(err, rows, fields) {
+    res.json({"userID":userID,"recipeID":recipeID,"rating":rating});
+  });
 });
 
 app.listen(1121,function() {
