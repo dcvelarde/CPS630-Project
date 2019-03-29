@@ -10,9 +10,13 @@ var dbPass = "2019cps630";
 var dbSchema = "cps630";
 var authToken = "RecipeProject2019";
 
+//login stuff
+var authenticateController=require('./../scripts/authenticate-controller');
+var registerController=require('./../scripts/register-controller');
+
 app.use(morgan('combined'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -36,6 +40,23 @@ app.get("/",function(req,res) {
   console.log("Responding to root route");
   res.send("Hello from ROOT");
 });
+
+//login stuff
+app.get('/index3.html', function (req, res) {
+   res.sendFile( __dirname + "/" + "index3.html" );
+})
+
+app.get('/login.html', function (req, res) {
+   res.sendFile( __dirname + "/" + "login.html" );
+})
+
+/* route to handle login and registration */
+app.post('/api/register',registerController.register);
+app.post('/api/authenticate',authenticateController.authenticate);
+
+console.log(authenticateController);
+app.post('/../scripts/register-controller', registerController.register);
+app.post('/../scripts/authenticate-controller', authenticateController.authenticate);
 
 
 // ******* Login API *******
@@ -117,3 +138,4 @@ app.get("/reciperate/:userreciperating", function(req,res) {
 app.listen(1121,function() {
   console.log("Server is up and listening on port 1121...");
 });
+module.exports = connection;
