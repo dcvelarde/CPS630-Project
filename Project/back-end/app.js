@@ -114,6 +114,18 @@ app.get("/reciperate/:userreciperating", function(req,res) {
    });
 });
 
+// ******* Get Average Ratings by Recipe ID *******
+app.get("/getAverageRating/:id", function(req,res) {
+    const id = parseInt(req.params.id, 10);
+    connection.query("SELECT Round(AVG(Rating),2) AS averageRating FROM UserRecipeRatings WHERE RecipeID="+id, function(err, rows, fields) {
+      if(rows !== undefined)
+        res.json(rows[0]);
+      else{
+        res.json({"averageRating":"-"});
+      }
+    });
+});
+
 app.listen(1121,function() {
   console.log("Server is up and listening on port 1121...");
 });

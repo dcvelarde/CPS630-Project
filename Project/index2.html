@@ -43,7 +43,7 @@
                     <div class="recipeDetails">
                         <star-rating-directive user="user" recipeObj="recipeObj"></star-rating-directive>
                         <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
-                        <p>Average Rating: -/5</p>
+                        <recipe-average-rating-directive recipeObj="recipeObj"></recipe-average-rating-directive>
                         <p>Ingredients:
                             <ul>
                                 <li ng-repeat="ingredient in recipeObj.recipe.ingredientLines">{{ingredient}}</li>
