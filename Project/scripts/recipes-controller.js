@@ -72,7 +72,7 @@ angular.module('recipeModule', ['recipeModule.directives'])
     dirapp.directive("recipeAverageRatingDirective",recipeAverageRating);
 
     recipeRatings.$inject = ['$http'];
-    recipeAverageRating.$inject = ['$http','$scope'];
+    recipeAverageRating.$inject = ['$http'];
 
     function recipeRatings($http) {
           var directive = { };
@@ -143,7 +143,7 @@ angular.module('recipeModule', ['recipeModule.directives'])
     }
 
     // For retrieving the average rating for each recipe
-    function recipeAverageRating($http,$scope) {
+    function recipeAverageRating($http) {
       var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
       var directive = { };
           directive.restrict = 'E';
