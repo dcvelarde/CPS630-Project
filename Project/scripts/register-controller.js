@@ -1,23 +1,25 @@
+angular.module('registerModule', [])
+    .controller('RegisterController', ['$scope', '$http' ,RegisterController]);
 
-var express=require("express");
-var connection = require('./../back-end/app');
-
-module.exports.register=function(req,res){
-    var users={
-        //"name":req.body.name,
-        //"location":req.body.location,
-        "Username":req.body.Username,
-        "Password":req.body.Password,
-        //"level":req.body.level
-    }
-    connection.query('INSERT INTO UserCredentials SET ?',users, function (error, results, fields) {
-      if (error) {
-        res.json({
-            status:false,
-            message:'there are some error with query'
-        })
-      }else{
-        return res.redirect('./../login.html');
+function RegisterController($scope,$http) {
+   $scope.createUser = function(firstname, location, password, username, level) {
+      var user = {
+        firstname: firstname,
+        location:location,
+        password:password,
+        username:username,
+        level:level
       }
-    });
+      $http.post("http://localhost:1121/users/post", JSON.stringify(user)).then(
+         function successCallback(response) {
+           console.log("Post request success");
+           console.log(response);
+           return res.redirect('./../login.html');
+         },
+         function errorCallback(response) {
+           console.log("Unable to perform get request");
+           // display error couldnt create account
+         }
+      );
+   }
 }

@@ -10,13 +10,9 @@ var dbPass = "2019cps630";
 var dbSchema = "cps630";
 var authToken = "RecipeProject2019";
 
-//login stuff
-var authenticateController=require('./../scripts/authenticate-controller');
-var registerController=require('./../scripts/register-controller');
-
 app.use(morgan('combined'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -41,23 +37,55 @@ app.get("/",function(req,res) {
   res.send("Hello from ROOT");
 });
 
-//login stuff
-app.get('/index3.html', function (req, res) {
-   res.sendFile( __dirname + "/" + "index3.html" );
-})
 
-app.get('/login.html', function (req, res) {
-   res.sendFile( __dirname + "/" + "login.html" );
-})
+// ******* Register user *******
+app.post("/users/post",function(req,res) {
+   var userCredentials = req.body;
+   var sqlInsert = "INSERT INTO Users(Username, Password, FirstName, Location, Level) VALUES (" +
+      "'" + userCredentials['username'] + "', '" + userCredentials['password'] + "', " +
+      "'" + userCredentials['firstname'] + "', '" + userCredentials['location'] + "', " +
+      "'" + userCredentials['level'] + "')";
+   connection.query(sqlInsert, function (error, results, fields) {
+   if(error) {
+      console.log("user not created");
+      res.json({response: "user not created"});
+   }
+   else {
+      console.log("user created");
+      res.json({response: "user created"});
+      res.redirect('./../login.html');
+   }
+   });
+});
 
-/* route to handle login and registration */
-app.post('/api/register',registerController.register);
-app.post('/api/authenticate',authenticateController.authenticate);
-
-console.log(authenticateController);
-app.post('/../scripts/register-controller', registerController.register);
-app.post('/../scripts/authenticate-controller', authenticateController.authenticate);
-
+// ******* Login user *******
+app.get("/users/post",function(req,res) {
+   var userCredentials = req.body;
+   var sqlSelect = "SELECT * FROM Users WHERE Username = " + userCredentials['username'];
+   connection.query(sqlSelect, function (error, results, fields) {
+   if(error) {
+      console.log("user not found");
+      res.json({response: "user not found"});
+   }
+   else {
+     if(results.length > 0){
+       if(userCredentials['password']==results[0].password){
+              console.log("correct password");
+              res.json({response: "correct password"});
+              res.redirect('./../login.html');
+          }
+          else{
+              console.log("incorrect password");
+              res.json({response: "incorrect password"});
+            }
+     }
+     else{
+       console.log("empty result");
+       res.json({response: "empty result"});
+      }
+   }
+   });
+});
 
 // ******* Login API *******
 app.post("/login",function(req,res) {
