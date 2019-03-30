@@ -53,37 +53,29 @@ app.post("/users/post",function(req,res) {
    else {
       console.log("user created");
       res.json({response: "user created"});
-      res.redirect('./../login.html');
    }
    });
 });
 
 // ******* Login user *******
-app.get("/users/post",function(req,res) {
+app.post("/users/login",function(req,res) {
    var userCredentials = req.body;
-   var sqlSelect = "SELECT * FROM Users WHERE Username = " + userCredentials['username'];
+   var sqlSelect = "SELECT * FROM Users WHERE Username = '" + userCredentials['username'] + "'";
    connection.query(sqlSelect, function (error, results, fields) {
-   if(error) {
-      console.log("user not found");
-      res.json({response: "user not found"});
-   }
-   else {
-     if(results.length > 0){
-       if(userCredentials['password']==results[0].password){
-              console.log("correct password");
-              res.json({response: "correct password"});
-              res.redirect('./../login.html');
+      if(results == undefined) {
+         console.log("user not found");
+         res.json({response: "user not found"});
+      }
+      else if (results !== undefined && results.length > 0){
+          if(userCredentials['password']==results[0]['Password']){
+                 console.log("correct password");
+                 res.json({response: "correct password"});
           }
           else{
               console.log("incorrect password");
               res.json({response: "incorrect password"});
-            }
-     }
-     else{
-       console.log("empty result");
-       res.json({response: "empty result"});
-      }
-   }
+           }
+       }
    });
 });
 

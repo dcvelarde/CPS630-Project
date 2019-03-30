@@ -1,17 +1,18 @@
 angular.module('authenticateModule', [])
-    .controller('AuthenticateController', ['$scope', '$http' ,AuthenticateController]);
+    .controller('AuthenticateController', ['$scope', '$http' , '$window' ,AuthenticateController]);
 
 
-function AuthenticateController($scope,$http) {
+function AuthenticateController($scope,$http,$window) {
   $scope.findUser = function(username, password) {
   var user = {
     username:username,
     password:password
   }
-    $http.get("http://localhost:1121/users/post", JSON.stringify(user)).then(
+    $http.post("http://localhost:1121/users/login", JSON.stringify(user)).then(
         function successCallback(response) {
           console.log("Get request success");
           console.log(response);
+          $window.location.href = './index.html';
         },
         function errorCallback(response) {
           console.log("Unable to perform get request");

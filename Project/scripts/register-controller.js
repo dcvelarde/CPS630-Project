@@ -1,7 +1,7 @@
 angular.module('registerModule', [])
-    .controller('RegisterController', ['$scope', '$http' ,RegisterController]);
+    .controller('RegisterController', ['$scope', '$http' , '$window' ,RegisterController]);
 
-function RegisterController($scope,$http) {
+function RegisterController($scope,$http,$window) {
    $scope.createUser = function(firstname, location, password, username, level) {
       var user = {
         firstname: firstname,
@@ -14,7 +14,7 @@ function RegisterController($scope,$http) {
          function successCallback(response) {
            console.log("Post request success");
            console.log(response);
-           return res.redirect('./../login.html');
+           $window.location.href = './login.html';
          },
          function errorCallback(response) {
            console.log("Unable to perform get request");
