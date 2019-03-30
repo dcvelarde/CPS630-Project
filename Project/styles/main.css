@@ -12,6 +12,9 @@
 
 .recipeDetails {
     padding:5px;
+    width:500px;
+    height:300px;
+    overflow-y: scroll;
 }
 
 .recipeImg {
@@ -37,4 +40,23 @@ star-rating-directive {
 
 .star.full {
    color: #f4d91f;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
