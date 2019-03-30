@@ -12,7 +12,7 @@ function AuthenticateController($scope,$http,$window) {
         function successCallback(response) {
           console.log("Get request success");
           console.log(response);
-          $window.location.href = './index.html';
+          $window.location.href = './index2.html';
         },
         function errorCallback(response) {
           console.log("Unable to perform get request");
