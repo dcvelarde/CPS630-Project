@@ -37,6 +37,7 @@
             <div ng-if="listOfRecipes.length == 0 && couldNotFindAnyResults">
                 <h3>Sorry, could not find any recipes with that search criteria :(</h3>
             </div>
+            <recipe-info></recipe-info>
             <div class="recipeContainer" ng-repeat="recipeObj in listOfRecipes">
                 <h4>{{recipeObj.recipe.label}}</h4>
                 <div style="display:flex;">

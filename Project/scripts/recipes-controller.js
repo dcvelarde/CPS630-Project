@@ -48,7 +48,7 @@ angular.module('recipeModule', ['recipeModule.directives'])
             }
             console.log("Get first 10 recipes for given ingredient(s)");
             $http.get("https://api.edamam.com/search?q="+queryIngredients+dietFilterParams+healthFilterParams
-              +"&app_id="+appID+"&app_key="+appKey+"&to=10").then(
+              +"&app_id="+appID+"&app_key="+appKey+"&to=30").then(
               function successCallback(response) {
                 $scope.response = response;
                 console.log(response);
@@ -70,9 +70,11 @@ angular.module('recipeModule', ['recipeModule.directives'])
     var dirapp = angular.module('recipeModule.directives', []);
     dirapp.directive("starRatingDirective", recipeRatings);
     dirapp.directive("recipeAverageRatingDirective",recipeAverageRating);
+    dirapp.directive("recipeInfo",['$http','$scope',recipeInfo]);
 
     recipeRatings.$inject = ['$http'];
     recipeAverageRating.$inject = ['$http'];
+    // recipeInfo.$inject = ['$http'];
 
     function recipeRatings($http) {
           var directive = { };
@@ -172,4 +174,14 @@ angular.module('recipeModule', ['recipeModule.directives'])
 
           return directive;
 
+    }
+
+    function recipeInfo($http,$scope) {
+      console.log('recipeInfo directive (:');
+      var directive = {};
+      directive.restrict = 'E';
+      console.log(scope.listOfRecipes);
+      directiveTemplate = "<p>List of recipe info</p>";
+
+      return directive;
     }
