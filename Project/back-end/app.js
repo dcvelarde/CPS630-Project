@@ -101,7 +101,9 @@ app.post("/generate",function(req,res) {
   console.log(rating);
 
   connection.query("INSERT IGNORE INTO UserRecipeRatings VALUES("+userID
-    +",'"+recipeID+"',"+rating+")", function(err, rows, fields) {
+    +",'"+recipeID+"',"+rating+",'')", function(err, rows, fields) {
+      if(err)
+        console.log(err);
     res.json({"userID":userID,"recipeID":recipeID,"rating":rating});
   });
 });

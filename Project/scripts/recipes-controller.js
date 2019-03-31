@@ -35,7 +35,7 @@ angular.module('recipeModule', [])
             }
             console.log("Get first 10 recipes for given ingredient(s)");
             $http.get("https://api.edamam.com/search?q="+queryIngredients+dietFilterParams+healthFilterParams
-              +"&app_id="+appID+"&app_key="+appKey+"&to=10").then(
+              +"&app_id="+appID+"&app_key="+appKey+"&to=100").then(
               function successCallback(response) {
                 $scope.response = response;
                 // console.log(response);
