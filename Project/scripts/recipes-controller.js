@@ -6,6 +6,7 @@ angular.module('recipeModule', ['recipeModule.directives'])
         $scope.recipeHeading = "Foodgether";
         $scope.searchForRecipes = searchForRecipes;
         $scope.couldNotFindAnyResults = false;
+        $scope.findWithinArea = false;
         $scope.listOfRecipes = [];
         $scope.dietFilters = [];
         $scope.healthFilters = [];
@@ -68,8 +69,10 @@ angular.module('recipeModule', ['recipeModule.directives'])
     /* directive for rating stars */
     var dirapp = angular.module('recipeModule.directives', []);
     dirapp.directive("starRatingDirective", recipeRatings);
+    dirapp.directive("recipeAverageRatingDirective",recipeAverageRating);
 
     recipeRatings.$inject = ['$http'];
+    recipeAverageRating.$inject = ['$http'];
 
     function recipeRatings($http) {
           var directive = { };
@@ -137,4 +140,36 @@ angular.module('recipeModule', ['recipeModule.directives'])
           };
 
           return directive;
+    }
+
+    // For retrieving the average rating for each recipe
+    function recipeAverageRating($http) {
+      var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
+      var directive = { };
+          directive.restrict = 'E';
+
+          directive.template = "<p>Average User Ratings: {{averageRating}}/5</p>";
+
+          directive.link = function(scope, elements, attr) {
+             scope.retrieveAvgRating = function() {
+                var recipeUri = scope.recipeObj.recipe.uri;
+                scope.recipeID = recipeUri.replace(rQueryPartialParam,"");
+                $http.get("http://localhost:1121/getAverageRating/"+scope.recipeID).then(
+                     function successCallback(response) {
+                      var averageRating = response.data.averageRating;
+                      if(averageRating != null)
+                        scope.averageRating = averageRating;
+                      else
+                        scope.averageRating = "-";
+                     },
+                     function errorCallback(response) {
+                       console.log("Unable to perform get request");
+                     }
+                );
+             }
+             scope.retrieveAvgRating();
+          };
+
+          return directive;
+
     }

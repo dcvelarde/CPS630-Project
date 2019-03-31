@@ -43,8 +43,9 @@
                     <img class="recipeImg" src="{{recipeObj.recipe.image}}"/>
                     <div class="recipeDetails">
                         <star-rating-directive user="user" recipeObj="recipeObj"></star-rating-directive>
+                        <recipe-average-rating-directive recipeObj="recipeObj"></recipe-average-rating-directive>
+                        <a href="{{recipeObj.recipe.url}}">Click here for instructions</a>
                         <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
-                        <p>Average Rating: -/5</p>
                         <p>Ingredients:
                             <ul>
                                 <li ng-repeat="ingredient in recipeObj.recipe.ingredientLines">{{ingredient}}</li>

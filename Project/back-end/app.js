@@ -57,6 +57,47 @@ app.post("/users/post",function(req,res) {
 });
 
 
+// ******* Register user *******
+app.post("/users/post",function(req,res) {
+   var userCredentials = req.body;
+   var sqlInsert = "INSERT INTO Users(Username, Password, FirstName, Location, Level) VALUES (" +
+      "'" + userCredentials['username'] + "', '" + userCredentials['password'] + "', " +
+      "'" + userCredentials['firstname'] + "', '" + userCredentials['location'] + "', " +
+      "'" + userCredentials['level'] + "')";
+   connection.query(sqlInsert, function (error, results, fields) {
+   if(error) {
+      console.log("user not created");
+      res.json({response: "user not created"});
+   }
+   else {
+      console.log("user created");
+      res.json({response: "user created"});
+   }
+   });
+});
+
+// ******* Login user *******
+app.post("/users/login",function(req,res) {
+   var userCredentials = req.body;
+   var sqlSelect = "SELECT * FROM Users WHERE Username = '" + userCredentials['username'] + "'";
+   connection.query(sqlSelect, function (error, results, fields) {
+      if(results == undefined) {
+         console.log("user not found");
+         res.json({response: "user not found"});
+      }
+      else if (results !== undefined && results.length > 0){
+          if(userCredentials['password']==results[0]['Password']){
+                 console.log("correct password");
+                 res.json({response: "correct password"});
+          }
+          else{
+              console.log("incorrect password");
+              res.json({response: "incorrect password"});
+           }
+       }
+   });
+});
+
 // ******* Login API *******
 app.post("/login",function(req,res) {
   var username = req.body.username;
@@ -133,6 +174,19 @@ app.get("/reciperate/:userreciperating", function(req,res) {
    });
 });
 
+// ******* Get Average Ratings by Recipe ID *******
+app.get("/getAverageRating/:id", function(req,res) {
+    const id = parseInt(req.params.id, 10);
+    connection.query("SELECT Round(AVG(Rating),2) AS averageRating FROM UserRecipeRatings WHERE RecipeID="+id, function(err, rows, fields) {
+      if(rows !== undefined)
+        res.json(rows[0]);
+      else{
+        res.json({"averageRating":"-"});
+      }
+    });
+});
+
 app.listen(1121,function() {
   console.log("Server is up and listening on port 1121...");
 });
+module.exports = connection;
