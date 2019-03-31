@@ -26,12 +26,21 @@
                 <h1>{{ recipeHeading }}</h1>
                 <br/>
                 <label>Ingredients</label><br/><input placeholder="Enter ingredients" ng-model="queryIngredients" type="text"/>
+
                 <br/><br/><label>Diet Filters</label><br/><select ng-model="dietFilters" class="selectpicker" multiple data-live-search="true">
                   <option ng-repeat="dietFilter in dietFilterOptions">{{dietFilter}}</option>
                 </select>
                 <br/><label>Health Filters</label><br/><select ng-model="healthFilters" class="selectpicker" multiple data-live-search="true">
                   <option ng-repeat="healthFilter in healthFilterOptions">{{healthFilter}}</option>
                 </select>
+
+                <!-- adding check box for displaying based on user level -->
+                <br/><br/>
+                <label>
+                   <input type="checkbox" ng-model="displayBasedOnLevel">
+                   Display recipes based on cooking level
+                </label>
+
                 <br/><br/><button ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">Find Recipes</button>
             </div>
             <div ng-if="listOfRecipes.length == 0 && couldNotFindAnyResults">

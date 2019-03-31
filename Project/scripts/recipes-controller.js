@@ -16,11 +16,14 @@ angular.module('recipeModule', ['recipeModule.directives'])
         "vegetarian","paleo","dairy-free","gluten-free","wheat-free","fat-free","low-sugar",
         "egg-free","peanut-free","tree-nut-free","soy-free","fish-free","shellfish-free"];
 
+        $scope.displayBasedOnLevel = false;
+
         var appID = "4e6ed2f0";
         var appKey = "2b62e270b8ccede3c8380b07051800a6";
 
         /* placeholder code for variables i need for user ratings */
         $scope.user = 1;
+        $scope.level = "beginner";
 
         $scope.getRequest = function() {
             console.log("I've been pressed!");
@@ -52,9 +55,15 @@ angular.module('recipeModule', ['recipeModule.directives'])
               function successCallback(response) {
                 $scope.response = response;
                 console.log(response);
+                // changing listofrecipes so won't update right away before filtered by level
                 $scope.listOfRecipes = response.data.hits;
-                if($scope.listOfRecipes.length != 0)
-                  $scope.couldNotFindAnyResults = false;
+                if($scope.listOfRecipes.length != 0) {
+                   $scope.couldNotFindAnyResults = false;
+                   // if displaybasedonlevel is true, only display recipes matching level
+                   if ($scope.displayBasedOnLevel)
+                     filterRecipesByLevel();
+                  console.log($scope.listOfRecipes);
+                }
                 else
                   $scope.couldNotFindAnyResults = true;
               },
@@ -64,7 +73,31 @@ angular.module('recipeModule', ['recipeModule.directives'])
             );
         }
 
+         /* function for filtering recipes based on user level */
+         function filterRecipesByLevel() {
+            var maxNumIngr;
+            switch($scope.level) {
+               case "beginner":
+                  maxNumIngr = 4;
+                  break;
+               case "intermediate":
+                  maxNumIngr = 7;
+                  break;
+               case "expert":
+                  maxNumIngr = 50; // basically no max
+                  break;
+            }
+            for(var i=$scope.listOfRecipes.length - 1; i >= 0 ; i--){
+               var numOfIngr = $scope.listOfRecipes[i].recipe.ingredientLines.length;
+               console.log("numOfIngr: " + numOfIngr);
+                  if(numOfIngr > maxNumIngr){
+                     $scope.listOfRecipes.splice(i,1)
+                  }
+            }
+         }
+
     }
+
 
     /* directive for rating stars */
     var dirapp = angular.module('recipeModule.directives', []);
