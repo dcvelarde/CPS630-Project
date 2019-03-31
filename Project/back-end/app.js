@@ -56,26 +56,6 @@ app.post("/users/post",function(req,res) {
    });
 });
 
-
-// ******* Register user *******
-app.post("/users/post",function(req,res) {
-   var userCredentials = req.body;
-   var sqlInsert = "INSERT INTO Users(Username, Password, FirstName, Location, Level) VALUES (" +
-      "'" + userCredentials['username'] + "', '" + userCredentials['password'] + "', " +
-      "'" + userCredentials['firstname'] + "', '" + userCredentials['location'] + "', " +
-      "'" + userCredentials['level'] + "')";
-   connection.query(sqlInsert, function (error, results, fields) {
-   if(error) {
-      console.log("user not created");
-      res.json({response: "user not created"});
-   }
-   else {
-      console.log("user created");
-      res.json({response: "user created"});
-   }
-   });
-});
-
 // ******* Login user *******
 app.post("/users/login",function(req,res) {
    var userCredentials = req.body;
@@ -83,35 +63,19 @@ app.post("/users/login",function(req,res) {
    connection.query(sqlSelect, function (error, results, fields) {
       if(results == undefined) {
          console.log("user not found");
-         res.json({response: "user not found"});
+         res.json({userid: -1});
       }
       else if (results !== undefined && results.length > 0){
           if(userCredentials['password']==results[0]['Password']){
                  console.log("correct password");
-                 res.json({response: "correct password"});
+                 res.json({userid: results[0]['UserID']});
           }
           else{
               console.log("incorrect password");
-              res.json({response: "incorrect password"});
+              res.json({userid: -1});
            }
        }
    });
-});
-
-// ******* Login API *******
-app.post("/login",function(req,res) {
-  var username = req.body.username;
-  var password = req.body.password;
-
-  connection.query("SELECT * FROM UserCredentials WHERE Username='"+username
-    +"' AND Password='"+password+"'", function(err, rows, fields) {
-    if(rows.length === 1)
-      res.json({"token":authToken});
-    else{
-      res.status(401);
-      res.json({"response":"Incorrect username/password"});
-    }
-  });
 });
 
 // ******* Get User Information by UserID *******
