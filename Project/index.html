@@ -1,43 +1,33 @@
 <!DOCTYPE html>
-    <head>
-        <title>Foogether</title>
-        <link rel="stylesheet" href="styles/main.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-          <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+<head>
+   <title>Sign Up</title>
+   <link rel="stylesheet" href="styles/main.css">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   <!-- Latest compiled and minified CSS -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
+</head>
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
-
-<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/i18n/defaults-*.min.js"></script>
-    </head>
-    <body ng-app="recipeModule">
-        <script src="scripts/angular.min.js"></script>
-        <script src="scripts/recipes-controller.js"></script>
-        <div class="mainContent" ng-controller="RecipeController">
-            <div class="recipeSearchContainer">
-                <h1>{{ recipeHeading }}</h1>
-                <br/>   
-                <label>Ingredients</label><br/><input placeholder="Enter ingredients" ng-model="queryIngredients" type="text"/>
-                <br/><br/><label>Diet Filters</label><br/><select ng-model="dietFilters" class="selectpicker" multiple data-live-search="true">
-                  <option ng-repeat="dietFilter in dietFilterOptions">{{dietFilter}}</option>
-                </select>
-                <br/><label>Health Filters</label><br/><select ng-model="healthFilters" class="selectpicker" multiple data-live-search="true">
-                  <option ng-repeat="healthFilter in healthFilterOptions">{{healthFilter}}</option>
-                </select>
-                <br/><br/><button ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">Find Recipes</button>
-            </div>
-            <div ng-if="listOfRecipes.length == 0 && couldNotFindAnyResults">
-                <h3>Sorry, could not find any recipes with that search criteria :(</h3>
-            </div>
-            <div class="recipeContainer" ng-repeat="recipeObj in listOfRecipes">
-                <h1>{{recipeObj.recipe.label}}</h1>
-                <img src="{{recipeObj.recipe.image}}"/>
-            </div>
-        </div>
-    </body>
+<body ng-app="registerModule">
+   <script src="scripts/angular.min.js"></script>
+   <script src="scripts/register-controller.js"></script>
+   <section ng-controller="RegisterController">
+      <form ng-submit="createUser(firstname, location, password, username, level)">
+         First Name: <input type="text" ng-model="firstname" name="name">
+         <br/><br/>Location: <input type="text" ng-model="location" name="location">
+         <br/><br/>Password: <input type="password" ng-model="password" name="password">
+         <br/><br/>Username: <input type="text" ng-model="username" name="username">
+         <br/><br/>Level: <select name="level" ng-model="level">
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="expert" selected>Expert</option>
+            </select>
+         <br/><br/><input type="submit" value="Send">
+      </form>
+   </section>
+</body>
 </html>

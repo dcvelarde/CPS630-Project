@@ -37,6 +37,25 @@ app.get("/",function(req,res) {
   res.send("Hello from ROOT");
 });
 
+// ******* Register user *******
+app.post("/users/post",function(req,res) {
+   var userCredentials = req.body;
+   var sqlInsert = "INSERT INTO Users(Username, Password, FirstName, Location, Level) VALUES (" +
+      "'" + userCredentials['username'] + "', '" + userCredentials['password'] + "', " +
+      "'" + userCredentials['firstname'] + "', '" + userCredentials['location'] + "', " +
+      "'" + userCredentials['level'] + "')";
+   connection.query(sqlInsert, function (error, results, fields) {
+   if(error) {
+      console.log("user not created");
+      res.json({response: "user not created"});
+   }
+   else {
+      console.log("user created");
+      res.json({response: "user created"});
+   }
+   });
+});
+
 
 // ******* Login API *******
 app.post("/login",function(req,res) {
