@@ -32,10 +32,10 @@ function authenticateAPI(token) {
   return token == authToken;
 }
 
-app.get("/",function(req,res) {
-  console.log("Responding to root route");
-  res.send("Hello from ROOT");
-});
+// app.get("/",function(req,res) {
+//   console.log("Responding to root route");
+//   res.send("Hello from ROOT");
+// });
 
 // ******* Register user *******
 app.post("/users/post",function(req,res) {
@@ -149,6 +149,11 @@ app.get("/getAverageRating/:id", function(req,res) {
         res.json({"averageRating":"-"});
       }
     });
+});
+
+app.use(express.static('./public'));
+app.get('*', (req, res) => {
+    res.sendfile(path.resolve(__dirname, 'public/index2.html'));
 });
 
 app.listen(1121,function() {

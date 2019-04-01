@@ -3,6 +3,7 @@ angular.module('recipeModule', ['recipeModule.directives'])
 
     function RecipeController($scope,$http) {
         var vm = this;
+        var hostIP = "54.86.83.49";
         $scope.recipeHeading = "Foodgether";
         $scope.searchForRecipes = searchForRecipes;
         $scope.couldNotFindAnyResults = false;
@@ -27,7 +28,7 @@ angular.module('recipeModule', ['recipeModule.directives'])
 
         $scope.getRequest = function() {
             console.log("I've been pressed!");
-            $http.get("http://localhost:1121/users").then(
+            $http.get("http://"+hostIP+":1121/users").then(
               function successCallback(response) {
                 $scope.response = response;
                 console.log(response);
@@ -51,7 +52,7 @@ angular.module('recipeModule', ['recipeModule.directives'])
             }
             console.log("Get first 10 recipes for given ingredient(s)");
             $http.get("https://api.edamam.com/search?q="+queryIngredients+dietFilterParams+healthFilterParams
-              +"&app_id="+appID+"&app_key="+appKey+"&to=10").then(
+              +"&app_id="+appID+"&app_key="+appKey+"&to=100").then(
               function successCallback(response) {
                 $scope.response = response;
                 console.log(response);
@@ -62,6 +63,8 @@ angular.module('recipeModule', ['recipeModule.directives'])
                    // if displaybasedonlevel is true, only display recipes matching level
                    if ($scope.displayBasedOnLevel)
                      filterRecipesByLevel();
+                   if($scope.displayBasedOnPopRating)
+                    filterRecipesByPopularRating();
                   console.log($scope.listOfRecipes);
                 }
                 else
@@ -96,6 +99,10 @@ angular.module('recipeModule', ['recipeModule.directives'])
             }
          }
 
+         function filterRecipesByPopularRating() {
+            
+         }
+
     }
 
 
@@ -110,7 +117,7 @@ angular.module('recipeModule', ['recipeModule.directives'])
     function recipeRatings($http) {
           var directive = { };
           directive.restrict = 'E';
-
+          var hostIP = "54.86.83.49";
           directive.template = "<section ng-repeat=\"star in stars\" ng-click=\"setRating($index)\">" +
           "<ion-icon name=\"restaurant\" ng-class=\"starClass(star, $index)\"></ion-icon>" +
           "</section>";
@@ -123,7 +130,7 @@ angular.module('recipeModule', ['recipeModule.directives'])
                 var idx = recipeUri.indexOf("#recipe_");
                 scope.recipeId = recipeUri.substring(idx+8);
                 var userRecipeId = {user: scope.user, recipeId: scope.recipeId};
-                $http.get("http://localhost:1121/reciperating/" + JSON.stringify(userRecipeId)).then(
+                $http.get("http://"+hostIP+":1121/reciperating/" + JSON.stringify(userRecipeId)).then(
                      function successCallback(response) {
                        scope.rating = response.data.rating;
                        if (scope.rating == 0) {
@@ -160,7 +167,7 @@ angular.module('recipeModule', ['recipeModule.directives'])
                 // this is where rating is set so get update or insert
                 scope.rating = idx + 1;
                 var userRecipeRatingArr = [{beenRated: scope.beenRated},{user: scope.user, recipeId: scope.recipeId, rating: scope.rating}];
-                $http.get("http://localhost:1121/reciperate/" + JSON.stringify(userRecipeRatingArr)).then(
+                $http.get("http://"+hostIP+":1121/reciperate/" + JSON.stringify(userRecipeRatingArr)).then(
                      function successCallback(response) {
                        console.log("got response");
                        console.log(response);
@@ -177,6 +184,7 @@ angular.module('recipeModule', ['recipeModule.directives'])
 
     // For retrieving the average rating for each recipe
     function recipeAverageRating($http) {
+      var hostIP = "54.86.83.49";
       var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
       var directive = { };
           directive.restrict = 'E';
@@ -187,7 +195,7 @@ angular.module('recipeModule', ['recipeModule.directives'])
              scope.retrieveAvgRating = function() {
                 var recipeUri = scope.recipeObj.recipe.uri;
                 scope.recipeID = recipeUri.replace(rQueryPartialParam,"");
-                $http.get("http://localhost:1121/getAverageRating/"+scope.recipeID).then(
+                $http.get("http://"+hostIP+":1121/getAverageRating/"+scope.recipeID).then(
                      function successCallback(response) {
                       var averageRating = response.data.averageRating;
                       if(averageRating != null)
