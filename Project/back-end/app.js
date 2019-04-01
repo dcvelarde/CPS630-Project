@@ -140,8 +140,9 @@ app.get("/reciperate/:userreciperating", function(req,res) {
 
 // ******* Get Average Ratings by Recipe ID *******
 app.get("/getAverageRating/:id", function(req,res) {
-    const id = parseInt(req.params.id, 10);
-    connection.query("SELECT Round(AVG(Rating),2) AS averageRating FROM UserRecipeRatings WHERE RecipeID="+id, function(err, rows, fields) {
+    const id = req.params.id;
+    var query = "SELECT Round(AVG(Rating),2) AS averageRating FROM UserRecipeRatings WHERE RecipeID='"+id+"'";
+    connection.query(query, function(err, rows, fields) {
       if(rows !== undefined)
         res.json(rows[0]);
       else{
