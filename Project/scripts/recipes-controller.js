@@ -1,9 +1,54 @@
-angular.module('recipeModule', ['recipeModule.directives'])
-    .controller('RecipeController', ['$scope', '$http' ,RecipeController]);
+/* AUTHENTICATE MODULE */
+angular.module('authenticateModule', [])
+   .factory('MessageFactory', function() {
+      const messages = {};
+      messages.list = [];
+      messages.add = function(li, ui) {
+         messages.list.push({loggedin: li, userid: ui});
+         console.log(messages);
+      };
+      return messages;
+   })
+   .controller('AuthenticateController', ['MessageFactory','$scope', '$http' , '$window', AuthenticateController]);
 
-    function RecipeController($scope,$http) {
+function AuthenticateController(MessageFactory,$scope,$http,$window) {
+   $scope.loginIsCorrect = true;
+  $scope.findUser = function(username, password) {
+     var user = {
+       username:username,
+       password:password
+     }
+    $http.post("http://localhost:1121/users/login", JSON.stringify(user)).then(
+        function successCallback(response) {
+           console.log(response.data.userid);
+          if (response.data.userid > 0) {
+             MessageFactory.add(true, response.data.userid);
+             console.log(MessageFactory);
+             // $window.location.href = './index2.html';
+          }
+          else {
+             loginError();
+          }
+        },
+        function errorCallback(response) {
+          loginError();
+        }
+    );
+   }
+   function loginError() {
+        $scope.loginIsCorrect = false;
+   }
+}
+
+/* RECIPE MODULE */
+angular.module('recipeModule', ['authenticateModule','recipeModule.directives'])
+    .controller('RecipeController', ['$scope', '$http','MessageFactory',RecipeController]);
+
+    function RecipeController($scope,$http,MessageFactory) {
         var vm = this;
-        $scope.recipeHeading = "Foodgether";
+        console.log(MessageFactory.list);
+        // $scope.message = MessageFactory.list[0];
+        // $scope.recipeHeading = "Foodgether";
         $scope.searchForRecipes = searchForRecipes;
         $scope.couldNotFindAnyResults = false;
         $scope.findWithinArea = false;
@@ -22,7 +67,8 @@ angular.module('recipeModule', ['recipeModule.directives'])
         var appKey = "2b62e270b8ccede3c8380b07051800a6";
 
         /* placeholder code for variables i need for user ratings */
-        $scope.user = 1;
+        // $scope.user = $scope.message.userid;
+        // console.log($scope.user);
         $scope.level = "beginner";
 
         $scope.getRequest = function() {
@@ -62,7 +108,6 @@ angular.module('recipeModule', ['recipeModule.directives'])
                    // if displaybasedonlevel is true, only display recipes matching level
                    if ($scope.displayBasedOnLevel)
                      filterRecipesByLevel();
-                  console.log($scope.listOfRecipes);
                 }
                 else
                   $scope.couldNotFindAnyResults = true;
@@ -97,7 +142,6 @@ angular.module('recipeModule', ['recipeModule.directives'])
          }
 
     }
-
 
     /* directive for rating stars */
     var dirapp = angular.module('recipeModule.directives', []);
