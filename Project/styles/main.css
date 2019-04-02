@@ -1,62 +1,153 @@
+html{
+    font-family: "Avenir Next", Helevetica, sans-serif;
+}
 .mainContent {
     display: flex;
     flex-flow: row wrap;
-    padding:5px;
-    width:100%;
+    padding: 5px;
+    width: 100%;
 }
 
 .recipeContainer {
-    width:50%;
-    padding:10px;
+    width: 50%;
 }
 
 .recipeDetails {
-    padding:5px;
-    width:500px;
-    height:300px;
+    padding: 5px;
+    width: 500px;
+    height: 300px;
     overflow-y: scroll;
 }
 
 .recipeImg {
     width: 300px;
-    height:300px;
-    border-radius:0px 10px 5px 50px;
+    height: 300px;
+    border-radius: 0px 10px 5px 50px;
 }
 
 .recipeSearchContainer {
-    width:100%;
+    width: 100%;
 }
 
 /* styling for star rating */
 star-rating-directive {
-   font-size: 40px;
-   display: inline-flex;
-   cursor: pointer;
+    font-size: 40px;
+    display: inline-flex;
+    cursor: pointer;
 }
 
 .star {
-   color: #b0b0b0;
+    color: #b0b0b0;
 }
 
 .star.full {
-   color: #f4d91f;
+    color: #f4d91f;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+    background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+    background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+    background: #555;
 }
+
+
+.banner h1 {
+    color: #ff3434;
+    font-size: 30px;
+    margin-left: 20px;
+    float: left;
+}
+
+.banner a {
+    float: right;
+    margin-top: 10px;
+    padding-right: 20px;
+}
+
+.banner {
+    margin-top:10px;
+    margin-bottom: 50px;
+    padding-top: 10px;
+    position: fixed;
+    width: 100%;
+}
+
+
+
+
+/* Control the left side */
+.left {
+    float: left;
+    width: 15%;
+    margin-left: 20px;
+    margin-top:80px;
+    position: fixed;
+}
+
+/* Control the right side */
+.right {
+    float: left;
+    width: 100%;
+    margin-top: 75px;
+    margin-left: 300px;
+
+
+}
+.container{
+    top:30%;
+    left: 50%;
+    position: absolute;
+}
+.loading{
+    border: 6px solid #ccc;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border-top-color:#ff3434;
+    border-left-color: #ff3434;
+    animation: spin 1s infinite ease-in-out;
+}
+
+@keyframes spin{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.recipeContainer {
+    width: 100%;
+    padding: 10px;
+}
+
+@media (min-width: 600px) {
+    .recipeContainer {
+        width: 100%;
+        padding: 10px;
+    }
+
+}
+
+@media (min-width: 1000px) {
+     .right {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+
