@@ -1,78 +1,72 @@
+angular.module('recipeModule')
+    .controller('RecipeController', ['$rootScope','$scope', '$http','$window' ,RecipeController]);
 
-angular.module('recipeModule', ['recipeModule.directives'])
-.controller('RecipeController', ['$rootScope','$scope', '$http' ,RecipeController]);
+    function RecipeController($rootScope,$scope,$http,$window) {
+        var vm = this;
+        var hostIP = "54.86.83.49";
+        $rootScope.recipeAverageRatings = {};
+        $rootScope.recipeIDs = {};
+        $scope.recipeHeading = "Foodgether";
+        $scope.searchForRecipes = searchForRecipes;
+        $scope.orderByPopRatings = orderByPopRatings;
+        $scope.couldNotFindAnyResults = false;
+        $scope.findWithinArea = false;
+        $rootScope.doneGettingAvgRatings = true;
+        $rootScope.listOfRecipes = [];
+        $rootScope.savedList = [];
+        $scope.dietFilters = [];
+        $scope.healthFilters = [];
+        $scope.dietFilterOptions = ["balanced","high-protein","high-fiber","low-fat","low-carb",
+        "low-sodium"];
+        $scope.healthFilterOptions = ["vegan",
+        "vegetarian","paleo","dairy-free","gluten-free","wheat-free","fat-free","low-sugar",
+        "egg-free","peanut-free","tree-nut-free","soy-free","fish-free","shellfish-free"];
 
-function RecipeController($rootScope,$scope,$http) {
-    var vm = this;
-    $scope.recipeHeading = "Foodgether";
-    $scope.searchForRecipes = searchForRecipes;
-    $scope.couldNotFindAnyResults = false;
-    $scope.findWithinArea = false;
-    $scope.listOfRecipes = [];
-    $scope.dietFilters = [];
-    $scope.healthFilters = [];
-    $scope.dietFilterOptions = ["balanced","high-protein","high-fiber","low-fat","low-carb",
-    "low-sodium"];
-    $scope.healthFilterOptions = ["vegan",
-    "vegetarian","paleo","dairy-free","gluten-free","wheat-free","fat-free","low-sugar",
-    "egg-free","peanut-free","tree-nut-free","soy-free","fish-free","shellfish-free"];
+        $scope.displayBasedOnLevel = false;
 
-    $scope.displayBasedOnLevel = false;
+        var appID = "4e6ed2f0";
+        var appKey = "2b62e270b8ccede3c8380b07051800a6";
 
-    var appID = "4e6ed2f0";
-    var appKey = "2b62e270b8ccede3c8380b07051800a6";
+        /* placeholder code for variables i need for user ratings */
+        $scope.user = sessionStorage.getItem("activeUserId");
+        $scope.level = sessionStorage.getItem("activeUserLevel");
 
-    /* placeholder code for variables i need for user ratings */
-    $scope.user = sessionStorage.getItem('activeUserId');
-    $scope.level = sessionStorage.getItem('activeUserLevel');
-
-    $scope.getRequest = function() {
-        console.log("I've been pressed!");
-        $http.get("http://localhost:1121/users").then(
-          function successCallback(response) {
-            $scope.response = response;
-            console.log(response);
-          },
-          function errorCallback(response) {
-            console.log("Unable to perform get request");
-          }
-        );
-      };
-
-    function searchForRecipes(queryIngredients, dietFilters, healthFilters) {
-        console.log(queryIngredients);
-        var dietFilterParams = "";
-        for(var i = 0; i <dietFilters.length; i++){
-          dietFilterParams = dietFilterParams+"&diet="+dietFilters[i];
-        }
-
-        var healthFilterParams = "";
-        for(var i = 0; i <healthFilters.length; i++){
-          healthFilterParams = healthFilterParams+"&health="+healthFilters[i];
-        }
-        console.log("Get first 10 recipes for given ingredient(s)");
-        $http.get("https://api.edamam.com/search?q="+queryIngredients+dietFilterParams+healthFilterParams
-          +"&app_id="+appID+"&app_key="+appKey+"&to=10").then(
-          function successCallback(response) {
-            $scope.response = response;
-            console.log(response);
-            // changing listofrecipes so won't update right away before filtered by level
-            $scope.listOfRecipes = response.data.hits;
-            if($scope.listOfRecipes.length != 0) {
-               $scope.couldNotFindAnyResults = false;
-               // if displaybasedonlevel is true, only display recipes matching level
-               if ($scope.displayBasedOnLevel)
-                 filterRecipesByLevel();
-              console.log($scope.listOfRecipes);
+        function searchForRecipes(queryIngredients, dietFilters, healthFilters) {
+            $rootScope.doneGettingAvgRatings = false;
+            var dietFilterParams = "";
+            for(var i = 0; i <dietFilters.length; i++){
+              dietFilterParams = dietFilterParams+"&diet="+dietFilters[i];
             }
-            else
-              $scope.couldNotFindAnyResults = true;
-          },
-          function errorCallback(response) {
-            console.log("Unable to perform get request");
-          }
-        );
-    }
+
+            var healthFilterParams = "";
+            for(var i = 0; i <healthFilters.length; i++){
+              healthFilterParams = healthFilterParams+"&health="+healthFilters[i];
+            }
+            $http.get("https://api.edamam.com/search?q="+queryIngredients+dietFilterParams+healthFilterParams
+              +"&app_id="+appID+"&app_key="+appKey+"&to=100").then(
+              function successCallback(response) {
+                $scope.response = response;
+                // changing listofrecipes so won't update right away before filtered by level
+                $rootScope.listOfRecipes = response.data.hits;
+                populateRecipeIDs();
+                if($rootScope.listOfRecipes.length != 0) {
+                   $scope.couldNotFindAnyResults = false;
+                   // if displaybasedonlevel is true, only display recipes matching level
+                   if ($scope.displayBasedOnLevel)
+                     filterRecipesByLevel();
+                   if($scope.displayBasedOnPopRating){
+                    filterRecipesByPopularRating();
+                    }
+                  console.log($rootScope.listOfRecipes);
+                }
+                else
+                  $scope.couldNotFindAnyResults = true;
+              },
+              function errorCallback(response) {
+                console.log("Unable to perform get request");
+              }
+            );
+        }
 
         function populateRecipeIDs() {
           for(var i=0;i < $rootScope.listOfRecipes.length;i++) {
@@ -141,10 +135,6 @@ function RecipeController($rootScope,$scope,$http) {
          }
     }
 
-/* directive for rating stars */
-var dirapp = angular.module('recipeModule.directives', []);
-dirapp.directive("starRatingDirective", recipeRatings);
-dirapp.directive("recipeAverageRatingDirective",recipeAverageRating);
 
     /* directive for rating stars */
     var dirapp = angular.module('recipeModule');
@@ -263,4 +253,4 @@ dirapp.directive("recipeAverageRatingDirective",recipeAverageRating);
 
           return directive;
 
-}
+    }

@@ -1,5 +1,5 @@
 
-angular.module('authenticateModule', [])
+angular.module('recipeModule')
 .controller('AuthenticateController', ['$rootScope','$scope', '$http' , '$window' ,AuthenticateController]);
 
 
@@ -13,7 +13,7 @@ $scope.findUser = function(username, password) {
 
 $http.post("http://localhost:1121/users/login", JSON.stringify(user)).then(
     function successCallback(response) {
-       //console.log(response.data);
+       console.log(response.data);
       if (response.data.userid > 0) {
         sessionStorage.setItem('activeUserId',response.data.userid);
         sessionStorage.setItem('activeUser',response.data.name);

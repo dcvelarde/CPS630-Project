@@ -19,6 +19,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/i18n/defaults-*.min.js"></script>
     </head>
 </html>
-<body>
-
+<body ng-app="recipeModule">
+  <div class="mainContent" ng-controller="RecipeController">
+      <div class="recipeSearchContainer">
+          <h1>Foodgether</h1><br>
+          <h4>Your saved recipes:</h4><br>
+          <div ng-if="savedList.length == 0">
+              <h3>You have no saved recipes yet!</h3>
+          </div>
+          <a href="index2.html">Back</a>
 </body>
