@@ -1,44 +1,44 @@
-/* AUTHENTICATE MODULE */
-angular.module('authenticateModule', [])
-   .factory('MessageFactory', function() {
-      const messages = {};
-      messages.list = [];
-      messages.add = function(li, ui) {
-         messages.list.push({loggedin: li, userid: ui});
-         console.log(messages);
-      };
-      return messages;
-   })
-   .controller('AuthenticateController', ['MessageFactory','$scope', '$http' , '$window', AuthenticateController]);
-
-function AuthenticateController(MessageFactory,$scope,$http,$window) {
-   $scope.loginIsCorrect = true;
-  $scope.findUser = function(username, password) {
-     var user = {
-       username:username,
-       password:password
-     }
-    $http.post("http://localhost:1121/users/login", JSON.stringify(user)).then(
-        function successCallback(response) {
-           console.log(response.data.userid);
-          if (response.data.userid > 0) {
-             MessageFactory.add(true, response.data.userid);
-             console.log(MessageFactory);
-             // $window.location.href = './index2.html';
-          }
-          else {
-             loginError();
-          }
-        },
-        function errorCallback(response) {
-          loginError();
-        }
-    );
-   }
-   function loginError() {
-        $scope.loginIsCorrect = false;
-   }
-}
+// /* AUTHENTICATE MODULE */
+// angular.module('authenticateModule', [])
+//    .factory('MessageFactory', function() {
+//       const messages = {};
+//       messages.list = [];
+//       messages.add = function(li, ui) {
+//          messages.list.push({loggedin: li, userid: ui});
+//          console.log(messages);
+//       };
+//       return messages;
+//    })
+//    .controller('AuthenticateController', ['MessageFactory','$scope', '$http' , '$window', AuthenticateController]);
+//
+// function AuthenticateController(MessageFactory,$scope,$http,$window) {
+//    $scope.loginIsCorrect = true;
+//   $scope.findUser = function(username, password) {
+//      var user = {
+//        username:username,
+//        password:password
+//      }
+//     $http.post("http://localhost:1121/users/login", JSON.stringify(user)).then(
+//         function successCallback(response) {
+//            console.log(response.data.userid);
+//           if (response.data.userid > 0) {
+//              MessageFactory.add(true, response.data.userid);
+//              console.log(MessageFactory);
+//              // $window.location.href = './index2.html';
+//           }
+//           else {
+//              loginError();
+//           }
+//         },
+//         function errorCallback(response) {
+//           loginError();
+//         }
+//     );
+//    }
+//    function loginError() {
+//         $scope.loginIsCorrect = false;
+//    }
+// }
 
 /* RECIPE MODULE */
 angular.module('recipeModule', ['authenticateModule','recipeModule.directives'])
