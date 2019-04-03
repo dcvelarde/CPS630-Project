@@ -23,72 +23,98 @@
 <body ng-app="recipeModule">
     <script src="scripts/angular.min.js"></script>
     <script src="scripts/recipes-controller.js"></script>
-    
+
     <div class="banner" ng-controller="RecipeController">
         <h1>{{recipeHeading}}</h1>
         <a href="./login.html">Sign in</a>
         <br>
-        <hr>
     </div>
-    
+
     <div class="mainContent" ng-controller="RecipeController">
         <div class="left">
-        <div class="recipeSearchContainer">
-            <label>Ingredients</label><br /><input placeholder="Enter ingredients" ng-model="queryIngredients" type="text" />
+            <div class="recipeSearchContainer">
+                <label>Ingredients</label><br /><input placeholder="Enter ingredients" ng-model="queryIngredients" type="text" />
 
-            <br /><br /><label>Diet Filters</label><br /><select ng-model="dietFilters" class="selectpicker" multiple data-live-search="true">
-                <option ng-repeat="dietFilter in dietFilterOptions">{{dietFilter}}</option>
-            </select>
-            <br /><label>Health Filters</label><br /><select ng-model="healthFilters" class="selectpicker" multiple data-live-search="true">
-                <option ng-repeat="healthFilter in healthFilterOptions">{{healthFilter}}</option>
-            </select>
+                <br /><br />
+                <label>Diet Filters</label><br /><select ng-model="dietFilters" class="selectpicker" multiple data-live-search="true">
+                    <option ng-repeat="dietFilter in dietFilterOptions">{{dietFilter}}</option>
+                </select>
+                <br /><br>
+                <label>Health Filters</label><br /><select ng-model="healthFilters" class="selectpicker" multiple data-live-search="true">
+                    <option ng-repeat="healthFilter in healthFilterOptions">{{healthFilter}}</option>
+                </select>
 
-            <!-- adding check box for displaying based on user level -->
-            <br /><br />
-            <label>
-                <input type="checkbox" ng-model="displayBasedOnLevel">
-                Display recipes based on cooking level
-            </label>
+                <!-- adding check box for displaying based on user level -->
+                <br /><br />
+                <label>
+                    <input type="checkbox" ng-model="displayBasedOnLevel">
+                    Display recipes based on cooking level
+                </label>
 
-            <br /><br /><button class ="Find" ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">Find Recipes</button>
+                <br /><br /><button class="Find" ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">Find Recipes</button>
+            </div>
         </div>
-        </div>
-        
-        <div class="container">
+
+        <!-- <div class="container">
         <div class="loading"></div>
-        </div>
-        
+        </div> -->
+
         <div class="right">
-            
-        <div ng-if="listOfRecipes.length == 0 && couldNotFindAnyResults">
-            <h3>Sorry, could not find any recipes with that search criteria :(</h3>
-        </div>
-        
-        <div class="recipeContainer" ng-repeat="recipeObj in listOfRecipes">
-            
-            <h4>{{recipeObj.recipe.label}}</h4>
-            <div style="display:flex;">
-                <img class="recipeImg" src="{{recipeObj.recipe.image}}" />
-                <div class="recipeDetails">
-                    <star-rating-directive user="user" recipeObj="recipeObj"></star-rating-directive>
-                    <recipe-average-rating-directive recipeObj="recipeObj"></recipe-average-rating-directive>
-                    <a href="{{recipeObj.recipe.url}}">Click here for instructions</a>
-                    <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
-                    <p>Ingredients:
-                        <ul>
-                            <li ng-repeat="ingredient in recipeObj.recipe.ingredientLines">{{ingredient}}</li>
-                        </ul>
-                    </p>
+            <section class="section1">
+                <div class="beignning"></div>
+            </section>
+            <div ng-if="listOfRecipes.length == 0 && couldNotFindAnyResults">
+                <h3>Sorry, could not find any recipes with that search criteria :(</h3>
+            </div>
+
+            <div class="recipeContainer" ng-repeat="recipeObj in listOfRecipes">
+
+                <h4>{{recipeObj.recipe.label}}</h4>
+                <div style="display:flex;">
+                    <img class="recipeImg" src="{{recipeObj.recipe.image}}" />
+                    <div class="recipeDetails">
+                        <star-rating-directive user="user" recipeObj="recipeObj"></star-rating-directive>
+                        <recipe-average-rating-directive recipeObj="recipeObj"></recipe-average-rating-directive>
+                        <a href="{{recipeObj.recipe.url}}">Click here for instructions</a>
+                        <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
+                        <p>Ingredients:
+                            <ul>
+                                <li ng-repeat="ingredient in recipeObj.recipe.ingredientLines">{{ingredient}}</li>
+                            </ul>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
+        <footer>@Foodgether team</footer>
     </div>
-    </div>
-    
+
+
 </body>
 
 
+<script type="text/javascript">
+    var phrases = [
+        'Eat and drink',
+        'Deliciousness jumping into the mouth',
+        'Stop, eat and go!',
+        'Eat and dream',
+        'The pleasure of variety on your plate',
+        'We listen to the food'
+    ];
 
+    var scripts = document.getElementsByClassName('beignning');
+    var this_script = scripts[scripts.length - 1];
+    this_script.parentNode.replaceChild(document.createTextNode(phrases[Math.floor(Math.random() * phrases.length)]), this_script);
+
+</script>
+
+<script>
+    $(".Find").click(function() {
+        $(".section1").hide();
+    });
+
+</script>
 
 
 
