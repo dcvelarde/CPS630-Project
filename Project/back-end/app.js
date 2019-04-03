@@ -63,18 +63,25 @@ app.post("/users/login",function(req,res) {
    connection.query(sqlSelect, function (error, results, fields) {
       if(results == undefined) {
          console.log("user not found");
-         res.json({userid: -1});
+         res.json({userid: -1,
+                   name: 'User',
+                   location: 'Canada',
+                   level: 'beginner'});
       }
       else if (results !== undefined && results.length > 0){
           if(userCredentials['password']==results[0]['Password']){
                  console.log("correct password");
                  res.json({userid: results[0]['UserID'],
+                           name: results[0]['FirstName'],
+                           location: results[0]['Location'],
                            level: results[0]['Level']});
-
           }
           else{
               console.log("incorrect password");
-              res.json({userid: -1});
+              res.json({userid: -1,
+                        name: 'User',
+                        location: 'Canada',
+                        level: 'beginner'});
            }
        }
    });

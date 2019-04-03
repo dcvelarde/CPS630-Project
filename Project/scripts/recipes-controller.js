@@ -3,8 +3,6 @@ angular.module('recipeModule', ['recipeModule.directives'])
 .controller('RecipeController', ['$rootScope','$scope', '$http' ,RecipeController]);
 
 function RecipeController($rootScope,$scope,$http) {
-  console.log(sessionStorage.getItem('activeUserId'));
-  //console.log(sessionStorage.getItem('activeUser'));
     var vm = this;
     $scope.recipeHeading = "Foodgether";
     $scope.searchForRecipes = searchForRecipes;
@@ -26,7 +24,7 @@ function RecipeController($rootScope,$scope,$http) {
 
     /* placeholder code for variables i need for user ratings */
     $scope.user = sessionStorage.getItem('activeUserId');
-    $scope.level = "beginner";
+    $scope.level = sessionStorage.getItem('activeUserLevel');
 
     $scope.getRequest = function() {
         console.log("I've been pressed!");

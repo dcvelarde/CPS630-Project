@@ -13,12 +13,13 @@ $scope.findUser = function(username, password) {
 
 $http.post("http://localhost:1121/users/login", JSON.stringify(user)).then(
     function successCallback(response) {
-       //console.log(response.data.userid);
-       console.log(response.data);
+       //console.log(response.data);
       if (response.data.userid > 0) {
         sessionStorage.setItem('activeUserId',response.data.userid);
-        //sessionStorage.setItem('activeUser',response.data.name);
-        // $window.location.href = './index2.html';
+        sessionStorage.setItem('activeUser',response.data.name);
+        sessionStorage.setItem('activeUserLocation',response.data.location);
+        sessionStorage.setItem('activeUserLevel',response.data.level);
+        $window.location.href = './index2.html';
       }
       else {
          loginError();
