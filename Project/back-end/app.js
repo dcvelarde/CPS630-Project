@@ -68,7 +68,9 @@ app.post("/users/login",function(req,res) {
       else if (results !== undefined && results.length > 0){
           if(userCredentials['password']==results[0]['Password']){
                  console.log("correct password");
-                 res.json({userid: results[0]['UserID']});
+                 res.json({userid: results[0]['UserID'],
+                           level: results[0]['Level']});
+
           }
           else{
               console.log("incorrect password");
@@ -90,6 +92,7 @@ app.get("/user/:id", function(req,res) {
     connection.query("SELECT * FROM UsersInfo WHERE UserID="+id, function(err, rows, fields) {
       if(rows !== undefined)
         res.json(rows[0]);
+
       else{
         res.status(404);
         res.json({"response":"No user exists with UserID: "+id});
