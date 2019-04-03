@@ -32,10 +32,10 @@ function authenticateAPI(token) {
   return token == authToken;
 }
 
-app.get("/",function(req,res) {
-  console.log("Responding to root route");
-  res.send("Hello from ROOT");
-});
+// app.get("/",function(req,res) {
+//   console.log("Responding to root route");
+//   res.send("Hello from ROOT");
+// });
 
 // ******* Register user *******
 app.post("/users/post",function(req,res) {
@@ -140,14 +140,48 @@ app.get("/reciperate/:userreciperating", function(req,res) {
 
 // ******* Get Average Ratings by Recipe ID *******
 app.get("/getAverageRating/:id", function(req,res) {
-    const id = parseInt(req.params.id, 10);
-    connection.query("SELECT Round(AVG(Rating),2) AS averageRating FROM UserRecipeRatings WHERE RecipeID="+id, function(err, rows, fields) {
+    const id = req.params.id;
+    var query = "SELECT Round(AVG(Rating),2) AS averageRating FROM UserRecipeRatings WHERE RecipeID='"+id+"'";
+    connection.query(query, function(err, rows, fields) {
       if(rows !== undefined)
         res.json(rows[0]);
       else{
         res.json({"averageRating":"-"});
       }
     });
+});
+
+// ******* Get List of Recipe IDs within current user's area *******
+app.post("/getPopularRatedRecipes",function(req,res) {
+   var body = req.body;
+   // console.log(body);
+   var userID = body.userID;
+   var recipeIDs = body.recipeIDs;
+   var recipeIDString = "'"+recipeIDs.join("','")+"'";
+   var sqlSelect = "SELECT DISTINCT uRR.RecipeID"
+   +" FROM UserRecipeRatings uRR JOIN "
+   +"(SELECT * FROM Users) AS SelectedUsers"
+   +" ON uRR.UserID = SelectedUsers.UserID"
+   +" WHERE RecipeID IN("+recipeIDString+") AND "
+   +"SelectedUsers.Location = (SELECT Location FROM Users WHERE UserID="+userID+")";
+   connection.query(sqlSelect, function (error, results, fields) {
+      if(error) {
+        res.json({response:[]});
+      }
+      else {
+        var resultRecipeIDs = [];
+        for(var i=0; i <results.length;i++) {
+          var recipeID = results[i]["RecipeID"];
+          resultRecipeIDs[i] = recipeID;
+        }
+        res.json({response:resultRecipeIDs})
+      }
+   });
+});
+
+app.use(express.static('./public'));
+app.get('*', (req, res) => {
+    res.sendfile(path.resolve(__dirname, 'public/index2.html'));
 });
 
 app.listen(1121,function() {

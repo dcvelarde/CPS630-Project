@@ -1,10 +1,10 @@
-angular.module('authenticateModule', [])
-    .controller('AuthenticateController', ['$scope', '$http' , '$window' ,AuthenticateController]);
+angular.module('recipeModule')
+    .controller('AuthenticateController', ['$rootScope','$scope', '$http' , '$window',AuthenticateController]);
 
 
-function AuthenticateController($scope,$http,$window) {
+function AuthenticateController($rootScope,$scope,$http,$window) {
    $scope.loginIsCorrect = true;
-  $scope.findUser = function(username, password) {
+    $scope.findUser = function(username, password) {
      var user = {
        username:username,
        password:password
@@ -12,6 +12,7 @@ function AuthenticateController($scope,$http,$window) {
     $http.post("http://localhost:1121/users/login", JSON.stringify(user)).then(
         function successCallback(response) {
            console.log(response.data.userid);
+           $window.sessionStorage.setItem("activeUserId",response.data.userid);
           if (response.data.userid > 0) {
              $window.location.href = './index2.html';
           }
