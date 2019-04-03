@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!-- comment for test -->
+
 <head>
     <title>Foodgether</title>
     <link rel="stylesheet" href="styles/main.css">
@@ -20,6 +21,7 @@
     <!-- (Optional) Latest compiled and minified JavaScript translation files -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/i18n/defaults-*.min.js"></script> -->
 </head>
+
 <body ng-app="recipeModule">
     <div class="banner" ng-controller="RecipeController">
         <h1>{{recipeHeading}}</h1>
@@ -29,13 +31,19 @@
     <div class="mainContent" ng-controller="RecipeController">
         <div class="left">
             <div class="recipeSearchContainer">
-                <label>Ingredients</label><br /><input placeholder="Enter ingredients" ng-model="queryIngredients" type="text" />
-
-                <br /><br />
-                <label>Diet Filters</label><br /><select ng-model="dietFilters" class="selectpicker" multiple data-live-search="true">
+                <label>Ingredients</label>
+                <br />
+                <div data-tip="Enter an space followed by another ingredient">
+                <input placeholder="Enter ingredients" ng-model="queryIngredients" type="text" />
+                    </div>
+                <br />
+                <br />
+                <label>Diet Filters</label>
+                <br />
+                <select ng-model="dietFilters" class="selectpicker" multiple data-live-search="true">
                     <option ng-repeat="dietFilter in dietFilterOptions">{{dietFilter}}</option>
                 </select>
-                <br /><br>
+                <br /><br />
                 <label>Health Filters</label><br /><select ng-model="healthFilters" class="selectpicker" multiple data-live-search="true">
                     <option ng-repeat="healthFilter in healthFilterOptions">{{healthFilter}}</option>
                 </select>
@@ -48,16 +56,16 @@
                 </label>
 
                 <!-- adding check box for displaying based on average recipe rating -->
-                <br/>
+                <br />
                 <label>
-                   <input type="checkbox" ng-model="displayBasedOnPopRating">
-                   Popular Rated Recipes within area
+                    <input type="checkbox" ng-model="displayBasedOnPopRating">
+                    Popular Rated Recipes within area
                 </label>
                 <br /><br /><button class="Find" ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">Find Recipes</button>
             </div>
         </div>
 
-   
+
         <div class="right">
             <section class="section1">
                 <div class="beignning"></div>
@@ -65,7 +73,7 @@
             <div ng-show="!doneGettingAvgRatings" class="loadingContainer">
                 <span>Searching for Recipes</span>
                 <div class="loadingContainerImage">
-                    <img class="loadicon"src="pictures/loading-icon.gif"/>
+                    <img class="loadicon" src="pictures/loading-icon.gif" />
                 </div>
             </div>
             <div ng-if="listOfRecipes.length == 0 && couldNotFindAnyResults">

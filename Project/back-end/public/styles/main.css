@@ -1,8 +1,8 @@
-html{
+html {
     font-family: "Avenir Next", Helevetica, sans-serif;
 }
 
-footer{
+footer {
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -13,50 +13,52 @@ footer{
     padding-left: 10px;
 }
 
-label{
-    font-size:20px;
+label {
+    font-size: 20px;
 }
 
-.Find{
-	background-color:#dadddf;
-	border:1px solid #dcdcdc;
-	display:inline-block;
-	cursor:pointer;
-	color:#777777;
-	font-size:15px;
-    font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #ffffff;
+.Find {
+    background-color: #dadddf;
+    border: 1px solid #dcdcdc;
+    display: inline-block;
+    cursor: pointer;
+    color: #777777;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffffff;
 }
+
 .Find:hover {
-	background-color:#dfdfdf;
+    background-color: #dfdfdf;
 }
+
 .Find:active {
-	position:relative;
-	top:1px;
+    position: relative;
+    top: 1px;
 }
 
 .loadingContainer {
-  text-align: center;
-  width: 100%;
-  display:flex;
-  flex-flow: row wrap;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
 }
 
 .loadingContainer span {
-  font-size: 2em;
-  width:100%;
+    font-size: 2em;
+    width: 100%;
 }
 
 .loadingContainerImage {
-  text-align: center;
-  width:100%;
-  
+    text-align: center;
+    width: 100%;
+
 }
 
-.loadicon{
-    width:40%;
+.loadicon {
+    width: 45%;
     height: 100%;
 }
 
@@ -126,7 +128,7 @@ star-rating-directive {
     margin-left: 20px;
     float: left;
     padding: 10px;
-    
+
 }
 
 .banner a {
@@ -143,8 +145,8 @@ star-rating-directive {
     background-color: #dadddf;
 }
 
-.section1{
-   text-align: center;
+.section1 {
+    text-align: center;
     font-size: 40px;
     margin-top: 20%;
 }
@@ -156,7 +158,7 @@ star-rating-directive {
     float: left;
     width: 15%;
     margin-left: 20px;
-    margin-top:80px;
+    margin-top: 80px;
     position: fixed;
 }
 
@@ -168,7 +170,52 @@ star-rating-directive {
     margin-left: 300px;
 }
 
+[data-tip] {
+    position: relative;
 
+}
+
+[data-tip]:before {
+    content: '';
+    /* hides the tooltip when not hovered */
+    display: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #dadddf;
+    position: absolute;
+    top: 30px;
+    left: 35px;
+    z-index: 8;
+    font-size: 0;
+    line-height: 0;
+    width: 0;
+    height: 0;
+}
+
+[data-tip]:after {
+    display: none;
+    content: attr(data-tip);
+    position: absolute;
+    top: 35px;
+    left: 0px;
+    padding: 5px 10px;
+    background: #dadddf;
+    color: #000;
+    z-index: 9;
+    font-size: 0.75em;
+    height: 25px;
+    line-height: 18px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    white-space: nowrap;
+    word-wrap: normal;
+}
+
+[data-tip]:hover:before,
+[data-tip]:hover:after {
+    display: block;
+}
 
 .recipeContainer {
     width: 100%;
@@ -184,10 +231,8 @@ star-rating-directive {
 }
 
 @media (min-width: 1000px) {
-     .right {
+    .right {
         width: 100%;
         padding: 10px;
     }
 }
-
-
