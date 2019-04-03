@@ -45,13 +45,19 @@ label{
 }
 
 .loadingContainer span {
-  font-size: 3em;
+  font-size: 2em;
   width:100%;
 }
 
 .loadingContainerImage {
   text-align: center;
   width:100%;
+  
+}
+
+.loadicon{
+    width:40%;
+    height: 100%;
 }
 
 .mainContent {
@@ -163,29 +169,6 @@ star-rating-directive {
 }
 
 
-.container{
-    top:30%;
-    left: 50%;
-    position: absolute;
-}
-.loading{
-    border: 6px solid #ccc;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border-top-color:#ff3434;
-    border-left-color: #ff3434;
-    animation: spin 1s infinite ease-in-out;
-}
-
-@keyframes spin{
-    0%{
-        transform: rotate(0deg);
-    }
-    100%{
-        transform: rotate(360deg);
-    }
-}
 
 .recipeContainer {
     width: 100%;
