@@ -50,8 +50,8 @@ input{
 }
 
 select{
-    width: 100px;
-    height: 30px;
+    width: 125px;
+    height: 35px;
     position:relative;
     background: linear-gradient(21deg, white, rgb(240, 179, 179));
     display: inline-block;
