@@ -151,6 +151,34 @@ app.get("/getAverageRating/:id", function(req,res) {
     });
 });
 
+// ******* Get List of Recipe IDs within current user's area *******
+app.post("/getPopularRatedRecipes",function(req,res) {
+   var body = req.body;
+   // console.log(body);
+   var userID = body.userID;
+   var recipeIDs = body.recipeIDs;
+   var recipeIDString = "'"+recipeIDs.join("','")+"'";
+   var sqlSelect = "SELECT DISTINCT uRR.RecipeID"
+   +" FROM UserRecipeRatings uRR JOIN "
+   +"(SELECT * FROM Users) AS SelectedUsers"
+   +" ON uRR.UserID = SelectedUsers.UserID"
+   +" WHERE RecipeID IN("+recipeIDString+") AND "
+   +"SelectedUsers.Location = (SELECT Location FROM Users WHERE UserID="+userID+")";
+   connection.query(sqlSelect, function (error, results, fields) {
+      if(error) {
+        res.json({response:[]});
+      }
+      else {
+        var resultRecipeIDs = [];
+        for(var i=0; i <results.length;i++) {
+          var recipeID = results[i]["RecipeID"];
+          resultRecipeIDs[i] = recipeID;
+        }
+        res.json({response:resultRecipeIDs})
+      }
+   });
+});
+
 app.use(express.static('./public'));
 app.get('*', (req, res) => {
     res.sendfile(path.resolve(__dirname, 'public/index2.html'));
