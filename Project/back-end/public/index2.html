@@ -14,13 +14,13 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
-
+<script src="scripts/angular.min.js"></script>
+<script src="scripts/recipeModule.js"></script>
+<script src="scripts/recipes-controller.js"></script>
 <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/i18n/defaults-*.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/i18n/defaults-*.min.js"></script> -->
     </head>
     <body ng-app="recipeModule">
-        <script src="scripts/angular.min.js"></script>
-        <script src="scripts/recipes-controller.js"></script>
         <div class="mainContent" ng-controller="RecipeController">
             <div class="recipeSearchContainer">
                 <h1>Foodgether</h1>
@@ -41,12 +41,25 @@
                    Display recipes based on cooking level
                 </label>
 
+                <!-- adding check box for displaying based on average recipe rating -->
+                <br/>
+                <label>
+                   <input type="checkbox" ng-model="displayBasedOnPopRating">
+                   Popular Rated Recipes within area
+                </label>
+
                 <br/><br/><button ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">Find Recipes</button>
+            </div>
+            <div ng-show="!doneGettingAvgRatings" class="loadingContainer">
+                <span>Searching for Recipes</span>
+                <div class="loadingContainerImage">
+                    <img src="pictures/loading-icon.gif"/>
+                </div>
             </div>
             <div ng-if="listOfRecipes.length == 0 && couldNotFindAnyResults">
                 <h3>Sorry, could not find any recipes with that search criteria :(</h3>
             </div>
-            <div class="recipeContainer" ng-repeat="recipeObj in listOfRecipes">
+            <div ng-show="doneGettingAvgRatings" class="recipeContainer" ng-repeat="recipeObj in listOfRecipes|orderBy:orderByPopRatings()">
                 <h4>{{recipeObj.recipe.label}}</h4>
                 <div style="display:flex;">
                     <img class="recipeImg" src="{{recipeObj.recipe.image}}"/>

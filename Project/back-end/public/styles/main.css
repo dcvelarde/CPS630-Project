@@ -1,3 +1,20 @@
+.loadingContainer {
+  text-align: center;
+  width: 100%;
+  display:flex;
+  flex-flow: row wrap;
+}
+
+.loadingContainer span {
+  font-size: 3em;
+  width:100%;
+}
+
+.loadingContainerImage {
+  text-align: center;
+  width:100%;
+}
+
 .mainContent {
     display: flex;
     flex-flow: row wrap;
