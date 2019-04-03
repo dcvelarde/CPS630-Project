@@ -27,8 +27,10 @@ angular.module('recipeModule')
         var appKey = "2b62e270b8ccede3c8380b07051800a6";
 
         /* placeholder code for variables i need for user ratings */
-        $scope.user = 1;
-        $scope.level = "beginner";
+        $scope.user = $window.sessionStorage.getItem('activeUserId');
+        $scope.level = $window.sessionStorage.getItem('activeUserLevel');
+        console.log("user: " + $scope.user);
+        console.log("level: " + $scope.level);
 
         function searchForRecipes(queryIngredients, dietFilters, healthFilters) {
             $rootScope.doneGettingAvgRatings = false;
@@ -231,7 +233,7 @@ angular.module('recipeModule')
                       var averageRating = response.data.averageRating;
                       if(averageRating != null){
                         scope.averageRating = averageRating;
-                        $rootScope.listOfRecipes[index].rating = averageRating; 
+                        $rootScope.listOfRecipes[index].rating = averageRating;
                         $rootScope.recipeAverageRatings[scope.recipeID] = averageRating;
                       }
                       else{
@@ -239,7 +241,7 @@ angular.module('recipeModule')
                         $rootScope.recipeAverageRatings[scope.recipeID] = "-";
                       }
 
-                      if(index == $rootScope.listOfRecipes.length-1) 
+                      if(index == $rootScope.listOfRecipes.length-1)
                         $rootScope.doneGettingAvgRatings = true;
                      },
                      function errorCallback(response) {

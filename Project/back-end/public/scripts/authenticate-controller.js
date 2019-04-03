@@ -11,10 +11,12 @@ function AuthenticateController($rootScope,$scope,$http,$window) {
      }
     $http.post("http://localhost:1121/users/login", JSON.stringify(user)).then(
         function successCallback(response) {
-           console.log(response.data.userid);
-           $window.sessionStorage.setItem("activeUserId",response.data.userid);
           if (response.data.userid > 0) {
-             $window.location.href = './index2.html';
+              $window.sessionStorage.setItem('activeUserId',response.data.userid);
+              $window.sessionStorage.setItem('activeUser',response.data.name);
+              $window.sessionStorage.setItem('activeUserLocation',response.data.location);
+              $window.sessionStorage.setItem('activeUserLevel',response.data.level);
+            $window.location.href = './index2.html';
           }
           else {
              loginError();
