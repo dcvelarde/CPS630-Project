@@ -14,9 +14,9 @@ function AuthenticateController($rootScope,$scope,$http,$window) {
           if (response.data.userid > 0) {
               $window.sessionStorage.setItem('activeUserId',response.data.userid);
               $window.sessionStorage.setItem('activeUser',response.data.name);
-              $window.sessionStorage.setItem('activeUserLocation',response.data.location);
+              $window.sessionStorage.setItem('activeUserCity',response.data.city);
               $window.sessionStorage.setItem('activeUserLevel',response.data.level);
-            $window.location.href = './index2.html';
+              $window.location.href = './index2.html';
           }
           else {
              loginError();

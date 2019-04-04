@@ -40,9 +40,9 @@ function authenticateAPI(token) {
 // ******* Register user *******
 app.post("/users/post",function(req,res) {
    var userCredentials = req.body;
-   var sqlInsert = "INSERT INTO Users(Username, Password, FirstName, Location, Level) VALUES (" +
+   var sqlInsert = "INSERT INTO Users1(Username, Password, Name, City, Level) VALUES (" +
       "'" + userCredentials['username'] + "', '" + userCredentials['password'] + "', " +
-      "'" + userCredentials['firstname'] + "', '" + userCredentials['location'] + "', " +
+      "'" + userCredentials['name'] + "', '" + userCredentials['city'] + "', " +
       "'" + userCredentials['level'] + "')";
    connection.query(sqlInsert, function (error, results, fields) {
    if(error) {
@@ -59,7 +59,7 @@ app.post("/users/post",function(req,res) {
 // ******* Login user *******
 app.post("/users/login",function(req,res) {
    var userCredentials = req.body;
-   var sqlSelect = "SELECT * FROM Users WHERE Username = '" + userCredentials['username'] + "'";
+   var sqlSelect = "SELECT * FROM Users1 WHERE Username = '" + userCredentials['username'] + "'";
    connection.query(sqlSelect, function (error, results, fields) {
       if(results == undefined) {
          console.log("user not found");
@@ -72,8 +72,8 @@ app.post("/users/login",function(req,res) {
           if(userCredentials['password']==results[0]['Password']){
                  console.log("correct password");
                  res.json({userid: results[0]['UserID'],
-                           name: results[0]['FirstName'],
-                           location: results[0]['Location'],
+                           name: results[0]['Name'],
+                           location: results[0]['City'],
                            level: results[0]['Level']});
           }
           else{

@@ -17,9 +17,9 @@
    <script src="scripts/angular.min.js"></script>
    <script src="scripts/register-controller.js"></script>
    <section ng-controller="RegisterController">
-      <form ng-submit="createUser(firstname, location, password, username, level)">
-         First Name: <input type="text" ng-model="firstname" name="name">
-         <br/><br/>Location: <input type="text" ng-model="location" name="location">
+      <form ng-submit="createUser(name, city, password, username, level)">
+         Name: <input type="text" ng-model="name" name="name">
+         <br/><br/>City: <select ng-options="city for city in cities" ng-model="city"></select>
          <br/><br/>Username: <input type="text" ng-model="username" name="username">
          <br/><br/>Password: <input type="password" ng-model="password" name="password">
          <br/><br/>Level: <select name="level" ng-model="level">
