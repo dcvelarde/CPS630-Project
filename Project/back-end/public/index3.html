@@ -23,11 +23,11 @@
    <script src="scripts/angular.min.js"></script>
    <script src="scripts/register-controller.js"></script>
    <section ng-controller="RegisterController">
-      <form id="center" ng-submit="createUser(firstname, location, password, username, level)">
-         <input type="text" placeholder=" First name" ng-model="firstname" name="name">
-         <br/><br/><input type="text" placeholder=" Loacation" ng-model="location" name="location">
+      <form id="center" ng-submit="createUser(name, city, password, username, level)">
+         <input type="text" placeholder=" Name" ng-model="name" name="name">
          <br/><br/><input type="text" placeholder=" Username" ng-model="username" name="username">
          <br/><br/><input type="password" placeholder=" Password" ng-model="password" name="password">
+         <br/><br/><div id="level">City: </div><select ng-options="city for city in cities" ng-model="city"></select>
          <br/><br/><div id="level"> Level: </div><select name="level" ng-model="level">
               <option value="beginner">Beginner</option>
               <option value="intermediate">Intermediate</option>
