@@ -66,7 +66,7 @@
                     <div class="recipeDetails">
                         <star-rating-directive user="user" recipeObj="recipeObj"></star-rating-directive>
                         <recipe-average-rating-directive recipeObj="recipeObj"></recipe-average-rating-directive>
-                        <a href="{{recipeObj.recipe.url}}">Click here for instructions</a>
+                        <a href="{{recipeObj.recipe.url}}" target="_blank">Click here for instructions</a>
                         <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
                         <p>Ingredients:
                             <ul>

@@ -65,8 +65,8 @@ app.post("/users/login",function(req,res) {
          console.log("user not found");
          res.json({userid: -1,
                    name: '',
-                   location: '',
-                   level: ''});
+                   location: 'Toronto',
+                   level: 'expert'});
       }
       else if (results !== undefined && results.length > 0){
           if(userCredentials['password']==results[0]['Password']){
@@ -80,8 +80,8 @@ app.post("/users/login",function(req,res) {
               console.log("incorrect password");
               res.json({userid: -1,
                         name: '',
-                        location: '',
-                        level: ''});
+                        location: 'Toronto',
+                        level: 'expert'});
            }
        }
    });
