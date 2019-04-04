@@ -5,23 +5,34 @@ body{
 }
 
 main{
+    /*Contains dimensions of login/signup box*/
     width: 400px;
-    height: 400px;
+    height: 420px;
+
     padding: 10px;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -200px 0 0 -200px;
+    /*If you change the dimensions of the box, the following margin values
+    must be equal to HALF of the 2 values above (centering puroposes)*/
+    margin: -210px 0 0 -200px;
+
     background: linear-gradient(180deg, darkorange, rgb(255, 255, 255));
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.33), 0 3px 6px rgba(0, 0, 0, 0.67);
 }
 
+/*Changes height of register box so it fits all the contents*/
+#registerMain{
+    height: 480px;
+}
+
+
+/*Misc styling*/
+
 #centerTitle{
     text-align: center;
-    margin-bottom: 5px;
-    color: red;
-    font-size: 64px;
-    font-family: "Times New Roman";
+    font-size: 38px; 
+    color: rgb(146, 27, 27);
 }
 
 #header{
