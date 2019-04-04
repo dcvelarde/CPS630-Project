@@ -17,17 +17,17 @@
    <div style="font-size: 30px; float: left">Foodgether</div>
 </div>
 
-<main style="height: 475px;">
-   <h2 id="center" style="font-size:38px; color: rgb(146,27,27); margin-bottom: 15px;"> Register </h2>
+<main id="registerMain">
+   <h2 id="centerTitle" style="margin-bottom: 15px;"> Register </h2>
 <body ng-app="registerModule">
    <script src="scripts/angular.min.js"></script>
    <script src="scripts/register-controller.js"></script>
    <section ng-controller="RegisterController">
       <form id="center" ng-submit="createUser(firstname, location, password, username, level)">
-         <input type="text" placeholder="First name" ng-model="firstname" name="name">
-         <br/><br/><input type="text" placeholder="Loacation" ng-model="location" name="location">
-         <br/><br/><input type="text" placeholder="Username" ng-model="username" name="username">
-         <br/><br/><input type="password" placeholder="Password" ng-model="password" name="password">
+         <input type="text" placeholder=" First name" ng-model="firstname" name="name">
+         <br/><br/><input type="text" placeholder=" Loacation" ng-model="location" name="location">
+         <br/><br/><input type="text" placeholder=" Username" ng-model="username" name="username">
+         <br/><br/><input type="password" placeholder=" Password" ng-model="password" name="password">
          <br/><br/><div id="level"> Level: </div><select name="level" ng-model="level">
               <option value="beginner">Beginner</option>
               <option value="intermediate">Intermediate</option>
