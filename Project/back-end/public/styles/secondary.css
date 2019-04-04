@@ -9,21 +9,24 @@ main{
     width: 400px;
     height: 420px;
 
+    /*Centers the login/signup box*/
     padding: 10px;
     position: absolute;
     top: 50%;
     left: 50%;
+
     /*If you change the dimensions of the box, the following margin values
     must be equal to HALF of the 2 values above (centering puroposes)*/
     margin: -210px 0 0 -200px;
 
+    /*Adds color gradient and shadowing to login/signup box*/
     background: linear-gradient(180deg, darkorange, rgb(255, 255, 255));
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.33), 0 3px 6px rgba(0, 0, 0, 0.67);
 }
 
-/*Changes height of signup box so it fits all the contents*/
+/*Changes height of register box so it fits all the contents*/
 #registerMain{
-    height: 480px;
+    height: 500px;
 }
 
 
@@ -51,6 +54,7 @@ main{
     text-align: center;
 }
 
+/*Styles text input areas*/
 input{
     width: 250px;
     height: 40px;
@@ -60,6 +64,7 @@ input{
     border-radius: 10px;
 }
 
+/*Styles select drop down area*/
 select{
     width: 125px;
     height: 35px;
@@ -72,10 +77,11 @@ select{
 #level{
     color: red;
     font-size: 21px;
-    font-weight: 250;
+    font-weight: 300;
     font-family: "Times New Roman";
 }
 
+/*Header and footer styling*/
 
 footer{
     position: fixed;
