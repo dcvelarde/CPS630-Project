@@ -1,4 +1,4 @@
-angular.module('recipeModule')
+angular.module('recipeModule',['ngMaterial', 'ngMessages'])
     .controller('RecipeController', ['$rootScope','$scope', '$http','$window' ,RecipeController]);
 
     function RecipeController($rootScope,$scope,$http,$window) {
@@ -26,6 +26,7 @@ angular.module('recipeModule')
         var appID = "4e6ed2f0";
         var appKey = "2b62e270b8ccede3c8380b07051800a6";
 
+        $scope.firstname = $window.sessionStorage.getItem('activeUser');
         /* placeholder code for variables i need for user ratings */
         $scope.user = $window.sessionStorage.getItem('activeUserId');
         $scope.level = $window.sessionStorage.getItem('activeUserLevel');

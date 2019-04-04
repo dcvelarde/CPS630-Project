@@ -1,5 +1,5 @@
 html {
-    font-family: "Avenir Next", Helevetica, sans-serif;
+    font-family: "Avenir Next", Helevetica, sans-serif,Roboto;
 }
 
 footer {
@@ -17,21 +17,24 @@ label {
     font-size: 20px;
 }
 
+.md-input-container label{
+    color: black;
+}
+
 .Find {
-    background-color: #dadddf;
-    border: 1px solid #dcdcdc;
+    background-color: #eb5713;
+    border: 1px solid #eb5713;
     display: inline-block;
     cursor: pointer;
-    color: #777777;
+    color: #ffffff;
     font-size: 15px;
-    font-weight: bold;
-    padding: 6px 24px;
+    padding: 6px 20px;
     text-decoration: none;
     text-shadow: 0px 1px 0px #ffffff;
 }
 
 .Find:hover {
-    background-color: #dfdfdf;
+    background-color: #F4511E;
 }
 
 .Find:active {
@@ -85,6 +88,7 @@ label {
 
 .recipeSearchContainer {
     width: 100%;
+    margin-top: 15px;
 }
 
 /* styling for star rating */
@@ -122,8 +126,8 @@ star-rating-directive {
 }
 
 
-.banner h1 {
-    color: #ff3434;
+.banner h1{
+    
     font-size: 30px;
     margin-left: 20px;
     float: left;
@@ -135,11 +139,16 @@ star-rating-directive {
     float: right;
     margin-top: 10px;
     padding-right: 20px;
+    text-decoration: none !important;
+    color: #ff3434;
 }
 
+.banner a:hover{
+    text-decoration: none;
+    color: #ff3434;
+}
 .banner {
     margin-bottom: 50px;
-    padding-top: 10px;
     position: fixed;
     width: 100%;
     background-color: #dadddf;
