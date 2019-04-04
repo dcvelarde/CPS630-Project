@@ -21,7 +21,7 @@ main{
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.33), 0 3px 6px rgba(0, 0, 0, 0.67);
 }
 
-/*Changes height of register box so it fits all the contents*/
+/*Changes height of signup box so it fits all the contents*/
 #registerMain{
     height: 480px;
 }
