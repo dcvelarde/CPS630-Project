@@ -188,6 +188,20 @@ app.post("/getPopularRatedRecipes",function(req,res) {
    });
 });
 
+app.get("/getMostPopularRecipes",function(req,res){
+  var sqlQuery = "SELECT RecipeID, Round(AVG(Rating),2) AS averageRating FROM UserRecipeRatings "
+  +"GROUP BY RecipeID ORDER BY averageRating DESC LIMIT 10;";
+
+  connection.query(sqlQuery, function (error, results, fields) {
+      if(error) {
+        res.json({response:[]});
+      }
+      else {
+        res.json({response:results})
+      }
+   });
+});
+
 app.use(express.static('./public'));
 app.get('*', (req, res) => {
     res.sendfile(path.resolve(__dirname, 'public/index2.html'));

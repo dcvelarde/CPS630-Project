@@ -16,7 +16,7 @@ function AuthenticateController($rootScope,$scope,$http,$window) {
               $window.sessionStorage.setItem('activeUser',response.data.name);
               $window.sessionStorage.setItem('activeUserLocation',response.data.location);
               $window.sessionStorage.setItem('activeUserLevel',response.data.level);
-            $window.location.href = './index2.html';
+              $window.location.href = './main.html';
           }
           else {
              loginError();
