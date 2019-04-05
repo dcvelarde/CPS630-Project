@@ -38,28 +38,31 @@
         <h1><a href="./index2.html">{{recipeHeading}}</a></h1>
         <a href="./login.html">Sign in</a>
         <br>
-        <p>{{firstname}}</p>
+        
     </div>
     <div class="mainContent" ng-controller="RecipeController">
         <div class="left">
             <div class="recipeSearchContainer">
-
-                <md-input-container>
+                
+                <div class="container1">
+                    <md-input-container>
                     <label>Ingredients</label>
                     <div data-tip="Enter an space followed by another ingredient">
                         <input ng-model="queryIngredients" type="text" />
                     </div>
                 </md-input-container>
-
-
+                </div>
+                
+                
                 <md-input-container>
                     <label>Diet Filters</label>
-                    <md-select ng-model="dietFilters" class="selectpicker" multiple data-live-search="true">
+                    <md-select ng-model="dietFilters" class="selectpicker" multiple data-live-search="true" >
                         <md-option ng-repeat="dietFilter in dietFilterOptions" value="{{dietFilter}}">{{dietFilter}}</md-option>
-                    </md-select>
+                    </md-select> 
                 </md-input-container>
-
-                <md-input-container >
+                
+                <br />
+                <md-input-container>
                     <label>Health Filters</label>
                     <md-select ng-model="healthFilters" class="selectpicker" multiple data-live-search="true">
                         <md-option ng-repeat="healthFilter in healthFilterOptions" value="{{healthFilter}}">{{healthFilter}}</md-option>

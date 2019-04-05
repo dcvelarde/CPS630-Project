@@ -1,3 +1,7 @@
+html {
+    font-family: "Avenir Next", Helevetica, sans-serif,Roboto;
+}
+
 body{
     background-image: url("food.jpg");
     height:100%;
@@ -6,7 +10,7 @@ body{
 
 main{
     /*Contains dimensions of login/signup box*/
-    width: 400px;
+    width: 350px;
     height: 420px;
 
     /*Centers the login/signup box*/
@@ -55,14 +59,14 @@ main{
 }
 
 /*Styles text input areas*/
-input{
+/*input{
     width: 250px;
     height: 40px;
     position:relative;
     background: linear-gradient(180deg, white, rgb(240, 179, 179));
     display: inline-block;
     border-radius: 10px;
-}
+}*/
 
 /*Styles select drop down area*/
 select{
@@ -103,8 +107,12 @@ footer{
 
 .banner a {
     float: right;
-    margin-top: 10px;
+    margin-top: 20px;
     padding-right: 20px;
+}
+
+.account{
+    margin-top: 20px;
 }
 
 .banner {
@@ -113,5 +121,19 @@ footer{
     position: fixed;
     width: 100%;
     background-color: #dadddf;
+}
+
+md-input-container label{
+    text-align: left;
+}
+
+md-select{
+    width: 50%;
+}
+.container{
+    margin-bottom: -50px;
+}
+md-input-container label{
+    color: black !important;
 }
 

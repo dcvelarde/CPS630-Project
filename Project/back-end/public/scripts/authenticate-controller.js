@@ -3,6 +3,7 @@ angular.module('recipeModule')
 
 
 function AuthenticateController($rootScope, $scope, $http, $window) {
+
     $scope.loginIsCorrect = true;
     $scope.findUser = function (username, password) {
         var user = {

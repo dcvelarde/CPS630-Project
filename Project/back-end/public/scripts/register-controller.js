@@ -1,4 +1,4 @@
-angular.module('registerModule', [])
+angular.module('registerModule', ['ngMaterial', 'ngMessages'])
     .controller('RegisterController', ['$scope', '$http' , '$window' ,RegisterController]);
 
 function RegisterController($scope,$http,$window) {
