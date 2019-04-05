@@ -125,6 +125,27 @@ app.post("/users/saved",function(req,res) {
    });
 });
 
+// ******* getting user saved recipes *******
+app.post("/getSavedRecipes", function(req,res) {
+    var body = req.body;
+    var userID = body.userID;
+    var query = "SELECT DISTINCT RecipeID FROM UsersSavedRecipes WHERE UserID= " + userID;
+    connection.query(query, function (error, results, fields) {
+       if(error) {
+         res.json({response:[]});
+       }
+       else {
+         var savedRecipeIDs = [];
+         for(var i=0; i <results.length; i++) {
+           var recipeID = results[i]["RecipeID"];
+           savedRecipeIDs[i] = recipeID;
+         }
+         console.log(savedRecipeIDs);
+         res.json({response:savedRecipeIDs})
+       }
+    });
+});
+
 // ******* Get User Ratings by UserID and RecipeIDs *******
 app.get("/reciperating/:userrecipeid", function(req,res) {
    var userRecipeId = JSON.parse(req.params['userrecipeid']);
@@ -177,6 +198,8 @@ app.get("/getAverageRating/:id", function(req,res) {
       }
     });
 });
+
+
 
 // ******* Get List of Recipe IDs within current user's area *******
 app.post("/getPopularRatedRecipes",function(req,res) {

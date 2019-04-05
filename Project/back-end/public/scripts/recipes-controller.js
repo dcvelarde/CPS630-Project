@@ -13,7 +13,6 @@ angular.module('recipeModule')
         $scope.findWithinArea = false;
         $rootScope.doneGettingAvgRatings = true;
         $rootScope.listOfRecipes = [];
-        $scope.hasSavedReceipes = false;
         $rootScope.savedList = [];
         $scope.dietFilters = [];
         $scope.healthFilters = [];
@@ -105,27 +104,27 @@ angular.module('recipeModule')
          }
 
          function filterRecipesByPopularRating() {
-          var dataToSend = {};
-          dataToSend.recipeIDs = Object.keys($rootScope.recipeIDs);
-          dataToSend.userID = $window.sessionStorage.getItem("activeUserId");
-          console.log(dataToSend);
-            $http.post("http://localhost:1121/getPopularRatedRecipes", dataToSend).then(
-              function successCallback(response) {
-                var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
-                console.log(response);
-                var iDs = response["response"];
-                 for(var i = 0; i < $rootScope.listOfRecipes.length;i++) {
-                   var recipeObj = $scope.listOfRecipes[i];
-                   var recipeID = recipeObj.recipe.uri.replace(rQueryPartialParam,"");
-                   if(!iDs.includes(recipeID)){
-                    $rootScope.listOfRecipes.splice(i,1);
-                   }
-                 }
-                },
-              function errorCallback(response) {
-              }
-            );
-         }
+           var dataToSend = {};
+           dataToSend.recipeIDs = Object.keys($rootScope.recipeIDs);
+           dataToSend.userID = $window.sessionStorage.getItem("activeUserId");
+           console.log(dataToSend);
+             $http.post("http://localhost:1121/getPopularRatedRecipes", dataToSend).then(
+               function successCallback(response) {
+                 var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
+                 console.log(response);
+                 var iDs = response["response"];
+                  for(var i = 0; i < $rootScope.listOfRecipes.length;i++) {
+                    var recipeObj = $scope.listOfRecipes[i];
+                    var recipeID = recipeObj.recipe.uri.replace(rQueryPartialParam,"");
+                    if(!iDs.includes(recipeID)){
+                     $rootScope.listOfRecipes.splice(i,1);
+                    }
+                  }
+                 },
+               function errorCallback(response) {
+               }
+             );
+          }
 
          // Needed to decide to order recipes by rating
          function orderByPopRatings() {
@@ -144,7 +143,6 @@ angular.module('recipeModule')
            }
            $http.post("http://localhost:1121/users/saved", JSON.stringify(userSaved)).then(
                 function successCallback(response) {
-                  $rootScope.savedList = response.data.hits;
                   console.log("saved successfully");
                   console.log(response);
                 },
@@ -152,6 +150,32 @@ angular.module('recipeModule')
                   console.log("unable to save");
                 }
              );
+         }
+         /* putting saved recipes into list*/
+         $scope.populateSavedList = function(){
+           $rootScope.savedList = [];
+           var dataToSend = {};
+           dataToSend.userID = $window.sessionStorage.getItem("activeUserId");
+           $http.post("http://localhost:1121/getSavedRecipes", dataToSend).then(
+             function successCallback(response) {
+               var iDs = response.data.response;
+               for (var a = 0; a< iDs.length; a++) {
+                 $http.get("https://api.edamam.com/search?r=http%3A%2F%2Fwww.edamam.com%2Fontologies%2Fedamam.owl%23recipe_" +
+                  iDs[a]+"&app_id="+appID+"&app_key="+appKey).then(
+                   function successCallback(response) {
+                     $rootScope.savedList.push(response.data);
+                   },
+                   function errorCallback(response) {
+                     console.log("unable to retrieve recipe");
+                   }
+                 )
+               }
+               console.log($rootScope.savedList);
+              },
+              function errorCallback(response) {
+                console.log("unable to get list");
+              }
+           );
          }
     }
 
