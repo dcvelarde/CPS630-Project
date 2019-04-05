@@ -27,5 +27,23 @@
           <div ng-if="savedList.length == 0">
               <h3>You have no saved recipes yet!</h3>
           </div>
+          <div ng-show="doneGettingAvgRatings" class="recipeContainer" ng-repeat="recipeObj in listOfRecipes|orderBy:orderByPopRatings()">
+              <h4>{{recipeObj.recipe.label}}</h4>
+              <div style="display:flex;">
+                  <img class="recipeImg" src="{{recipeObj.recipe.image}}"/>
+                  <div class="recipeDetails">
+                      <star-rating-directive user="user" recipeObj="recipeObj"></star-rating-directive>
+                      <br><button ng-click="">Delete</button>
+                      <recipe-average-rating-directive recipeObj="recipeObj"></recipe-average-rating-directive>
+                      <a href="{{recipeObj.recipe.url}}">Click here for instructions</a>
+                      <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
+                      <p>Ingredients:
+                          <ul>
+                              <li ng-repeat="ingredient in recipeObj.recipe.ingredientLines">{{ingredient}}</li>
+                          </ul>
+                      </p>
+                  </div>
+              </div>
+          </div>
           <a href="index2.html">Back</a>
 </body>

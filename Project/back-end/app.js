@@ -108,6 +108,23 @@ app.get("/user/:id", function(req,res) {
   }
 });
 
+// ******* User add to saved recipes page *******
+app.get("/user/saved",function(req,res) {
+  var userSaved = req.body;
+  var sqlInsert = "INSERT INTO UsersSavedRecipes(UserID, RecipeID) VALUES (" + userSaved['userid'] + ", '" +
+   userSaved['recipeid'] + "')";
+   connection.query(sqlInsert, function (error, results, fields) {
+   if(error) {
+      console.log("recipe not saved");
+      res.json({response: "recipe not saved"});
+   }
+   else {
+      console.log("recipe saved");
+      res.json({response: "recipe saved"});
+   }
+   });
+});
+
 // ******* Get User Ratings by UserID and RecipeIDs *******
 app.get("/reciperating/:userrecipeid", function(req,res) {
    var userRecipeId = JSON.parse(req.params['userrecipeid']);

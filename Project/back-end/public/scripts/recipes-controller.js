@@ -133,8 +133,25 @@ angular.module('recipeModule')
           else
             return "";
          }
-    }
 
+         /* adding user saved recipes */
+         $scope.addToSaved = function(recipeObj){
+           var userSaved = {
+             userid: sessionStorage.getItem("activeUserId"),
+             recipeid: recipeObj.recipe.uri
+           }
+           $http.post("http://localhost:1121/users/saved", JSON.stringify(userSaved)).then(
+                function successCallback(response) {
+                  console.log("saved successfully");
+                  console.log(response);
+                },
+                function errorCallback(response) {
+                  console.log("unable to save");
+                }
+             );
+           console.log(recipeObj.recipe.label);
+         }
+    }
 
     /* directive for rating stars */
     var dirapp = angular.module('recipeModule');
