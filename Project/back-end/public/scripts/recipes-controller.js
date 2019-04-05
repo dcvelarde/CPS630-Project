@@ -13,6 +13,7 @@ angular.module('recipeModule')
         $scope.findWithinArea = false;
         $rootScope.doneGettingAvgRatings = true;
         $rootScope.listOfRecipes = [];
+        $scope.hasSavedReceipes = false;
         $rootScope.savedList = [];
         $scope.dietFilters = [];
         $scope.healthFilters = [];
@@ -136,12 +137,14 @@ angular.module('recipeModule')
 
          /* adding user saved recipes */
          $scope.addToSaved = function(recipeObj){
+           var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
            var userSaved = {
              userid: sessionStorage.getItem("activeUserId"),
-             recipeid: recipeObj.recipe.uri
+             recipeid: recipeObj.recipe.uri.replace(rQueryPartialParam,"")
            }
            $http.post("http://localhost:1121/users/saved", JSON.stringify(userSaved)).then(
                 function successCallback(response) {
+                  $rootScope.savedList = response.data.hits;
                   console.log("saved successfully");
                   console.log(response);
                 },
@@ -149,7 +152,6 @@ angular.module('recipeModule')
                   console.log("unable to save");
                 }
              );
-           console.log(recipeObj.recipe.label);
          }
     }
 

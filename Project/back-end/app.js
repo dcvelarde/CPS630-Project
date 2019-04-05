@@ -109,7 +109,7 @@ app.get("/user/:id", function(req,res) {
 });
 
 // ******* User add to saved recipes page *******
-app.get("/user/saved",function(req,res) {
+app.post("/users/saved",function(req,res) {
   var userSaved = req.body;
   var sqlInsert = "INSERT INTO UsersSavedRecipes(UserID, RecipeID) VALUES (" + userSaved['userid'] + ", '" +
    userSaved['recipeid'] + "')";

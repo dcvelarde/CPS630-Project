@@ -27,7 +27,7 @@
           <div ng-if="savedList.length == 0">
               <h3>You have no saved recipes yet!</h3>
           </div>
-          <div ng-show="doneGettingAvgRatings" class="recipeContainer" ng-repeat="recipeObj in listOfRecipes|orderBy:orderByPopRatings()">
+          <div ng-show="doneGettingAvgRatings" class="recipeContainer" ng-repeat="recipeObj in savedList">
               <h4>{{recipeObj.recipe.label}}</h4>
               <div style="display:flex;">
                   <img class="recipeImg" src="{{recipeObj.recipe.image}}"/>
