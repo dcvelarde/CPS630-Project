@@ -13,6 +13,7 @@ function AuthenticateController($rootScope,$scope,$http,$window) {
         function successCallback(response) {
           if (response.data.userid > 0) {
               $window.sessionStorage.setItem('activeUserId',response.data.userid);
+              $window.sessionStorage.setItem('activeUserName',response.data.username);
               $window.sessionStorage.setItem('activeUser',response.data.name);
               $window.sessionStorage.setItem('activeUserCity',response.data.city);
               $window.sessionStorage.setItem('activeUserLevel',response.data.level);

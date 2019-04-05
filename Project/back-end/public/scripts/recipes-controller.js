@@ -26,9 +26,10 @@ angular.module('recipeModule')
         var appID = "4e6ed2f0";
         var appKey = "2b62e270b8ccede3c8380b07051800a6";
 
-        /* placeholder code for variables i need for user ratings */
+        /* user information stored in login */
         $scope.user = $window.sessionStorage.getItem('activeUserId');
         $scope.level = $window.sessionStorage.getItem('activeUserLevel');
+        $scope.name = $window.sessionStorage.getItem('activeUser');
         console.log("user: " + $scope.user);
         console.log("level: " + $scope.level);
 

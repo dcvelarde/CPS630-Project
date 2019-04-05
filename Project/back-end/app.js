@@ -17,6 +17,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  // check if this is ok
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   next();
 });
 
@@ -64,26 +66,46 @@ app.post("/users/login",function(req,res) {
       if(results == undefined) {
          console.log("user not found");
          res.json({userid: -1,
+                   username: '',
                    name: '',
-                   location: 'Toronto',
+                   city: 'Toronto',
                    level: 'expert'});
       }
       else if (results !== undefined && results.length > 0){
           if(userCredentials['password']==results[0]['Password']){
                  console.log("correct password");
                  res.json({userid: results[0]['UserID'],
+                           username: results[0]['Username'],
                            name: results[0]['Name'],
-                           location: results[0]['City'],
+                           city: results[0]['City'],
                            level: results[0]['Level']});
           }
           else{
               console.log("incorrect password");
               res.json({userid: -1,
+                        username: '',
                         name: '',
-                        location: 'Toronto',
+                        city: 'Toronto',
                         level: 'expert'});
            }
        }
+   });
+});
+
+// ******* Update user information *******
+app.put("/updateuser",function(req,res) {
+   var newUserInfo = req.body;
+   var sqlUpdate = "UPDATE Users1 SET Name='" + newUserInfo['name'] + "'" +
+   ", City='" + newUserInfo['city'] + "'" + ", Level='" + newUserInfo['level'] + "'" +
+   " WHERE UserID=" + newUserInfo['userid'];
+
+   connection.query(sqlUpdate, function(err, result) {
+      if(err) {
+         res.json({response: "userinfo was not updated"});
+      }
+      else {
+         res.json({response: "userinfo was updated"});
+      }
    });
 });
 
