@@ -10,6 +10,7 @@ angular.module('recipeModule')
         $scope.searchForRecipes = searchForRecipes;
         $scope.orderByPopRatings = orderByPopRatings;
         $scope.couldNotFindAnyResults = false;
+        $scope.addToSaved = addToSaved;
         $scope.findWithinArea = false;
         $rootScope.doneGettingAvgRatings = true;
         $rootScope.listOfRecipes = [];
@@ -135,7 +136,7 @@ angular.module('recipeModule')
          }
 
          /* adding user saved recipes */
-         $scope.addToSaved = function(recipeObj){
+         function addToSaved(recipeObj){
            var userSaved = {
              userid: sessionStorage.getItem("activeUserId"),
              recipeid: recipeObj.recipe.uri
