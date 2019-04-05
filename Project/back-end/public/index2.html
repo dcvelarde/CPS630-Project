@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <!-- comment for test -->
-
 <head>
     <title>Foodgether</title>
     <link rel="stylesheet" href="styles/main.css">
@@ -36,6 +35,7 @@
 <body ng-app="recipeModule">
     <div class="banner" ng-controller="RecipeController">
         <h1><a href="./index2.html">{{recipeHeading}}</a></h1>
+        <a class="navbar" href="profile.html">Hi, {{firstname}}</a>
         <a href="./login.html">Sign in</a>
         <br>
         
@@ -105,7 +105,7 @@
                     <div class="recipeDetails">
                         <star-rating-directive user="user" recipeObj="recipeObj"></star-rating-directive>
                         <recipe-average-rating-directive recipeObj="recipeObj"></recipe-average-rating-directive>
-                        <a href="{{recipeObj.recipe.url}}">Click here for instructions</a>
+                        <a href="{{recipeObj.recipe.url}}" target="_blank">Click here for instructions</a>
                         <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
                         <p>Ingredients:
                             <ul>

@@ -17,6 +17,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  // check if this is ok
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   next();
 });
 
@@ -42,7 +44,7 @@ app.post("/users/post",function(req,res) {
    var userCredentials = req.body;
    var sqlInsert = "INSERT INTO Users(Username, Password, FirstName, Location, Level) VALUES (" +
       "'" + userCredentials['username'] + "', '" + userCredentials['password'] + "', " +
-      "'" + userCredentials['firstname'] + "', '" + userCredentials['location'] + "', " +
+      "'" + userCredentials['name'] + "', '" + userCredentials['city'] + "', " +
       "'" + userCredentials['level'] + "')";
    connection.query(sqlInsert, function (error, results, fields) {
    if(error) {
@@ -64,26 +66,46 @@ app.post("/users/login",function(req,res) {
       if(results == undefined) {
          console.log("user not found");
          res.json({userid: -1,
+                   username: '',
                    name: '',
-                   location: '',
-                   level: ''});
+                   city: 'Toronto',
+                   level: 'expert'});
       }
       else if (results !== undefined && results.length > 0){
           if(userCredentials['password']==results[0]['Password']){
                  console.log("correct password");
                  res.json({userid: results[0]['UserID'],
+                           username: results[0]['Username'],
                            name: results[0]['FirstName'],
-                           location: results[0]['Location'],
+                           city: results[0]['Location'],
                            level: results[0]['Level']});
           }
           else{
               console.log("incorrect password");
               res.json({userid: -1,
+                        username: '',
                         name: '',
-                        location: '',
-                        level: ''});
+                        city: 'Toronto',
+                        level: 'expert'});
            }
        }
+   });
+});
+
+// ******* Update user information *******
+app.put("/updateuser",function(req,res) {
+   var newUserInfo = req.body;
+   var sqlUpdate = "UPDATE Users SET FirstName='" + newUserInfo['name'] + "'" +
+   ", Location='" + newUserInfo['city'] + "'" + ", Level='" + newUserInfo['level'] + "'" +
+   " WHERE UserID=" + newUserInfo['userid'];
+
+   connection.query(sqlUpdate, function(err, result) {
+      if(err) {
+         res.json({response: "userinfo was not updated"});
+      }
+      else {
+         res.json({response: "userinfo was updated"});
+      }
    });
 });
 
