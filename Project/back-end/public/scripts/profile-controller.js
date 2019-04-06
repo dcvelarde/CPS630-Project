@@ -21,6 +21,7 @@ function ProfileController($rootScope,$scope,$http,$window) {
      $http.put("http://localhost:1121/updateuser", JSON.stringify(newUserInfo)).then(
          function successCallback(response) {
            console.log(response);
+           $window.location.href = './index2.html';
          },
          function errorCallback(response) {
            console.log(response);

@@ -147,6 +147,21 @@ app.post("/users/saved",function(req,res) {
    });
 });
 
+app.post("/users/deleted",function(req,res) {
+  var userDeleted = req.body;
+  var sqlDelete = "DELETE FROM UsersSavedRecipes WHERE UserID=" +  userDeleted['userid'] + " AND RecipeID=\"" + userDeleted['recipeid'] + "\"";
+   connection.query(sqlDelete, function (error, results, fields) {
+   if(error) {
+      console.log("recipe not deleted");
+      res.json({response: "recipe not deleted"});
+   }
+   else {
+      console.log("recipe deleted");
+      res.json({response: "recipe deleted"});
+   }
+   });
+});
+
 // ******* getting user saved recipes *******
 app.post("/getSavedRecipes", function(req,res) {
     var body = req.body;

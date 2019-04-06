@@ -180,6 +180,23 @@ angular.module('recipeModule')
               }
            );
          }
+
+         $scope.removeFromSaved = function(recipeObj) {
+           var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
+           var userDelete = {
+             userid: sessionStorage.getItem("activeUserId"),
+             recipeid: recipeObj[0].uri.replace(rQueryPartialParam,"")
+           }
+           $http.post("http://localhost:1121/users/deleted", JSON.stringify(userDelete)).then(
+                function successCallback(response) {
+                  console.log("deleted successfully");
+                  console.log(response);
+                },
+                function errorCallback(response) {
+                  console.log("unable to delete");
+                }
+             );
+         }
     }
 
     /* directive for rating stars */

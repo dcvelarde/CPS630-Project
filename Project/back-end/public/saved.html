@@ -35,7 +35,7 @@
               <div style="display:flex;">
                   <img class="recipeImg" src="{{recipeObj[0].image}}"/>
                   <div class="recipeDetails">
-                      <br><button ng-click="">Delete</button><br>
+                      <br><button ng-click="removeFromSaved(recipeObj)">Delete</button><br>
                       <a href="{{recipeObj[0].url}}">Click here for instructions</a>
                       <p>Calories: {{recipeObj[0].calories|number:0}}</p>
                       <p>Ingredients:
