@@ -23,8 +23,7 @@
 </html>
 <body ng-app="recipeModule">
   <div class="mainContent" ng-controller="RecipeController">
-      <div class="recipeSearchContainer">
-        <a href="" ng-click="populateSavedList()">View saved recipes</a>
+      <div class="recipeSearchContainer" data-ng-init="populateSavedList()">
           <h1>Foodgether</h1><br>
           <h4>Your saved recipes:</h4><br>
           <div ng-if="savedList.length == 0">

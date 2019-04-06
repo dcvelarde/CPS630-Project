@@ -146,7 +146,6 @@ angular.module('recipeModule')
            $http.post("http://localhost:1121/users/saved", JSON.stringify(userSaved)).then(
                 function successCallback(response) {
                   console.log("saved successfully");
-                  console.log(response);
                 },
                 function errorCallback(response) {
                   console.log("unable to save");
@@ -172,8 +171,6 @@ angular.module('recipeModule')
                    }
                  )
                }
-               console.log($rootScope.savedList);
-               console.log($rootScope.listOfRecipes);
               },
               function errorCallback(response) {
                 console.log("unable to get list");
@@ -181,6 +178,7 @@ angular.module('recipeModule')
            );
          }
 
+         /* delete recipe from saved list*/
          $scope.removeFromSaved = function(recipeObj) {
            var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
            var userDelete = {
@@ -189,8 +187,14 @@ angular.module('recipeModule')
            }
            $http.post("http://localhost:1121/users/deleted", JSON.stringify(userDelete)).then(
                 function successCallback(response) {
+                  for(var i=$rootScope.savedList.length - 1; i >= 0; i--) {
+                    if(recipeObj[0].uri == $rootScope.savedList[i][0].uri) {
+                      $rootScope.savedList.splice(i,1);
+                      console.log("was removed: " + recipeObj[0].label);
+                    }
+                  }
+                  console.log($rootScope.savedList);
                   console.log("deleted successfully");
-                  console.log(response);
                 },
                 function errorCallback(response) {
                   console.log("unable to delete");
