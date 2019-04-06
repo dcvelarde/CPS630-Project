@@ -22,6 +22,10 @@
     </head>
     <body ng-app="recipeModule">
         <div class="mainContent" ng-controller="RecipeController">
+            <nav>
+               <a class="navbar" href="profile.html">Hi, {{name}}</a>
+            </nav>
+
             <div class="recipeSearchContainer">
                 <h1>Foodgether</h1>
                 <br/>
@@ -46,8 +50,8 @@
                 <label>
                    <input type="checkbox" ng-model="displayBasedOnPopRating">
                    Popular Rated Recipes within area
-                </label><br/>
-                <a href="saved.html">View saved recipes</a>
+                </label><br>
+                <a href="saved.html" ng-click="populateSavedList()">View saved recipes</a>
                 <br/><br/><button ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">Find Recipes</button>
             </div>
             <div ng-show="!doneGettingAvgRatings" class="loadingContainer">
@@ -65,8 +69,8 @@
                     <img class="recipeImg" src="{{recipeObj.recipe.image}}"/>
                     <div class="recipeDetails">
                         <star-rating-directive user="user" recipeObj="recipeObj"></star-rating-directive>
-                        <br/><button ng-click="addToSaved(recipeObj)">Save</button>
                         <recipe-average-rating-directive recipeObj="recipeObj"></recipe-average-rating-directive>
+                        <button ng-click="addToSaved(recipeObj)">Save</button><br>
                         <a href="{{recipeObj.recipe.url}}">Click here for instructions</a>
                         <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
                         <p>Ingredients:

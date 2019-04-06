@@ -17,6 +17,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  // check if this is ok
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   next();
 });
 
@@ -42,7 +44,7 @@ app.post("/users/post",function(req,res) {
    var userCredentials = req.body;
    var sqlInsert = "INSERT INTO Users(Username, Password, FirstName, Location, Level) VALUES (" +
       "'" + userCredentials['username'] + "', '" + userCredentials['password'] + "', " +
-      "'" + userCredentials['firstname'] + "', '" + userCredentials['location'] + "', " +
+      "'" + userCredentials['name'] + "', '" + userCredentials['city'] + "', " +
       "'" + userCredentials['level'] + "')";
    connection.query(sqlInsert, function (error, results, fields) {
    if(error) {
@@ -64,26 +66,46 @@ app.post("/users/login",function(req,res) {
       if(results == undefined) {
          console.log("user not found");
          res.json({userid: -1,
-                   name: 'User',
-                   location: 'Canada',
-                   level: 'beginner'});
+                   username: '',
+                   name: '',
+                   city: 'Toronto',
+                   level: 'expert'});
       }
       else if (results !== undefined && results.length > 0){
           if(userCredentials['password']==results[0]['Password']){
                  console.log("correct password");
                  res.json({userid: results[0]['UserID'],
+                           username: results[0]['Username'],
                            name: results[0]['FirstName'],
-                           location: results[0]['Location'],
+                           city: results[0]['Location'],
                            level: results[0]['Level']});
           }
           else{
               console.log("incorrect password");
               res.json({userid: -1,
-                        name: 'User',
-                        location: 'Canada',
-                        level: 'beginner'});
+                        username: '',
+                        name: '',
+                        city: 'Toronto',
+                        level: 'expert'});
            }
        }
+   });
+});
+
+// ******* Update user information *******
+app.put("/updateuser",function(req,res) {
+   var newUserInfo = req.body;
+   var sqlUpdate = "UPDATE Users SET FirstName='" + newUserInfo['name'] + "'" +
+   ", Location='" + newUserInfo['city'] + "'" + ", Level='" + newUserInfo['level'] + "'" +
+   " WHERE UserID=" + newUserInfo['userid'];
+
+   connection.query(sqlUpdate, function(err, result) {
+      if(err) {
+         res.json({response: "userinfo was not updated"});
+      }
+      else {
+         res.json({response: "userinfo was updated"});
+      }
    });
 });
 
@@ -123,6 +145,27 @@ app.post("/users/saved",function(req,res) {
       res.json({response: "recipe saved"});
    }
    });
+});
+
+// ******* getting user saved recipes *******
+app.post("/getSavedRecipes", function(req,res) {
+    var body = req.body;
+    var userID = body.userID;
+    var query = "SELECT DISTINCT RecipeID FROM UsersSavedRecipes WHERE UserID= " + userID;
+    connection.query(query, function (error, results, fields) {
+       if(error) {
+         res.json({response:[]});
+       }
+       else {
+         var savedRecipeIDs = [];
+         for(var i=0; i <results.length; i++) {
+           var recipeID = results[i]["RecipeID"];
+           savedRecipeIDs[i] = recipeID;
+         }
+         console.log(savedRecipeIDs);
+         res.json({response:savedRecipeIDs})
+       }
+    });
 });
 
 // ******* Get User Ratings by UserID and RecipeIDs *******
@@ -177,6 +220,8 @@ app.get("/getAverageRating/:id", function(req,res) {
       }
     });
 });
+
+
 
 // ******* Get List of Recipe IDs within current user's area *******
 app.post("/getPopularRatedRecipes",function(req,res) {

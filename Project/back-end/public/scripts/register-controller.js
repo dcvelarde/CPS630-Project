@@ -2,10 +2,12 @@ angular.module('registerModule', [])
     .controller('RegisterController', ['$scope', '$http' , '$window' ,RegisterController]);
 
 function RegisterController($scope,$http,$window) {
-   $scope.createUser = function(firstname, location, password, username, level) {
+   $scope.cities = ["Toronto", "Ottawa", "Mississauga", "Brampton", "Hamilton",
+      "London", "Markham", "Vaughan", "Kitchener", "Windsor"];
+   $scope.createUser = function(name, city, password, username, level) {
       var user = {
-        firstname: firstname,
-        location:location,
+        name: name,
+        city:city,
         password:password,
         username:username,
         level:level
