@@ -1,4 +1,4 @@
-angular.module('recipeModule')
+angular.module('recipeModule',['ngMaterial', 'ngMessages'])
     .controller('ProfileController', ['$rootScope','$scope', '$http' , '$window',ProfileController]);
 
 
@@ -6,7 +6,8 @@ function ProfileController($rootScope,$scope,$http,$window) {
    $scope.cities = ["Toronto", "Ottawa", "Mississauga", "Brampton", "Hamilton",
       "London", "Markham", "Vaughan", "Kitchener", "Windsor"];
    $scope.levels = ["beginner", "intermediate", "expert"];
-
+   $scope.recipeHeading="Foodgether";    
+    
    $scope.user = $window.sessionStorage.getItem('activeUserId');
    $scope.username = $window.sessionStorage.getItem('activeUserName');
    $scope.userlevel = $window.sessionStorage.getItem('activeUserLevel');

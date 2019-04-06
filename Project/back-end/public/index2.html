@@ -35,15 +35,14 @@
 <body ng-app="recipeModule">
     <div class="banner" ng-controller="RecipeController">
         <h1><a href="./index2.html">{{recipeHeading}}</a></h1>
-        <a class="navbar" href="profile.html">Hi, {{firstname}}</a>
-        <a href="./login.html">Sign in</a>
-        <br>
-        
+        <a ng-show="{{checkiflogin}}" class="navbar" href="profile.html">Hi, {{firstname}}</a>
+        <a class="signin" ng-hide="{{checkiflogin}}" href="./login.html">Sign in</a>
+        <br> 
     </div>
+    
     <div class="mainContent" ng-controller="RecipeController">
         <div class="left">
             <div class="recipeSearchContainer">
-                
                 <div class="container1">
                     <md-input-container>
                     <label>Ingredients</label>
@@ -116,7 +115,7 @@
                 </div>
             </div>
         </div>
-        <footer> Foodgether team</footer>
+        <footer>© Foodgether team</footer>
     </div>
 
 
@@ -144,6 +143,7 @@
         $(".section1").hide();
     });
 
+    
 </script>
 
 

@@ -107,8 +107,14 @@ footer{
 
 .banner a {
     float: right;
-    margin-top: 20px;
     padding-right: 20px;
+    text-decoration: none !important;
+    color: #ff3434;
+}
+
+.banner a:hover{
+    text-decoration: none;
+    color: #ff3434;
 }
 
 .account{
@@ -131,9 +137,61 @@ md-select{
     width: 50%;
 }
 .container{
-    margin-bottom: -50px;
+    margin-bottom: -55px;
 }
 md-input-container label{
     color: black !important;
 }
 
+.city{
+    width: 300px;
+    text-align: left;
+    margin-left: 80px;
+    color: black !important;
+}
+
+
+.level{
+    width: 300px;
+    text-align: left;
+    margin-left: 80px;
+    color: black !important;
+}
+
+.profile{
+     width: 350px;
+    height: 420px;
+
+    /*Centers the login/signup box*/
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    /*If you change the dimensions of the box, the following margin values
+    must be equal to HALF of the 2 values above (centering puroposes)*/
+    margin: -210px 0 0 -200px;
+
+    /*Adds color gradient and shadowing to login/signup box*/
+    background: linear-gradient(180deg, darkorange, rgb(255, 255, 255));
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.33), 0 3px 6px rgba(0, 0, 0, 0.67);
+}
+
+.send {
+    margin-top: -30px;
+}
+.username{
+   margin-top: 30px;
+}
+.password{
+    margin-top: -15px;
+}
+
+/*style for profile.html*/
+.profile{
+    text-align: center;
+}
+#username{
+   
+    padding: 20px;
+}

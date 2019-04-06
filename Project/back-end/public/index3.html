@@ -29,13 +29,12 @@
 
 
 <body ng-app="registerModule">
-    <div class="banner" style="color: red">
-        <a id="backArrow" style="float:left" href="login.html">&#8629</a>
-        <div style="font-size: 30px; float: left">Foodgether</div>
+    <div class="banner" ng-controller="RegisterController">
+       <h1><a href="./index2.html">{{recipeHeading}}</a></h1>
     </div>
 
     <main id="registerMain">
-        <h2 id="centerTitle" style="margin-bottom: 15px;"> Register </h2>
+        <h2 id="centerTitle" style="margin-bottom: 15px; padding-top:20px;"> Register </h2>
 
 
         <section ng-controller="RegisterController">
@@ -62,16 +61,25 @@
                 </div>
                 <br />
                 
-                     <label>City:</label>
-                <select ng-options="city for city in cities" ng-model="city"></select>
-                <br /><br/>
-                <label>Level:</label>
-                <select name="level" ng-model="level">
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="expert" selected>Expert</option>
-                </select>
-                <br /><br /><input type="submit" value="Send">
+                <md-input-container class="city">
+                    <label>City</label>
+                <md-select  ng-model="city" >
+                    <md-option ng-repeat="city in cities" value="{{city}}">{{city}}</md-option>
+                    </md-select>
+                </md-input-container>
+                
+                <br />
+                <md-input-container class="level">
+                <label>Level</label>
+                <md-select name="level" ng-model="level">
+                    <md-option ng-repeat="level in levels" value="{{level}}">{{level}}</md-option>
+                </md-select>
+                </md-input-container>
+                
+                <br />
+                <md-button class="md-raised md-warn" type="submit" value="Send">Send</md-button>
+                
+                
             </form>
         </section>
     </main>
