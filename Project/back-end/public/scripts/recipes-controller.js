@@ -45,7 +45,7 @@ angular.module('recipeModule')
               healthFilterParams = healthFilterParams+"&health="+healthFilters[i];
             }
             $http.get("https://api.edamam.com/search?q="+queryIngredients+dietFilterParams+healthFilterParams
-              +"&app_id="+appID+"&app_key="+appKey+"&to=100").then(
+              +"&app_id="+appID+"&app_key="+appKey+"&to=20").then(
               function successCallback(response) {
                 $scope.response = response;
                 // changing listofrecipes so won't update right away before filtered by level
@@ -142,9 +142,11 @@ angular.module('recipeModule')
     var dirapp = angular.module('recipeModule');
     dirapp.directive("starRatingDirective", recipeRatings);
     dirapp.directive("recipeAverageRatingDirective",recipeAverageRating);
+    dirapp.directive("nutrientsInfoDirective",nutrientsInfo);
 
     recipeRatings.$inject = ['$http'];
     recipeAverageRating.$inject = ['$http','$rootScope'];
+    nutrientsInfo.$inject = ['$http','$rootScope'];
 
     function recipeRatings($http) {
           var directive = { };
@@ -254,5 +256,58 @@ angular.module('recipeModule')
           };
 
           return directive;
+    }
 
+        function nutrientsInfo($http,$rootScope) {
+          
+          var directive = { };
+          directive.restrict = 'E';
+          directive.template = "<div id=\"nutrients_graph\"></div>";
+
+          directive.link = function(scope, elements, attr) {
+             scope.getNutrients = getNutrients;
+
+             function getNutrients() {
+                var nutrientsInfo = scope.recipeObj.recipe.totalDaily;
+                var servings = scope.recipeObj.recipe.yield;
+
+                var graphLabels = [["Nutrients","% Daily Value"]];
+                var dailyValues = [];
+                var nutrients = Object.keys(nutrientsInfo);
+
+                for(var i=0;i < nutrients.length;i++) {
+                  var data = [];
+                  var key = nutrients[i];
+                  var nutrient = nutrientsInfo[key];
+                  data[0] = nutrient.label;
+                  data[1] = Math.round(nutrient.quantity / servings);
+                  dailyValues[i] = data;
+                }
+
+                var result = graphLabels.concat(dailyValues);
+                // console.log("Result: ",result);
+
+                var graphData = google.visualization.arrayToDataTable(result);
+
+                var options = {
+                  title: 'Nutrition Facts',
+                  legend:'none',
+                  chartArea: {width: '50%'},
+                  hAxis: {
+                    title: 'Nutrients',
+                    minValue: 0,
+                    maxValue:100
+                  },
+                  vAxis: {
+                    title: '% Daily Value'
+                  }
+                };
+
+                var chart = new google.visualization.BarChart(document.getElementById('nutrients_graph'));
+                chart.draw(graphData, options);
+             }
+             scope.getNutrients();
+          };
+
+          return directive;
     }
