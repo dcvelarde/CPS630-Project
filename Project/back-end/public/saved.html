@@ -24,7 +24,6 @@
 <body ng-app="recipeModule">
   <div class="mainContent" ng-controller="RecipeController">
       <div class="recipeSearchContainer">
-        <div>{{savedList[0]}}</div><br>
         <a href="" ng-click="populateSavedList()">View saved recipes</a>
           <h1>Foodgether</h1><br>
           <h4>Your saved recipes:</h4><br>
@@ -32,16 +31,16 @@
               <h3>You have no saved recipes yet!</h3>
           </div>
           <div class="recipeContainer" ng-repeat="recipeObj in savedList">
-              <h4>{{recipeObj.recipe.label}}</h4>
+              <h4>{{recipeObj[0].label}}</h4>
               <div style="display:flex;">
-                  <img class="recipeImg" src="{{recipeObj.recipe.image}}"/>
+                  <img class="recipeImg" src="{{recipeObj[0].image}}"/>
                   <div class="recipeDetails">
-                      <br><button ng-click="">Delete</button>
-                      <a href="{{recipeObj.recipe.url}}">Click here for instructions</a>
-                      <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
+                      <br><button ng-click="">Delete</button><br>
+                      <a href="{{recipeObj[0].url}}">Click here for instructions</a>
+                      <p>Calories: {{recipeObj[0].calories|number:0}}</p>
                       <p>Ingredients:
                           <ul>
-                              <li ng-repeat="ingredient in recipeObj.recipe.ingredientLines">{{ingredient}}</li>
+                              <li ng-repeat="ingredient in recipeObj[0].ingredientLines">{{ingredient}}</li>
                           </ul>
                       </p>
                   </div>

@@ -57,7 +57,6 @@ angular.module('recipeModule')
                    if($scope.displayBasedOnPopRating){
                     filterRecipesByPopularRating();
                     }
-                  console.log($rootScope.listOfRecipes);
                 }
                 else
                   $scope.couldNotFindAnyResults = true;
@@ -171,6 +170,7 @@ angular.module('recipeModule')
                  )
                }
                console.log($rootScope.savedList);
+               console.log($rootScope.listOfRecipes);
               },
               function errorCallback(response) {
                 console.log("unable to get list");
