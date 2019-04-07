@@ -63,7 +63,7 @@ app.post("/users/login",function(req,res) {
    var userCredentials = req.body;
    var sqlSelect = "SELECT * FROM Users WHERE Username = '" + userCredentials['username'] + "'";
    connection.query(sqlSelect, function (error, results, fields) {
-      if(results == undefined) {
+      if(results == undefined || results.length == 0) {
          console.log("user not found");
          res.json({userid: -1,
                    username: '',
