@@ -1,1 +1,1 @@
-angular.module('recipeModule', []);
+angular.module('recipeModule', ['ngMaterial', 'ngMessages']);

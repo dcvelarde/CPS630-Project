@@ -40,7 +40,7 @@
 <body ng-app="recipeModule">
     <div class="banner" ng-controller="RecipeController">
         <h1><a href="./index2.html">{{recipeHeading}}</a></h1>
-        <a ng-show="{{checkiflogin}}" class="navbar" href="profile.html">Hi, {{firstname}}</a>
+        <a ng-show="{{checkiflogin}}" class="navbar" href="./profile.html">Hi, {{firstname}}</a>
         <a class="signin" ng-hide="{{checkiflogin}}" href="./login.html">Sign in</a>
         <br>
     </div>
@@ -78,8 +78,10 @@
                 <md-checkbox md-no-ink="" aria-label="Checkbox No Ink" ng-model="displayBasedOnPopRating" class="md-primary">Popular Rated Recipes within area</md-checkbox>
 
 
-                <a href="saved.html">View saved recipes</a>
-                <button class="Find" ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">FIND RECIPES</button>
+               
+                
+                <button class="Find" ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">Find Recipes</button>
+                 <a class="viewSaved "ng-show="{{checkiflogin}}" href="saved.html"><button class="Find">View Saved Recipes</button></a>
             </div>
         </div>
 
@@ -104,8 +106,11 @@
                     <div class="recipeDetails">
                         <star-rating-directive user="user" recipeObj="recipeObj"></star-rating-directive>
                         <recipe-average-rating-directive recipeObj="recipeObj"></recipe-average-rating-directive>
-                        <button ng-click="addToSaved(recipeObj)" ng-controller="SavedController">Save</button><br>
-                        <a href="{{recipeObj.recipe.url}}">Click here for instructions</a>
+                        <button class="Find" ng-click="addToSaved(recipeObj)" ng-controller="SavedController">Save</button>
+                        <br>
+                        
+                        
+                        <a  href="{{recipeObj.recipe.url}}">Click here for instructions</a>
                         <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
                         <p>Ingredients:
                             <ul>

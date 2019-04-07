@@ -5,8 +5,19 @@ function SavedController($rootScope,$scope,$http,$window) {
         $rootScope.savedList = [];
         var appID = "4e6ed2f0";
         var appKey = "2b62e270b8ccede3c8380b07051800a6";
-
+    
+        /*check if login, if login, display use first name*/
+        $scope.firstname = $window.sessionStorage.getItem('activeUser');
+        $scope.checkiflogin = function checkiflogin(){
+        if($window.sessionStorage.length!= 0)
+            return  true;
+        else
+           return  false;
+    }
+    
+    
         /* adding user saved recipes */
+        $scope.recipeHeading = "Foodgether";
         $scope.addToSaved = function(recipeObj){
           var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
           var userSaved = {

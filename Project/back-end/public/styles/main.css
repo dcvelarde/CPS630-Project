@@ -31,6 +31,7 @@ label {
     padding: 6px 20px;
     text-decoration: none;
     text-shadow: 0px 1px 0px #ffffff;
+    margin-top: 10px;
 }
 
 .Find:hover {
@@ -239,9 +240,19 @@ star-rating-directive {
     padding: 10px;
 }
 
+.recipeContainer1{
+    width: 100%;
+    padding: 10px;
+}
+
 @media (min-width: 600px) {
     .recipeContainer {
         width: 100%;
+        padding: 10px;
+    }
+    .recipeContainer1{
+        float: left;
+        width:50%;
         padding: 10px;
     }
 
@@ -261,6 +272,32 @@ star-rating-directive {
 
 .signin{
    padding-top:15px;
+}
+
+.viewSaved{
+    color: black;
+    
+}
+
+.viewSaved:hover{
+    text-decoration: none;
+    color: black;
+}
+
+#back{
+    margin-left: 85%;
+    padding: -20px;
+}
+
+#h3{
+   padding-top: 10px;
+   margin-left: 10px;
+}
+
+#h4{
+   padding-top: 60px;
+   margin-left: 10px;
+    width: 50%;
 }
 
 
