@@ -127,6 +127,7 @@ footer{
     position: fixed;
     width: 100%;
     background-color: #dadddf;
+    z-index: 999;
 }
 
 md-input-container label{
