@@ -43,8 +43,10 @@
             <h1><a href="./index2.html">{{recipeHeading}}</a></h1>
             <span class="mostPopularRecipeNavItem" ng-click="goToMostPopPage()">Most Popular Recipes</span>
         </div>
+        <a class="navbar" href="login.html" ng-click="SignUserOut()">Sign out</a>
         <a ng-show="{{checkiflogin}}" class="navbar" href="profile.html">Hi, {{firstname}}</a>
-        <a class="signin" ng-hide="{{checkiflogin}}" href="./login.html">Sign in</a>
+        <!-- <a class="signin" ng-hide="{{checkiflogin}}" href="./login.html">Sign in</a> -->
+
         <br>
     </div>
 

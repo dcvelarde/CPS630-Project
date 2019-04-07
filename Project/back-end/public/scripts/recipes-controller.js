@@ -40,6 +40,7 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
     console.log("level: " + $scope.level);
 
     $scope.checkiflogin= checkiflogin();
+    $scope.SignUserOut = SignUserOut;
 
     function checkiflogin(){
         if($window.sessionStorage.length!= 0)
@@ -47,6 +48,14 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
         else
            return  false;
     }
+
+      function SignUserOut() {
+         $window.sessionStorage.removeItem('activeUserId');
+         $window.sessionStorage.removeItem('activeUserName');
+         $window.sessionStorage.removeItem('activeUser');
+         $window.sessionStorage.removeItem('activeUserCity');
+         $window.sessionStorage.removeItem('activeUserLevel');
+      }
 
     function searchForRecipes(queryIngredients, dietFilters, healthFilters) {
         $rootScope.doneGettingAvgRatings = false;
