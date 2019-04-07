@@ -39,8 +39,11 @@
 
 <body ng-app="recipeModule">
     <div class="banner" ng-controller="RecipeController">
-        <h1><a href="./index2.html">{{recipeHeading}}</a></h1>
-        <a ng-show="{{checkiflogin}}" class="navbar" href="./profile.html">Hi, {{firstname}}</a>
+        <div>
+            <h1><a href="./index2.html">{{recipeHeading}}</a></h1>
+            <span class="mostPopularRecipeNavItem" ng-click="goToMostPopPage()">Most Popular Recipes</span>
+        </div>
+        <a ng-show="{{checkiflogin}}" class="navbar" href="profile.html">Hi, {{firstname}}</a>
         <a class="signin" ng-hide="{{checkiflogin}}" href="./login.html">Sign in</a>
         <br>
     </div>
@@ -67,6 +70,21 @@
                     <label>Health Filters</label>
                     <md-select ng-model="healthFilters" class="selectpicker" multiple data-live-search="true">
                         <md-option ng-repeat="healthFilter in healthFilterOptions" value="{{healthFilter}}">{{healthFilter}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <br />
+                <md-input-container>
+                    <label>Dish Type</label>
+                    <md-select ng-model="dishTypeValue" class="selectpicker">
+                        <md-option ng-repeat="dishType in dishTypeOptions" value="{{dishType}}">{{dishType}}</md-option>
+                    </md-select>
+                </md-input-container>
+
+                <br />
+                <md-input-container>
+                    <label>Cuisine Type</label>
+                    <md-select ng-model="cuisineTypeValue" class="selectpicker">
+                        <md-option ng-repeat="cuisineType in cuisineTypeOptions" value="{{cuisineType}}">{{cuisineType}}</md-option>
                     </md-select>
                 </md-input-container>
 

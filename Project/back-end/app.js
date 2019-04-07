@@ -47,7 +47,7 @@ app.post("/users/post",function(req,res) {
       "'" + userCredentials['name'] + "', '" + userCredentials['city'] + "', " +
       "'" + userCredentials['level'] + "')";
    connection.query(sqlInsert, function (error, results, fields) {
-   if(error) {
+   if(error || results == undefined) {
       console.log("user not created");
       res.json({response: "user not created"});
    }
@@ -240,7 +240,19 @@ app.get("/getAverageRating/:id", function(req,res) {
     });
 });
 
-
+// ******* Get All Time Popular Rated Recipes *******
+app.get("/getMostPopularRecipes", function(req,res) {
+    var query = "SELECT RecipeID,Round(AVG(Rating),2) AS averageRating FROM UserRecipeRatings"
+    +" GROUP BY RecipeID ORDER BY averageRating DESC"+
+    " LIMIT 20";
+    connection.query(query, function(err, rows, fields) {
+      if(rows !== undefined)
+        res.json({response:rows});
+      else{
+        res.json({response:[]});
+      }
+    });
+});
 
 // ******* Get List of Recipe IDs within current user's area *******
 app.post("/getPopularRatedRecipes",function(req,res) {
