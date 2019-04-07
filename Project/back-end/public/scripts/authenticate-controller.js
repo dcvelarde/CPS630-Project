@@ -31,5 +31,6 @@ function AuthenticateController($rootScope,$scope,$http,$window) {
 
     function loginError() {
         $scope.loginIsCorrect = false;
+        alert("Incorrect username or password.");
     }
 }
