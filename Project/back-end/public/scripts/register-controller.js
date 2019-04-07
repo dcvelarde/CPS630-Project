@@ -4,7 +4,7 @@ angular.module('registerModule', ['ngMaterial', 'ngMessages'])
 function RegisterController($scope,$http,$window) {
    $scope.cities = ["Toronto", "Ottawa", "Mississauga", "Brampton", "Hamilton",
       "London", "Markham", "Vaughan", "Kitchener", "Windsor"];
-    $scope.levels = ["Beginner","Intermediate","Expert"];
+    $scope.levels = ["beginner","intermediate","expert"];
     $scope.recipeHeading="Foodgether";
    $scope.createUser = function(name, city, password, username, level) {
       var user = {
