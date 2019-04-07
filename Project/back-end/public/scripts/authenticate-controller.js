@@ -1,10 +1,9 @@
-
-angular.module('recipeModule')
-.controller('AuthenticateController', ['$rootScope','$scope', '$http' , '$window' ,AuthenticateController]);
-
+angular.module('recipeModule',['ngMaterial', 'ngMessages'])
+    .controller('AuthenticateController', ['$rootScope', '$scope', '$http', '$window', AuthenticateController]);
 
 function AuthenticateController($rootScope,$scope,$http,$window) {
-   $scope.loginIsCorrect = true;
+    $scope.recipeHeading="Foodgether";
+    $scope.loginIsCorrect = true;
     $scope.findUser = function(username, password) {
      var user = {
        username:username,
@@ -27,9 +26,10 @@ function AuthenticateController($rootScope,$scope,$http,$window) {
         function errorCallback(response) {
           loginError();
         }
-    );
-   }
-   function loginError() {
+        );
+    }
+
+    function loginError() {
         $scope.loginIsCorrect = false;
-   }
+    }
 }

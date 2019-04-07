@@ -1,34 +1,90 @@
 <!DOCTYPE html>
+
 <head>
-   <title>Sign Up</title>
-   <link rel="stylesheet" href="styles/main.css">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-   <!-- Latest compiled and minified CSS -->
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
-   <!-- Latest compiled and minified JavaScript -->
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="styles/secondary.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/register-controller.js"></script>
 </head>
 
+
 <body ng-app="registerModule">
-  <h1>Sign Up</h1>
-   <script src="scripts/angular.min.js"></script>
-   <script src="scripts/register-controller.js"></script>
-   <section ng-controller="RegisterController">
-      <form ng-submit="createUser(name, city, password, username, level)">
-         Name: <input type="text" ng-model="name" name="name">
-         <br/><br/>City: <select ng-options="city for city in cities" ng-model="city"></select>
-         <br/><br/>Username: <input type="text" ng-model="username" name="username">
-         <br/><br/>Password: <input type="password" ng-model="password" name="password">
-         <br/><br/>Level: <select name="level" ng-model="level">
-              <option value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="expert" selected>Expert</option>
-            </select>
-         <br/><br/><input type="submit" value="Send">
-      </form>
-   </section>
+    <div class="banner" ng-controller="RegisterController">
+       <h1><a href="./index2.html">{{recipeHeading}}</a></h1>
+    </div>
+
+    <main id="registerMain">
+        <h2 id="centerTitle" style="margin-bottom: 15px; padding-top:20px;"> Register </h2>
+
+
+        <section ng-controller="RegisterController">
+            <form id="center" ng-submit="createUser(name, city, password, username, level)">
+                <div class="container">
+                <md-input-container>
+                    <label>Name</label>
+                    <input type="text" ng-model="name" name="name">
+                </md-input-container>
+                </div>
+                <br/>
+                <div class="container">
+                    <md-input-container>
+                    <input type="text" placeholder=" Username" ng-model="username" name="username">
+                    <br />
+                    </md-input-container>
+                </div>
+                
+                <br/>
+                 <div class="container">
+                <md-input-container>
+                    <input type="password" placeholder=" Password" ng-model="password" name="password">
+                </md-input-container>
+                </div>
+                <br />
+                
+                <md-input-container class="city">
+                    <label>City</label>
+                <md-select  ng-model="city" >
+                    <md-option ng-repeat="city in cities" value="{{city}}">{{city}}</md-option>
+                    </md-select>
+                </md-input-container>
+                
+                <br />
+                <md-input-container class="level">
+                <label>Level</label>
+                <md-select name="level" ng-model="level">
+                    <md-option ng-repeat="level in levels" value="{{level}}">{{level}}</md-option>
+                </md-select>
+                </md-input-container>
+                
+                <br />
+                <md-button class="md-raised md-warn" type="submit" value="Send">Send</md-button>
+                
+                
+            </form>
+        </section>
+    </main>
 </body>
+
+<footer> © Foodgether team </footer>
+
 </html>

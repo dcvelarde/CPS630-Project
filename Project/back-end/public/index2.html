@@ -1,69 +1,99 @@
 <!DOCTYPE html>
 <!-- comment for test -->
-    <head>
-        <title>Foodgether</title>
-        <link rel="stylesheet" href="styles/main.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-          <!-- needed for rating icon -->
-          <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
-          <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+<head>
+    <title>Foodgether</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- needed for rating icon -->
+    <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
-<script src="scripts/angular.min.js"></script>
-<script src="scripts/recipeModule.js"></script>
-<script src="scripts/recipes-controller.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
 
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
 
-<!-- Google Charts files for displaying nutrients info -->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" src="scripts/chart-demo.js"></script>
+    <!-- Google Charts files for displaying nutrients info -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="scripts/chart-demo.js"></script>
 
-<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/i18n/defaults-*.min.js"></script> -->
-    </head>
-    <body ng-app="recipeModule">
-        <div class="mainContent" ng-controller="RecipeController">
-            <nav>
-               <a class="navbar" href="profile.html">Hi, {{name}}</a>
-            </nav>
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
 
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/recipeModule.js"></script>
+    <script src="scripts/recipes-controller.js"></script>
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/i18n/defaults-*.min.js"></script> -->
+</head>
+
+<body ng-app="recipeModule">
+    <div class="banner" ng-controller="RecipeController">
+        <h1><a href="./index2.html">{{recipeHeading}}</a></h1>
+        <a ng-show="{{checkiflogin}}" class="navbar" href="profile.html">Hi, {{firstname}}</a>
+        <a class="signin" ng-hide="{{checkiflogin}}" href="./login.html">Sign in</a>
+        <br> 
+    </div>
+    
+    <div class="mainContent" ng-controller="RecipeController">
+        <div class="left">
             <div class="recipeSearchContainer">
-                <h1>Foodgether</h1>
-                <br/>
-                <label>Ingredients</label><br/><input placeholder="Enter ingredients" ng-model="queryIngredients" type="text"/>
-
-                <br/><br/><label>Diet Filters</label><br/><select ng-model="dietFilters" class="selectpicker" multiple data-live-search="true">
-                  <option ng-repeat="dietFilter in dietFilterOptions">{{dietFilter}}</option>
-                </select>
-                <br/><label>Health Filters</label><br/><select ng-model="healthFilters" class="selectpicker" multiple data-live-search="true">
-                  <option ng-repeat="healthFilter in healthFilterOptions">{{healthFilter}}</option>
-                </select>
+                <div class="container1">
+                    <md-input-container>
+                    <label>Ingredients</label>
+                    <div data-tip="Enter an space followed by another ingredient">
+                        <input ng-model="queryIngredients" type="text" />
+                    </div>
+                </md-input-container>
+                </div>
+                
+                
+                <md-input-container>
+                    <label>Diet Filters</label>
+                    <md-select ng-model="dietFilters" class="selectpicker" multiple data-live-search="true" >
+                        <md-option ng-repeat="dietFilter in dietFilterOptions" value="{{dietFilter}}">{{dietFilter}}</md-option>
+                    </md-select> 
+                </md-input-container>
+                
+                <br />
+                <md-input-container>
+                    <label>Health Filters</label>
+                    <md-select ng-model="healthFilters" class="selectpicker" multiple data-live-search="true">
+                        <md-option ng-repeat="healthFilter in healthFilterOptions" value="{{healthFilter}}">{{healthFilter}}</md-option>
+                    </md-select>
+                </md-input-container>
 
                 <!-- adding check box for displaying based on user level -->
-                <br/><br/>
-                <label>
-                   <input type="checkbox" ng-model="displayBasedOnLevel">
-                   Display recipes based on cooking level
-                </label>
+                <br /><br />
+                <md-checkbox md-no-ink="" aria-label="Checkbox No Ink" ng-model="displayBasedOnLevel" class="md-primary">Display recipes based on cooking level</md-checkbox>
 
                 <!-- adding check box for displaying based on average recipe rating -->
-                <br/>
-                <label>
-                   <input type="checkbox" ng-model="displayBasedOnPopRating">
-                   Popular Rated Recipes within area
-                </label><br>
+                <md-checkbox md-no-ink="" aria-label="Checkbox No Ink" ng-model="displayBasedOnPopRating" class="md-primary">Popular Rated Recipes within area</md-checkbox>
+
+
                 <a href="saved.html" ng-click="populateSavedList()">View saved recipes</a>
-                <br/><br/><button ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">Find Recipes</button>
+                <button class="Find" ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">FIND RECIPES</button>
             </div>
+        </div>
+
+
+        <div class="right">
+            <section class="section1">
+                <div class="beignning"></div>
+            </section>
             <div ng-show="!doneGettingAvgRatings" class="loadingContainer">
                 <span>Searching for Recipes</span>
                 <div class="loadingContainerImage">
-                    <img src="pictures/loading-icon.gif"/>
+                    <img class="loadicon" src="pictures/loading-icon.gif" />
                 </div>
             </div>
             <div ng-if="listOfRecipes.length == 0 && couldNotFindAnyResults">
@@ -72,7 +102,7 @@
             <div ng-show="doneGettingAvgRatings" class="recipeContainer" ng-repeat="recipeObj in listOfRecipes|orderBy:orderByPopRatings()">
                 <h4>{{recipeObj.recipe.label}}</h4>
                 <div style="display:flex;">
-                    <img class="recipeImg" src="{{recipeObj.recipe.image}}"/>
+                    <img class="recipeImg" src="{{recipeObj.recipe.image}}" />
                     <div class="recipeDetails">
                         <star-rating-directive user="user" recipeObj="recipeObj"></star-rating-directive>
                         <recipe-average-rating-directive recipeObj="recipeObj"></recipe-average-rating-directive>
@@ -90,5 +120,37 @@
                 </div>
             </div>
         </div>
-    </body>
+        <footer>© Foodgether team</footer>
+    </div>
+
+
+</body>
+
+
+<script type="text/javascript">
+    var phrases = [
+        'Eat and drink',
+        'Deliciousness jumping into the mouth',
+        'Stop, eat and go!',
+        'Eat and dream',
+        'The pleasure of variety on your plate',
+        'We listen to the food'
+    ];
+
+    var scripts = document.getElementsByClassName('beignning');
+    var this_script = scripts[scripts.length - 1];
+    this_script.parentNode.replaceChild(document.createTextNode(phrases[Math.floor(Math.random() * phrases.length)]), this_script);
+
+</script>
+
+<script>
+    $(".Find").click(function() {
+        $(".section1").hide();
+    });
+
+    
+</script>
+
+
+
 </html>
