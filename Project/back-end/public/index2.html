@@ -32,6 +32,7 @@
     <script src="scripts/angular.min.js"></script>
     <script src="scripts/recipeModule.js"></script>
     <script src="scripts/recipes-controller.js"></script>
+    <script src="scripts/saved-controller.js"></script>
     <!-- (Optional) Latest compiled and minified JavaScript translation files -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/i18n/defaults-*.min.js"></script> -->
 </head>
@@ -41,9 +42,9 @@
         <h1><a href="./index2.html">{{recipeHeading}}</a></h1>
         <a ng-show="{{checkiflogin}}" class="navbar" href="profile.html">Hi, {{firstname}}</a>
         <a class="signin" ng-hide="{{checkiflogin}}" href="./login.html">Sign in</a>
-        <br> 
+        <br>
     </div>
-    
+
     <div class="mainContent" ng-controller="RecipeController">
         <div class="left">
             <div class="recipeSearchContainer">
@@ -55,15 +56,15 @@
                     </div>
                 </md-input-container>
                 </div>
-                
-                
+
+
                 <md-input-container>
                     <label>Diet Filters</label>
                     <md-select ng-model="dietFilters" class="selectpicker" multiple data-live-search="true" >
                         <md-option ng-repeat="dietFilter in dietFilterOptions" value="{{dietFilter}}">{{dietFilter}}</md-option>
-                    </md-select> 
+                    </md-select>
                 </md-input-container>
-                
+
                 <br />
                 <md-input-container>
                     <label>Health Filters</label>
@@ -80,7 +81,7 @@
                 <md-checkbox md-no-ink="" aria-label="Checkbox No Ink" ng-model="displayBasedOnPopRating" class="md-primary">Popular Rated Recipes within area</md-checkbox>
 
 
-                <a href="saved.html" ng-click="populateSavedList()">View saved recipes</a>
+                <a href="saved.html">View saved recipes</a>
                 <button class="Find" ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">FIND RECIPES</button>
             </div>
         </div>
@@ -106,7 +107,7 @@
                     <div class="recipeDetails">
                         <star-rating-directive user="user" recipeObj="recipeObj"></star-rating-directive>
                         <recipe-average-rating-directive recipeObj="recipeObj"></recipe-average-rating-directive>
-                        <button ng-click="addToSaved(recipeObj)">Save</button><br>
+                        <button ng-click="addToSaved(recipeObj)" ng-controller="SavedController">Save</button><br>
                         <a href="{{recipeObj.recipe.url}}">Click here for instructions</a>
                         <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
                         <p>Ingredients:
@@ -148,7 +149,7 @@
         $(".section1").hide();
     });
 
-    
+
 </script>
 
 
