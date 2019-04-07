@@ -82,14 +82,18 @@ angular.module('recipeModule')
          /* function for filtering recipes based on user level */
          function filterRecipesByLevel() {
             var maxNumIngr;
+            var minNumIngr;
             switch($scope.level) {
                case "beginner":
-                  maxNumIngr = 4;
+                  minNumIngr = 0;
+                  maxNumIngr = 3;
                   break;
                case "intermediate":
-                  maxNumIngr = 7;
+                  minNumIngr = 4;
+                  maxNumIngr = 6;
                   break;
                case "expert":
+                  minNumIngr = 7;
                   maxNumIngr = 50; // basically no max
                   break;
             }
@@ -98,7 +102,7 @@ angular.module('recipeModule')
               var recipeObj = $scope.listOfRecipes[i];
               var recipeID = recipeObj.recipe.uri.replace(rQueryPartialParam,"");
                var numOfIngr = recipeObj.recipe.ingredientLines.length;
-                  if(numOfIngr > maxNumIngr){
+                  if(numOfIngr < minNumIngr || numOfIngr > maxNumIngr){
                      $rootScope.listOfRecipes.splice(i,1)
                      delete $rootScope.recipeIDs[recipeID];
                   }
@@ -259,7 +263,7 @@ angular.module('recipeModule')
     }
 
         function nutrientsInfo($http,$rootScope) {
-          
+
           var directive = { };
           directive.restrict = 'E';
           directive.template = "<div id=\"nutrients_graph\"></div>";
