@@ -148,6 +148,18 @@ star-rating-directive {
     color: #ff3434;
 }
 
+.mostPopularRecipeNavItem {
+    margin-left: 20px;
+    margin-top:10px;
+    font-size: 1.5em;
+    float: left;
+    padding: 10px;
+}
+
+.mostPopularRecipeNavItem:hover {
+    cursor:pointer;
+}
+
 .banner a:hover{
     text-decoration: none;
     color: #ff3434;
@@ -157,6 +169,7 @@ star-rating-directive {
     position: fixed;
     width: 100%;
     background-color: #dadddf;
+    z-index: 999;
 }
 
 .section1 {

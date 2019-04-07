@@ -8,6 +8,7 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
         $scope.recipeHeading = "Foodgether";
         $scope.searchForRecipes = searchForRecipes;
         $scope.orderByPopRatings = orderByPopRatings;
+        $scope.goToMostPopPage = goToMostPopPage;
         $scope.couldNotFindAnyResults = false;
         $scope.findWithinArea = false;
         $rootScope.doneGettingAvgRatings = true;
@@ -162,7 +163,11 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
         else
             return "";
          }
+
+    function goToMostPopPage() {
+      $window.location.href="most-popular.html";
     }
+    } // end of RecipeController function
 
     /* directive for rating stars */
     var dirapp = angular.module('recipeModule');

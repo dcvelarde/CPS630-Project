@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+    <head>
+        <title>Foodgether</title>
+            <link rel="stylesheet" href="styles/main.css">
+            <link rel="stylesheet" href="styles/mostPopPage.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- needed for rating icon -->
+    <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+
+    <!-- Google Charts files for displaying nutrients info -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="scripts/chart-demo.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/recipeModule.js"></script>
+    <script src="scripts/most-popular-recipes-controller.js"></script>
+    </head>
+    <body ng-app="recipeModule">
+        <div ng-controller="MostPopRecipeController">
+            <div class="banner">
+                <div>
+                    <h1><a href="./index2.html">{{recipeHeading}}</a></h1>
+                    <span class="mostPopularRecipeNavItem" ng-click="goToMostPopPage()">Most Popular Recipes</span>
+                </div>
+                <a ng-show="{{checkiflogin}}" class="navbar" href="profile.html">Hi, {{firstname}}</a>
+                <a class="signin" ng-hide="{{checkiflogin}}" href="./login.html">Sign in</a>
+                <br>
+            </div>
+            <div class="mainContent">
+                <div class="mostPopPageCont">
+                    <h1>Most Popular Recipes</h1>
+                    <p>Explore through the top 20 recipes that users within your city liked the most!</p>
+                </div>
+                <div class="recipeCont" ng-repeat="recipeObj in listOfPopRecipes">
+                                    <h4>{{recipeObj.label}}</h4>
+                <div style="display:flex;">
+                    <img class="recipeImg" src="{{recipeObj.image}}" />
+                    <div class="recipeDetails">
+                        <p><strong>Average User Ratings</strong>: {{recipeObj.rating}}/5</p>
+                        <a href="{{recipeObj.url}}">Click here for instructions</a>
+                        <p>Calories: {{recipeObj.calories|number:0}}</p>
+                        <p>Ingredients:
+                            <ul>
+                                <li ng-repeat="ingredient in recipeObj.ingredientLines">{{ingredient}}</li>
+                            </ul>
+                        </p>
+                        <nutrients-info-directive recipeObj="recipeObj"></nutrients-info-directive>
+
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html
