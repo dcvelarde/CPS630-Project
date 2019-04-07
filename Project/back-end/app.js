@@ -47,7 +47,7 @@ app.post("/users/post",function(req,res) {
       "'" + userCredentials['name'] + "', '" + userCredentials['city'] + "', " +
       "'" + userCredentials['level'] + "')";
    connection.query(sqlInsert, function (error, results, fields) {
-   if(error) {
+   if(error || results == undefined) {
       console.log("user not created");
       res.json({response: "user not created"});
    }
