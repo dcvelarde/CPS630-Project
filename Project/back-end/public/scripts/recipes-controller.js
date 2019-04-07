@@ -335,8 +335,8 @@ angular.module('recipeModule')
 
           directive.link = function(scope, elements, attr) {
              scope.getNutrients = getNutrients;
-
-             function getNutrients() {
+             function getNutrients(elements) {
+              var graph_container = elements[0].childNodes[0];
                 var nutrientsInfo = scope.recipeObj.recipe.totalDaily;
                 var servings = scope.recipeObj.recipe.yield;
 
@@ -371,11 +371,10 @@ angular.module('recipeModule')
                     title: '% Daily Value'
                   }
                 };
-
-                var chart = new google.visualization.BarChart(document.getElementById('nutrients_graph'));
+                var chart = new google.visualization.BarChart(graph_container);
                 chart.draw(graphData, options);
              }
-             scope.getNutrients();
+             scope.getNutrients(elements);
           };
 
           return directive;
