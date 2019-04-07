@@ -157,6 +157,7 @@ star-rating-directive {
     position: fixed;
     width: 100%;
     background-color: #dadddf;
+    z-index: 999;
 }
 
 .section1 {
