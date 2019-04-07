@@ -46,7 +46,7 @@ angular.module('recipeModule')
               healthFilterParams = healthFilterParams+"&health="+healthFilters[i];
             }
             $http.get("https://api.edamam.com/search?q="+queryIngredients+dietFilterParams+healthFilterParams
-              +"&app_id="+appID+"&app_key="+appKey+"&to=20").then(
+              +"&app_id="+appID+"&app_key="+appKey+"&to=100").then(
               function successCallback(response) {
                 $scope.response = response;
                 // changing listofrecipes so won't update right away before filtered by level
