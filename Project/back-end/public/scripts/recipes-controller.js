@@ -1,21 +1,21 @@
 angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
     .controller('RecipeController', ['$rootScope', '$scope', '$http', '$window', RecipeController]);
-
-function RecipeController($rootScope, $scope, $http, $window) {
-    var vm = this;
-    var hostIP = "54.86.83.49";
-    $rootScope.recipeAverageRatings = {};
-    $rootScope.recipeIDs = {};
-    $scope.recipeHeading = "Foodgether";
-    $scope.searchForRecipes = searchForRecipes;
-    $scope.orderByPopRatings = orderByPopRatings;
-    $scope.couldNotFindAnyResults = false;
-    $scope.findWithinArea = false;
-    $rootScope.doneGettingAvgRatings = true;
-    $rootScope.listOfRecipes = [];
-    $scope.dietFilters = [];
-    $scope.healthFilters = [];
-    $scope.dietFilterOptions = ["balanced", "high-protein", "high-fiber", "low-fat", "low-carb",
+    function RecipeController($rootScope,$scope,$http,$window) {
+        var vm = this;
+        var hostIP = "54.86.83.49";
+        $rootScope.recipeAverageRatings = {};
+        $rootScope.recipeIDs = {};
+        $scope.recipeHeading = "Foodgether";
+        $scope.searchForRecipes = searchForRecipes;
+        $scope.orderByPopRatings = orderByPopRatings;
+        $scope.couldNotFindAnyResults = false;
+        $scope.findWithinArea = false;
+        $rootScope.doneGettingAvgRatings = true;
+        $rootScope.listOfRecipes = [];
+        $rootScope.savedList = [];
+        $scope.dietFilters = [];
+        $scope.healthFilters = [];
+        $scope.dietFilterOptions = ["balanced","high-protein","high-fiber","low-fat","low-carb",
         "low-sodium"];
     $scope.healthFilterOptions = ["vegan",
         "vegetarian", "paleo", "dairy-free", "gluten-free", "wheat-free", "fat-free", "low-sugar",
@@ -55,7 +55,7 @@ function RecipeController($rootScope, $scope, $http, $window) {
             healthFilterParams = healthFilterParams + "&health=" + healthFilters[i];
         }
         $http.get("https://api.edamam.com/search?q=" + queryIngredients + dietFilterParams + healthFilterParams +
-            "&app_id=" + appID + "&app_key=" + appKey + "&to=100").then(
+            "&app_id=" + appID + "&app_key=" + appKey + "&to=30").then(
             function successCallback(response) {
                 $scope.response = response;
                 // changing listofrecipes so won't update right away before filtered by level
@@ -69,11 +69,11 @@ function RecipeController($rootScope, $scope, $http, $window) {
                     if ($scope.displayBasedOnPopRating) {
                         filterRecipesByPopularRating();
                     }
-                    console.log($rootScope.listOfRecipes);
-                } else
-                    $scope.couldNotFindAnyResults = true;
-            },
-            function errorCallback(response) {
+                }
+                else
+                  $scope.couldNotFindAnyResults = true;
+              },
+              function errorCallback(response) {
                 console.log("Unable to perform get request");
             }
         );
@@ -87,54 +87,58 @@ function RecipeController($rootScope, $scope, $http, $window) {
             $rootScope.recipeIDs[recipeID] = "";
         }
     }
-
-    /* function for filtering recipes based on user level */
-    function filterRecipesByLevel() {
-        var maxNumIngr;
-        switch ($scope.level) {
-            case "beginner":
-                maxNumIngr = 4;
-                break;
-            case "intermediate":
-                maxNumIngr = 7;
-                break;
-            case "expert":
-                maxNumIngr = 50; // basically no max
-                break;
-        }
-        for (var i = $rootScope.listOfRecipes.length - 1; i >= 0; i--) {
-            var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
-            var recipeObj = $scope.listOfRecipes[i];
-            var recipeID = recipeObj.recipe.uri.replace(rQueryPartialParam, "");
-            var numOfIngr = recipeObj.recipe.ingredientLines.length;
-            if (numOfIngr > maxNumIngr) {
-                $rootScope.listOfRecipes.splice(i, 1)
-                delete $rootScope.recipeIDs[recipeID];
+         /* function for filtering recipes based on user level */
+         function filterRecipesByLevel() {
+            var maxNumIngr;
+            var minNumIngr;
+            switch($scope.level) {
+               case "beginner":
+                  minNumIngr = 0;
+                  maxNumIngr = 3;
+                  break;
+               case "intermediate":
+                  minNumIngr = 4;
+                  maxNumIngr = 6;
+                  break;
+               case "expert":
+                  minNumIngr = 7;
+                  maxNumIngr = 50; // basically no max
+                  break;
+            }
+            for(var i=$rootScope.listOfRecipes.length - 1; i >= 0 ; i--){
+              var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
+              var recipeObj = $scope.listOfRecipes[i];
+              var recipeID = recipeObj.recipe.uri.replace(rQueryPartialParam,"");
+               var numOfIngr = recipeObj.recipe.ingredientLines.length;
+                  if(numOfIngr < minNumIngr || numOfIngr > maxNumIngr){
+                     $rootScope.listOfRecipes.splice(i,1)
+                     delete $rootScope.recipeIDs[recipeID];
+                  }
             }
         }
-    }
 
-    function filterRecipesByPopularRating() {
-        var dataToSend = {};
-        dataToSend.recipeIDs = Object.keys($rootScope.recipeIDs);
-        dataToSend.userID = $window.sessionStorage.getItem("activeUserId");
-        console.log(dataToSend);
-        $http.post("http://localhost:1121/getPopularRatedRecipes", dataToSend).then(
-            function successCallback(response) {
-                var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
-                console.log(response);
-                var iDs = response["response"];
-                for (var i = 0; i < $rootScope.listOfRecipes.length; i++) {
+         function filterRecipesByPopularRating() {
+           var dataToSend = {};
+           dataToSend.recipeIDs = Object.keys($rootScope.recipeIDs);
+           dataToSend.userID = $window.sessionStorage.getItem("activeUserId");
+           console.log(dataToSend);
+             $http.post("http://localhost:1121/getPopularRatedRecipes", dataToSend).then(
+               function successCallback(response) {
+                 var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
+                 console.log(response);
+                 var iDs = response["response"];
+                  for(var i = 0; i < $rootScope.listOfRecipes.length;i++) {
                     var recipeObj = $scope.listOfRecipes[i];
-                    var recipeID = recipeObj.recipe.uri.replace(rQueryPartialParam, "");
-                    if (!iDs.includes(recipeID)) {
-                        $rootScope.listOfRecipes.splice(i, 1);
+                    var recipeID = recipeObj.recipe.uri.replace(rQueryPartialParam,"");
+                    if(!iDs.includes(recipeID)){
+                     $rootScope.listOfRecipes.splice(i,1);
                     }
-                }
-            },
-            function errorCallback(response) {}
-        );
-    }
+                  }
+                 },
+               function errorCallback(response) {
+               }
+             );
+          }
 
     // Needed to decide to order recipes by rating
     function orderByPopRatings() {
@@ -142,17 +146,84 @@ function RecipeController($rootScope, $scope, $http, $window) {
             return "-rating";
         else
             return "";
+         }
+
+         /* adding user saved recipes */
+         $scope.addToSaved = function(recipeObj){
+           var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
+           var userSaved = {
+             userid: sessionStorage.getItem("activeUserId"),
+             recipeid: recipeObj.recipe.uri.replace(rQueryPartialParam,"")
+           }
+           $http.post("http://localhost:1121/users/saved", JSON.stringify(userSaved)).then(
+                function successCallback(response) {
+                  console.log("saved successfully");
+                },
+                function errorCallback(response) {
+                  console.log("unable to save");
+                }
+             );
+         }
+         /* putting saved recipes into list*/
+         $scope.populateSavedList = function(){
+           $rootScope.savedList = [];
+           var dataToSend = {};
+           dataToSend.userID = $window.sessionStorage.getItem("activeUserId");
+           $http.post("http://localhost:1121/getSavedRecipes", dataToSend).then(
+             function successCallback(response) {
+               var iDs = response.data.response;
+               for (var a = 0; a< iDs.length; a++) {
+                 $http.get("https://api.edamam.com/search?r=http%3A%2F%2Fwww.edamam.com%2Fontologies%2Fedamam.owl%23recipe_" +
+                  iDs[a]+"&app_id="+appID+"&app_key="+appKey).then(
+                   function successCallback(response) {
+                     $rootScope.savedList.push(response.data);
+                   },
+                   function errorCallback(response) {
+                     console.log("unable to retrieve recipe");
+                   }
+                 )
+               }
+              },
+              function errorCallback(response) {
+                console.log("unable to get list");
+              }
+           );
+         }
+
+         /* delete recipe from saved list*/
+         $scope.removeFromSaved = function(recipeObj) {
+           var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
+           var userDelete = {
+             userid: sessionStorage.getItem("activeUserId"),
+             recipeid: recipeObj[0].uri.replace(rQueryPartialParam,"")
+           }
+           $http.post("http://localhost:1121/users/deleted", JSON.stringify(userDelete)).then(
+                function successCallback(response) {
+                  for(var i=$rootScope.savedList.length - 1; i >= 0; i--) {
+                    if(recipeObj[0].uri == $rootScope.savedList[i][0].uri) {
+                      $rootScope.savedList.splice(i,1);
+                      console.log("was removed: " + recipeObj[0].label);
+                    }
+                  }
+                  console.log($rootScope.savedList);
+                  console.log("deleted successfully");
+                },
+                function errorCallback(response) {
+                  console.log("unable to delete");
+                }
+             );
+         }
     }
-}
 
+    /* directive for rating stars */
+    var dirapp = angular.module('recipeModule');
+    dirapp.directive("starRatingDirective", recipeRatings);
+    dirapp.directive("recipeAverageRatingDirective",recipeAverageRating);
+    dirapp.directive("nutrientsInfoDirective",nutrientsInfo);
 
-/* directive for rating stars */
-var dirapp = angular.module('recipeModule');
-dirapp.directive("starRatingDirective", recipeRatings);
-dirapp.directive("recipeAverageRatingDirective", recipeAverageRating);
-
-recipeRatings.$inject = ['$http'];
-recipeAverageRating.$inject = ['$http', '$rootScope'];
+    recipeRatings.$inject = ['$http'];
+    recipeAverageRating.$inject = ['$http','$rootScope'];
+    nutrientsInfo.$inject = ['$http','$rootScope'];
 
 function recipeRatings($http) {
     var directive = {};
@@ -271,6 +342,58 @@ function recipeAverageRating($http, $rootScope) {
         scope.retrieveAvgRating();
     };
 
-    return directive;
+          return directive;
+    }
 
-}
+        function nutrientsInfo($http,$rootScope) {
+
+          var directive = { };
+          directive.restrict = 'E';
+          directive.template = "<div id=\"nutrients_graph\"></div>";
+
+          directive.link = function(scope, elements, attr) {
+             scope.getNutrients = getNutrients;
+             function getNutrients(elements) {
+              var graph_container = elements[0].childNodes[0];
+                var nutrientsInfo = scope.recipeObj.recipe.totalDaily;
+                var servings = scope.recipeObj.recipe.yield;
+
+                var graphLabels = [["Nutrients","% Daily Value"]];
+                var dailyValues = [];
+                var nutrients = Object.keys(nutrientsInfo);
+
+                for(var i=0;i < nutrients.length;i++) {
+                  var data = [];
+                  var key = nutrients[i];
+                  var nutrient = nutrientsInfo[key];
+                  data[0] = nutrient.label;
+                  data[1] = Math.round(nutrient.quantity / servings);
+                  dailyValues[i] = data;
+                }
+
+                var result = graphLabels.concat(dailyValues);
+                // console.log("Result: ",result);
+
+                var graphData = google.visualization.arrayToDataTable(result);
+
+                var options = {
+                  title: 'Nutrition Facts',
+                  legend:'none',
+                  chartArea: {width: '50%'},
+                  hAxis: {
+                    title: 'Nutrients',
+                    minValue: 0,
+                    maxValue:100
+                  },
+                  vAxis: {
+                    title: '% Daily Value'
+                  }
+                };
+                var chart = new google.visualization.BarChart(graph_container);
+                chart.draw(graphData, options);
+             }
+             scope.getNutrients(elements);
+          };
+
+          return directive;
+    }

@@ -20,6 +20,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
 
+    <!-- Google Charts files for displaying nutrients info -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="scripts/chart-demo.js"></script>
+
     <!-- Angular Material Library -->
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
 
@@ -76,10 +80,8 @@
                 <md-checkbox md-no-ink="" aria-label="Checkbox No Ink" ng-model="displayBasedOnPopRating" class="md-primary">Popular Rated Recipes within area</md-checkbox>
 
 
-
+                <a href="saved.html" ng-click="populateSavedList()">View saved recipes</a>
                 <button class="Find" ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">FIND RECIPES</button>
-
-
             </div>
         </div>
 
@@ -104,13 +106,16 @@
                     <div class="recipeDetails">
                         <star-rating-directive user="user" recipeObj="recipeObj"></star-rating-directive>
                         <recipe-average-rating-directive recipeObj="recipeObj"></recipe-average-rating-directive>
-                        <a href="{{recipeObj.recipe.url}}" target="_blank">Click here for instructions</a>
+                        <button ng-click="addToSaved(recipeObj)">Save</button><br>
+                        <a href="{{recipeObj.recipe.url}}">Click here for instructions</a>
                         <p>Calories: {{recipeObj.recipe.calories|number:0}}</p>
                         <p>Ingredients:
                             <ul>
                                 <li ng-repeat="ingredient in recipeObj.recipe.ingredientLines">{{ingredient}}</li>
                             </ul>
                         </p>
+                        <nutrients-info-directive recipeObj="recipeObj"></nutrients-info-directive>
+
                     </div>
                 </div>
             </div>

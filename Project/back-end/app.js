@@ -121,12 +121,66 @@ app.get("/user/:id", function(req,res) {
     connection.query("SELECT * FROM UsersInfo WHERE UserID="+id, function(err, rows, fields) {
       if(rows !== undefined)
         res.json(rows[0]);
+
       else{
         res.status(404);
         res.json({"response":"No user exists with UserID: "+id});
       }
     });
   }
+});
+
+// ******* User add to saved recipes page *******
+app.post("/users/saved",function(req,res) {
+  var userSaved = req.body;
+  var sqlInsert = "INSERT INTO UsersSavedRecipes(UserID, RecipeID) VALUES (" + userSaved['userid'] + ", '" +
+   userSaved['recipeid'] + "')";
+   connection.query(sqlInsert, function (error, results, fields) {
+   if(error) {
+      console.log("recipe not saved");
+      res.json({response: "recipe not saved"});
+   }
+   else {
+      console.log("recipe saved");
+      res.json({response: "recipe saved"});
+   }
+   });
+});
+
+app.post("/users/deleted",function(req,res) {
+  var userDeleted = req.body;
+  var sqlDelete = "DELETE FROM UsersSavedRecipes WHERE UserID=" +  userDeleted['userid'] + " AND RecipeID=\"" + userDeleted['recipeid'] + "\"";
+   connection.query(sqlDelete, function (error, results, fields) {
+   if(error) {
+      console.log("recipe not deleted");
+      res.json({response: "recipe not deleted"});
+   }
+   else {
+      console.log("recipe deleted");
+      res.json({response: "recipe deleted"});
+   }
+   });
+});
+
+// ******* getting user saved recipes *******
+app.post("/getSavedRecipes", function(req,res) {
+    var body = req.body;
+    var userID = body.userID;
+    var query = "SELECT DISTINCT RecipeID FROM UsersSavedRecipes WHERE UserID= " + userID;
+    connection.query(query, function (error, results, fields) {
+       if(error) {
+         res.json({response:[]});
+       }
+       else {
+         var savedRecipeIDs = [];
+         for(var i=0; i <results.length; i++) {
+           var recipeID = results[i]["RecipeID"];
+           savedRecipeIDs[i] = recipeID;
+         }
+         console.log(savedRecipeIDs);
+         res.json({response:savedRecipeIDs})
+       }
+    });
 });
 
 // ******* Get User Ratings by UserID and RecipeIDs *******
@@ -181,6 +235,8 @@ app.get("/getAverageRating/:id", function(req,res) {
       }
     });
 });
+
+
 
 // ******* Get List of Recipe IDs within current user's area *******
 app.post("/getPopularRatedRecipes",function(req,res) {

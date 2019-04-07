@@ -98,6 +98,10 @@ star-rating-directive {
     cursor: pointer;
 }
 
+#nutrients_graph {
+  width:100%;
+  height:300px;
+}
 
 .star {
     color: #b0b0b0;

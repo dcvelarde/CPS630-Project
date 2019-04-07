@@ -1,7 +1,6 @@
 angular.module('recipeModule',['ngMaterial', 'ngMessages'])
     .controller('AuthenticateController', ['$rootScope', '$scope', '$http', '$window', AuthenticateController]);
 
-
 function AuthenticateController($rootScope,$scope,$http,$window) {
     $scope.recipeHeading="Foodgether";
     $scope.loginIsCorrect = true;
