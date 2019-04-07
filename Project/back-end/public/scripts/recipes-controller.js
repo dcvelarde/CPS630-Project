@@ -15,8 +15,12 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
         $rootScope.savedList = [];
         $scope.dietFilters = [];
         $scope.healthFilters = [];
+        $scope.dishTypeFilters = [];
         $scope.dietFilterOptions = ["balanced","high-protein","high-fiber","low-fat","low-carb",
         "low-sodium"];
+        $scope.dishTypeOptions = ["Breakfast","Lunch","Dinner","Dessert"];
+        $scope.cuisineTypeOptions = ["American","British","Canadian","Chinese",
+        "Indian","Japanese","Korean","Thai"];
     $scope.healthFilterOptions = ["vegan",
         "vegetarian", "paleo", "dairy-free", "gluten-free", "wheat-free", "fat-free", "low-sugar",
         "egg-free", "peanut-free", "tree-nut-free", "soy-free", "fish-free", "shellfish-free"];
@@ -45,6 +49,14 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
 
     function searchForRecipes(queryIngredients, dietFilters, healthFilters) {
         $rootScope.doneGettingAvgRatings = false;
+        var dishTypeParam = "";
+        if($scope.dishTypeValue !== undefined)
+          dishTypeParam ="&dishType="+$scope.dishTypeValue;
+
+        var cuisineTypeParam = "";
+        if($scope.cuisineTypeValue !== undefined)
+          cuisineTypeParam = "&cuisineType="+$scope.cuisineTypeValue;
+
         var dietFilterParams = "";
         for (var i = 0; i < dietFilters.length; i++) {
             dietFilterParams = dietFilterParams + "&diet=" + dietFilters[i];
@@ -55,11 +67,12 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
             healthFilterParams = healthFilterParams + "&health=" + healthFilters[i];
         }
         $http.get("https://api.edamam.com/search?q=" + queryIngredients + dietFilterParams + healthFilterParams +
-            "&app_id=" + appID + "&app_key=" + appKey + "&to=30").then(
+           dishTypeParam+ cuisineTypeParam +"&app_id=" + appID + "&app_key=" + appKey + "&to=30").then(
             function successCallback(response) {
                 $scope.response = response;
                 // changing listofrecipes so won't update right away before filtered by level
                 $rootScope.listOfRecipes = response.data.hits;
+                console.log(response.data.hits);
                 populateRecipeIDs();
                 if ($rootScope.listOfRecipes.length != 0) {
                     $scope.couldNotFindAnyResults = false;
@@ -70,8 +83,10 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
                         filterRecipesByPopularRating();
                     }
                 }
-                else
+                else{
                   $scope.couldNotFindAnyResults = true;
+                  $scope.doneGettingAvgRatings = true;
+                }
               },
               function errorCallback(response) {
                 console.log("Unable to perform get request");

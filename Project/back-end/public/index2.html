@@ -72,6 +72,21 @@
                         <md-option ng-repeat="healthFilter in healthFilterOptions" value="{{healthFilter}}">{{healthFilter}}</md-option>
                     </md-select>
                 </md-input-container>
+                <br />
+                <md-input-container>
+                    <label>Dish Type</label>
+                    <md-select ng-model="dishTypeValue" class="selectpicker">
+                        <md-option ng-repeat="dishType in dishTypeOptions" value="{{dishType}}">{{dishType}}</md-option>
+                    </md-select>
+                </md-input-container>
+
+                <br />
+                <md-input-container>
+                    <label>Cuisine Type</label>
+                    <md-select ng-model="cuisineTypeValue" class="selectpicker">
+                        <md-option ng-repeat="cuisineType in cuisineTypeOptions" value="{{cuisineType}}">{{cuisineType}}</md-option>
+                    </md-select>
+                </md-input-container>
 
                 <!-- adding check box for displaying based on user level -->
                 <br /><br />
