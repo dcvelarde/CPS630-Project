@@ -203,6 +203,10 @@ app.get("/reciperating/:userrecipeid", function(req,res) {
 app.get("/reciperate/:userreciperating", function(req,res) {
    var userRecipeRatingArr = JSON.parse(req.params['userreciperating']);
    var userRecipeRating = userRecipeRatingArr[1];
+   if(userRecipeRating < 1 || userRecipeRating > 5)
+   {
+    res.json({response: "incorrect rating value"});
+   }
    var beenRated = userRecipeRatingArr[0]['beenRated'];
    var sql;
    if (!beenRated) {
