@@ -44,8 +44,8 @@
             <span class="mostPopularRecipeNavItem" ng-click="goToMostPopPage()">Most Popular Recipes</span>
             <span class="mostPopularRecipeNavItem" ng-click="goToSavedRecipes()">Your Saved Recipes</span>
         </div>
-        <a class="navbar" href="login.html" ng-click="SignUserOut()">Sign out</a>
-        <a ng-show="{{checkiflogin}}" class="navbar" href="profile.html">Hi, {{firstname}}</a>
+         <a class="navbar" ng-show="{{checkiflogin}}" href="index.html" ng-click="SignUserOut()">Sign out</a>
+        <a  class="navbar" href="profile.html" ng-show="{{checkiflogin}}">Hi, {{firstname}}</a>
         <a class="signin" ng-hide="{{checkiflogin}}" href="./index.html">Sign in</a>
         <br>
     </div>
@@ -97,7 +97,7 @@
                 <!-- adding check box for displaying based on average recipe rating -->
                 <md-checkbox md-no-ink="" aria-label="Checkbox No Ink" ng-model="displayBasedOnPopRating" class="md-primary">Popular Rated Recipes within area</md-checkbox>
                 <button class="Find" ng-click="searchForRecipes(queryIngredients,dietFilters,healthFilters)">Find Recipes</button>
-                 <a class="viewSaved "ng-show="{{checkiflogin}}" href="saved.html"><button class="Find">View Saved Recipes</button></a>
+
             </div>
         </div>
 

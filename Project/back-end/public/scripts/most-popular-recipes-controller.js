@@ -5,6 +5,7 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
         $scope.listOfPopRecipesLocal = [];
         $scope.listOfPopRecipes = [];
         $scope.getMostPopRecipes = getMostPopRecipes();
+        $scope.goToSavedRecipes = goToSavedRecipes();
         $scope.checkiflogin= checkiflogin();
 
         $scope.getRecipeInfo = getRecipeInfo;
@@ -21,6 +22,7 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
             else
                return  false;
         }
+        
 
         function getMostPopRecipes() {
             var hostIP = "localhost";
@@ -38,6 +40,11 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
                 }
             );
         }
+        
+        function goToSavedRecipes() {
+      $window.location.href="saved.html";
+    }
+        
 
         function getRecipeInfo() {
             var partialURI = "http%3A%2F%2Fwww.edamam.com%2Fontologies%2Fedamam.owl%23recipe_";

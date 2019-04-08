@@ -15,7 +15,14 @@ function SavedController($rootScope,$scope,$http,$window) {
            return  false;
     }
     
-    
+        $scope.goToMostPopPage = function goToMostPopPage(){
+      $window.location.href="most-popular.html";
+    };
+        $scope.goToSavedRecipes = function goToSavedRecipes() {
+      $window.location.href="saved.html";
+    };
+        
+  
         /* adding user saved recipes */
         $scope.recipeHeading = "Foodgether";
         $scope.addToSaved = function(recipeObj){
