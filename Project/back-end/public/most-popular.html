@@ -41,6 +41,7 @@
                     <span class="mostPopularRecipeNavItem" ng-click="goToMostPopPage()">Most Popular Recipes</span>
                     <span class="mostPopularRecipeNavItem" ng-click="goToSavedRecipes()">Your Saved Recipes</span>
                 </div>
+                <a class="navbar" ng-show="{{checkiflogin}}" href="index.html" ng-click="SignUserOut()">Sign out</a>
                 <a ng-show="{{checkiflogin}}" class="navbar" href="profile.html">Hi, {{firstname}}</a>
                 <a class="signin" ng-hide="{{checkiflogin}}" href="./login.html">Sign in</a>
                 <br>

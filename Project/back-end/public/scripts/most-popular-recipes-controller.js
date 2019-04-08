@@ -4,15 +4,15 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
         $scope.recipeHeading = "Foodgether";
         $scope.listOfPopRecipesLocal = [];
         $scope.listOfPopRecipes = [];
+        $scope.userLocation = $window.sessionStorage.getItem('activeUserCity');
         $scope.getMostPopRecipes = getMostPopRecipes();
-        $scope.goToSavedRecipes = goToSavedRecipes();
+        $scope.goToSavedRecipes = goToSavedRecipes;
         $scope.checkiflogin= checkiflogin();
 
         $scope.getRecipeInfo = getRecipeInfo;
         /* user information stored in login */
         $scope.user = $window.sessionStorage.getItem('activeUserId');
         $scope.firstname = $window.sessionStorage.getItem('activeUser');
-
         $scope.appID = "4e6ed2f0";
         $scope.appKey = "2b62e270b8ccede3c8380b07051800a6";
 
@@ -26,7 +26,7 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
 
         function getMostPopRecipes() {
             var hostIP = "localhost";
-            $http.get("http://"+hostIP+":1121/getMostPopularRecipes").then(
+            $http.get("http://"+hostIP+":1121/getMostPopularRecipes/"+$scope.userLocation).then(
                 function successCallback(response) {
                     // console.log(response);
                     $scope.listOfPopRecipesLocal = response.data.response;

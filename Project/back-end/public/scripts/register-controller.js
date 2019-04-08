@@ -24,7 +24,7 @@ function RegisterController($scope,$http,$window) {
              }
              else {
                 console.log("Post request success");
-                $window.location.href = './login.html';
+                $window.location.href = './index.html';
              }
             },
             function errorCallback(response) {
