@@ -9,6 +9,7 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
         $scope.searchForRecipes = searchForRecipes;
         $scope.orderByPopRatings = orderByPopRatings;
         $scope.goToMostPopPage = goToMostPopPage;
+        $scope.goToSavedRecipes = goToSavedRecipes;
         $scope.couldNotFindAnyResults = false;
         $scope.findWithinArea = false;
         $rootScope.doneGettingAvgRatings = true;
@@ -175,6 +176,10 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
 
     function goToMostPopPage() {
       $window.location.href="most-popular.html";
+    }
+
+    function goToSavedRecipes() {
+      $window.location.href="saved.html";
     }
     } // end of RecipeController function
 
