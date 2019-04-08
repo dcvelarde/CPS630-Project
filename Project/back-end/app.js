@@ -243,10 +243,10 @@ app.get("/getAverageRating/:id", function(req,res) {
 // ******* Get All Time Popular Rated Recipes By Location *******
 app.get("/getMostPopularRecipes/:location", function(req,res) {
     const location = req.params.location;
-    var query = "SELECT RecipeID,AVG(Rating) AS averageRating FROM ("
+    var query = "SELECT RecipeID,AVG(Rating) AS averageRating, COUNT(*) AS NumOfUsers FROM ("
     +"SELECT usr.UserID,usr.RecipeID,usr.Rating, u.Location FROM "
     +"UserRecipeRatings usr JOIN Users u ON usr.UserID=u.UserID) AS PopularRatedInArea "
-    +"WHERE Location = '"+location+"' GROUP BY RecipeID ORDER BY averageRating DESC LIMIT 20;";
+    +"WHERE Location = '"+location+"' GROUP BY RecipeID ORDER BY averageRating DESC LIMIT 20";
     connection.query(query, function(err, rows, fields) {
       if(rows !== undefined)
         res.json({response:rows});

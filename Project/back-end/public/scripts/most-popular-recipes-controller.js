@@ -67,7 +67,9 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
                     var results = response.data;
                     for(var i=0; i < results.length;i++) {
                         results[i].rating = $scope.listOfPopRecipesLocal[i].averageRating;
+                        results[i].numOfUsers = $scope.listOfPopRecipesLocal[i].NumOfUsers;
                     }
+                    
 
                     console.log(results);
                     $scope.listOfPopRecipes = results;
