@@ -9,6 +9,7 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
         $scope.searchForRecipes = searchForRecipes;
         $scope.orderByPopRatings = orderByPopRatings;
         $scope.goToMostPopPage = goToMostPopPage;
+        $scope.goToSavedRecipes = goToSavedRecipes;
         $scope.couldNotFindAnyResults = false;
         $scope.findWithinArea = false;
         $rootScope.doneGettingAvgRatings = true;
@@ -40,14 +41,22 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
     console.log("level: " + $scope.level);
 
     $scope.checkiflogin= checkiflogin();
-        
+    $scope.SignUserOut = SignUserOut;
     function checkiflogin(){
         if($window.sessionStorage.length!= 0)
             return  true;
         else
            return  false;
     }
-        
+
+      function SignUserOut() {
+         $window.sessionStorage.removeItem('activeUserId');
+         $window.sessionStorage.removeItem('activeUserName');
+         $window.sessionStorage.removeItem('activeUser');
+         $window.sessionStorage.removeItem('activeUserCity');
+         $window.sessionStorage.removeItem('activeUserLevel');
+      }
+
     function searchForRecipes(queryIngredients, dietFilters, healthFilters) {
         $rootScope.doneGettingAvgRatings = false;
         var dishTypeParam = "";
@@ -166,6 +175,10 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
 
     function goToMostPopPage() {
       $window.location.href="most-popular.html";
+    }
+
+    function goToSavedRecipes() {
+      $window.location.href="saved.html";
     }
     } // end of RecipeController function
 

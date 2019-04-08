@@ -19,11 +19,13 @@ function ProfileController($rootScope,$scope,$http,$window) {
    $scope.updateUser = function(name, city, level) {
       var hostIP = "54.86.83.49";
 
-      var newUserInfo = {userid: $scope.user, name: $scope.name, city: $scope.city, level: $scope.level};
+      var newUserInfo = {userid: $scope.user, name: name, city: city, level: level};
 
       $window.sessionStorage.setItem('activeUserName',$scope.name);
       $window.sessionStorage.setItem('activeUserCity',$scope.city);
       $window.sessionStorage.setItem('activeUserLevel',$scope.level);
+
+      console.log(newUserInfo.level);
 
      $http.put("http://localhost:1121/updateuser", JSON.stringify(newUserInfo)).then(
          function successCallback(response) {
