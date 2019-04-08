@@ -25,7 +25,7 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
         
 
         function getMostPopRecipes() {
-            var hostIP = "localhost";
+            var hostIP = "54.86.83.49";
             $http.get("http://"+hostIP+":1121/getMostPopularRecipes/"+$scope.userLocation).then(
                 function successCallback(response) {
                     // console.log(response);
@@ -69,7 +69,7 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
                         results[i].rating = $scope.listOfPopRecipesLocal[i].averageRating;
                         results[i].numOfUsers = $scope.listOfPopRecipesLocal[i].NumOfUsers;
                     }
-                    
+
 
                     console.log(results);
                     $scope.listOfPopRecipes = results;

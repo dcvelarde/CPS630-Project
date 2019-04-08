@@ -27,7 +27,7 @@ function ProfileController($rootScope,$scope,$http,$window) {
 
       console.log(newUserInfo.level);
 
-     $http.put("http://localhost:1121/updateuser", JSON.stringify(newUserInfo)).then(
+     $http.put("http://54.86.83.49:1121/updateuser", JSON.stringify(newUserInfo)).then(
          function successCallback(response) {
            console.log(response);
            alert("Changes successful!");

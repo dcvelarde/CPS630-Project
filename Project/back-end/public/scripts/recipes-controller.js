@@ -147,7 +147,7 @@ angular.module('recipeModule', ['ngMaterial', 'ngMessages'])
            dataToSend.recipeIDs = Object.keys($rootScope.recipeIDs);
            dataToSend.userID = $window.sessionStorage.getItem("activeUserId");
            console.log(dataToSend);
-             $http.post("http://localhost:1121/getPopularRatedRecipes", dataToSend).then(
+             $http.post("http://54.86.83.49:1121/getPopularRatedRecipes", dataToSend).then(
                function successCallback(response) {
                  var rQueryPartialParam = "http://www.edamam.com/ontologies/edamam.owl#recipe_";
                  console.log(response);

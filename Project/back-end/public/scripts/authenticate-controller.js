@@ -9,7 +9,7 @@ function AuthenticateController($rootScope,$scope,$http,$window) {
        username:username,
        password:password
      }
-    $http.post("http://localhost:1121/users/login", JSON.stringify(user)).then(
+    $http.post("http://54.86.83.49:1121/users/login", JSON.stringify(user)).then(
         function successCallback(response) {
           if (response.data.userid > 0) {
               $window.sessionStorage.setItem('activeUserId',response.data.userid);

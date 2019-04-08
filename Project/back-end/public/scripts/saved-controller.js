@@ -31,7 +31,7 @@ function SavedController($rootScope,$scope,$http,$window) {
             userid: sessionStorage.getItem("activeUserId"),
             recipeid: recipeObj.recipe.uri.replace(rQueryPartialParam,"")
           }
-          $http.post("http://localhost:1121/users/saved", JSON.stringify(userSaved)).then(
+          $http.post("http://54.86.83.49:1121/users/saved", JSON.stringify(userSaved)).then(
                function successCallback(response) {
                  console.log("saved successfully");
                },
@@ -45,7 +45,7 @@ function SavedController($rootScope,$scope,$http,$window) {
           $rootScope.savedList = [];
           var dataToSend = {};
           dataToSend.userID = $window.sessionStorage.getItem("activeUserId");
-          $http.post("http://localhost:1121/getSavedRecipes", dataToSend).then(
+          $http.post("http://54.86.83.49:1121/getSavedRecipes", dataToSend).then(
             function successCallback(response) {
               var iDs = response.data.response;
               for (var a = 0; a< iDs.length; a++) {
@@ -73,7 +73,7 @@ function SavedController($rootScope,$scope,$http,$window) {
             userid: sessionStorage.getItem("activeUserId"),
             recipeid: recipeObj[0].uri.replace(rQueryPartialParam,"")
           }
-          $http.post("http://localhost:1121/users/deleted", JSON.stringify(userDelete)).then(
+          $http.post("http://54.86.83.49:1121/users/deleted", JSON.stringify(userDelete)).then(
                function successCallback(response) {
                  for(var i=$rootScope.savedList.length - 1; i >= 0; i--) {
                    if(recipeObj[0].uri == $rootScope.savedList[i][0].uri) {

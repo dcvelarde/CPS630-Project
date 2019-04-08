@@ -15,7 +15,7 @@ function RegisterController($scope,$http,$window) {
         level:level
       }
       if (user.name != undefined && user.city != undefined && user.password != undefined && user.username != undefined && user.level != undefined) {
-         $http.post("http://localhost:1121/users/post", JSON.stringify(user)).then(
+         $http.post("http://54.86.83.49:1121/users/post", JSON.stringify(user)).then(
             function successCallback(response) {
                console.log(response);
               if (response.data.response == "user not created") {
